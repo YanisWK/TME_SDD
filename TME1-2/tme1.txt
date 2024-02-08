@@ -1,0 +1,13 @@
+q1. segmentation fault
+q2. 4025857229, tab[0]
+q3. enlever unsigned
+q4. le programme assigne une adresse donne en parametre et renvoie une erreur de segmentation
+q5. "No symbol "new" in current context." le gdb ne reconnait pas la ligne 
+    corr : new->rue = strdup(r). en effet le strcpy ne permet pas d'allouer un espace mémoire 
+    avant de copier le contenu de r dans new->rue, contrairement à strdup
+
+q6. le programme ajoute des éléments à un tableau de type Tableau puis l'affiche
+    les tableaux ne sont pas free à la fin du programme
+q7. les données des tableaux initialisés dans le main
+q8. les 400 bytes viennent des données non libérées 
+q9. ajouter un free(t->tab) avant free(t) dans le main
