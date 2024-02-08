@@ -25,12 +25,12 @@ Biblio* creer_biblio(){
 }
 
 void liberer_biblio(Biblio* b){
-    liberer_livre(b->l);
+    liberer_livre(b->L);
     free(b);
 }
 
 void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
     Livre *tete=creer_livre(num,titre,auteur);
-    tete->suiv=b->l;
-    b->l=tete;
+    tete->suiv=b->L;
+    b->L=tete;
 }
