@@ -3,12 +3,12 @@
 #include <string.h>
 #include "biblioLC.h"
 
-Biblio* charger n entrees(char* nomfic, int n){
-    
+Biblio* charger_n_entrees(char* nomfic, int n){
+    File *f=fopen(nomfic,)
 }
 
 
 
 
 
-void enregistrer biblio(Biblio *b, char* nomfic);
+void enregistrer_biblio(Biblio *b, char* nomfic);
