@@ -5,8 +5,8 @@
 
 Biblio* charger_n_entrees(char* nomfic, int n){
     int num;
-    char * titre;
-    char * auteur;
+    char titre[256];
+    char auteur[256];
     FILE *f=fopen(nomfic,"r");
     Biblio *b=creer_biblio();
     char buffer[256];
@@ -14,7 +14,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     while(i<n){
         fgets(buffer,256,f);
         sscanf(buffer,"%d %s %s", &num, titre, auteur);
-        inserer_en_tete(b,num,titre,auteur);
+        inserer_en_tete(b,num,strdup(titre),strdup(auteur));
         i++;
     }
     fclose(f);
@@ -22,13 +22,16 @@ Biblio* charger_n_entrees(char* nomfic, int n){
 }
 
 void enregistrer_biblio(Biblio *b, char* nomfic){
+    int num;
+    char * titre;
+    char * auteur;
     FILE *f = fopen(nomfic, "w");
     if(f == NULL){
         printf("Erreur d'ouverture de : %s\n", nomfic);
     }
 
 	while(b->L){
-        fprintf(buffer,"%d %s %s", &nu, &ti, &au);
+        fprintf(f,"%d %s %s", num, titre, auteur);
 		b->L = b->L->suiv;
 	}
 
