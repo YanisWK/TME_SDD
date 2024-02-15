@@ -69,6 +69,10 @@ Livre* rechercheLivreTitre(Biblio *b,char* titre){
 Biblio* BiblioAuteur(Biblio*b,char* auteur){
     Biblio *BiblioAut=creer_biblio();
     while(b->L){
-        
+        if(strcmp(b->L->auteur,auteur)==0){
+            inserer_en_tete(BiblioAut,b->L->num,b->L->titre,auteur);
+        }
+        b->L=b->L->suiv;
     }
+    return BiblioAut;
 }
