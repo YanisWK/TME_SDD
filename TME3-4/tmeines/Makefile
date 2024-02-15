@@ -19,4 +19,5 @@ main.o: main.c
 	gcc $(CFLAGS) -c main.c
 
 clean:
+	find . -type f | xargs touch
 	rm -f *.o *~ $(PROGRAMS)
