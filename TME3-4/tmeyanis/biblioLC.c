@@ -98,5 +98,29 @@ Biblio* FusionBiblio(Biblio* b1,Biblio* b2){
         liberer_livre(b2->L);
         b2->L=suiv;
     }
+    free(b2);
     return b1;
+}
+
+Biblio* RecherchePlusieurs(Biblio *b){
+    /*Je vais faire deux boucle while, la premiere sert a avoir le livre pour lequel
+        on va le comparer avec les autres livres la deuxieme est donc celle qui permet de faire cette comapraison
+        lors de la comparaison je verifie si les livre on le meme nom meme auteur mais pas le meme numero
+        si c'est le cas j'ajoute uniquement le livre actuelle dans ma bibliodoublon
+    */
+    Biblio * Bibliodoublon=creer_biblio();
+    Livre* Livreactuel=b->L;
+    Livre* Livrecompare=b->L;
+    while(Livreactuel){
+        while(Livrecompare){
+            if(Livreactuel->num!=Livrecompare->num && (strcmp(Livreactuel->auteur,Livrecompare->auteur)==0)&& (strcmp(Livreactuel->titre,Livrecompare->titre)==0)){
+                inserer_en_tete(Bibliodoublon,Livreactuel->num,Livreactuel->titre,Livreactuel->auteur);
+                Livrecompare=NULL; 
+            }
+            Livrecompare=Livrecompare->suiv
+        }
+        Livrecompare=b->L;
+        Livreactuel=Livreactuel->suiv;
+    }
+    return Bibliodoublon;
 }
