@@ -21,17 +21,15 @@ Biblio* charger_n_entrees(char* nomfic, int n){
 	return b;
 }
 
-void enregistrer_biblio(Biblio *b, char* nomfic){
-    int num;
-    char * titre;
-    char * auteur;
+void enregistrer_biblio(Biblio *b, char* nomfic){;
     FILE *f = fopen(nomfic, "w");
     if(f == NULL){
         printf("Erreur d'ouverture de : %s\n", nomfic);
+        exit(1);
     }
 
 	while(b->L){
-        fprintf(f,"%d %s %s", num, titre, auteur);
+        fprintf(f,"%d %s %s", b->L->num, b->L->titre, b->L->auteur);
 		b->L = b->L->suiv;
 	}
 
