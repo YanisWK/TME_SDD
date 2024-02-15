@@ -11,14 +11,17 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     Biblio *newBiblio=creer_biblio();
 
     if(f==NULL){
-        printf("Erreur");
+        printf("Erreur\n");
         return NULL;
     }
     char buffer[256];
     while(n>0){
+        
         fgets(buffer,256,f);
         sscanf(buffer,"%d %s %s",&num,titre,auteur);
+        printf("num = %d, titre=%s , auteur=%s",num,titre,auteur);
         inserer_en_tete(newBiblio,num,titre,auteur);
+        n++;
     }
     fclose(f);
     return newBiblio;

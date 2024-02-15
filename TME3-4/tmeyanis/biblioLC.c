@@ -25,12 +25,23 @@ Biblio* creer_biblio(){
 }
 
 void liberer_biblio(Biblio* b){
-    liberer_livre(b->l);
+    liberer_livre(b->L);
     free(b);
 }
 
 void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
     Livre *tete=creer_livre(num,titre,auteur);
-    tete->suiv=b->l;
-    b->l=tete;
+    tete->suiv=b->L;
+    b->L=tete;
+}
+
+
+void afficheLivre(Livre *l){
+    printf("Le livre qui se nomme %s ecris par %s possede le numero %d\n",l->titre,l->auteur,l->num);
+}
+void afficherBiblio(Biblio *b){
+    while(b->L){
+        afficheLivre(b->L);
+        b->L->suiv;
+    }
 }

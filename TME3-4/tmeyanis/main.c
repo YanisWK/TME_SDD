@@ -4,12 +4,13 @@
 #include "entreeSortieLC.h"
 
 int main(int argc, char** argv){
-    if (argc != 2){
-        printf("Erreur ./main <nomfichier> <un nombre>");
+    if (argc != 3){
+        printf("Erreur ./main <nomfichier> <un nombre>\n");
     }else{
-    Biblio *bibli=charger_n_entrees(argv[0],atoi(argv[1]));
+    //printf("nom fichier = %s , numero ligne %s \n",argv[1],argv[2]); 
+    Biblio *bibli=charger_n_entrees(argv[1],atoi(argv[2]));
     if(bibli){
-        printf("cool");
+        afficherBiblio(bibli);
     }
     return 0;
 }
