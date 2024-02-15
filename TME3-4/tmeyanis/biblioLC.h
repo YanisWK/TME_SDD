@@ -21,5 +21,7 @@ void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur);
 void afficheLivre(Livre *l);
 void afficherBiblio(Biblio *b);
 
-
-
+Livre* rechercheLivreNum(Biblio *b,int num);
+Livre* rechercheLivreTitre(Biblio *b,char* titre);
+Biblio* BiblioAuteur(Biblio*b,char* auteur);
+Biblio* FusionBiblio(Biblio* b1,Biblio* b2);

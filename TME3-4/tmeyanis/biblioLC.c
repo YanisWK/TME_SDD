@@ -45,7 +45,7 @@ void inserer_en_fin(Biblio *b,int num,char* titre,char* auteur){
     while(b->L->suiv){
         b->L->suiv=b->L->suiv->suiv;
     }
-    b-L->suiv=fin;
+    b->L->suiv=fin;
 }
 
 
