@@ -17,4 +17,11 @@ void liberer_livre(Livre *l);
 Biblio* creer_biblio();
 void liberer_biblio(Biblio* b);
 void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur);
-void fusion(Biblio *b1, Biblio *b2);
+
+void affichelivre(Livre *l);
+void affichebiblio(Biblio *b);
+Livre *rechnum(Biblio *b, int num);
+Livre *rechtit(Biblio *b, char * titre);
+Biblio *rechaut(Biblio *b, char *auteur);
+Biblio* fusion(Biblio *b1, Biblio *b2);
+
