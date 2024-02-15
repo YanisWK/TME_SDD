@@ -45,3 +45,22 @@ void afficherBiblio(Biblio *b){
         b->L=b->L->suiv;
     }
 }
+
+Livre* rechercheLivreNum(Biblio *b,int num){
+    while(b->L){
+        if(b->L->num==num){
+            return (b->L);
+        }
+        b->L=b->L->suiv;
+    }
+    return NULL;
+}
+
+Livre* rechercheLivreTitre(Biblio *b,char* titre){
+    while(b->L){
+        if(strcmp(b->L->titre,titre)==0){
+            return(b->L);
+        }
+        b->L=b->L->suiv;
+    }
+}
