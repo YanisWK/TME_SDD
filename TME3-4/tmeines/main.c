@@ -9,6 +9,10 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    charger_n_entrees(argv[1],atoi(argv[2]));
+    Biblio *b = charger_n_entrees(argv[1],atoi(argv[2]));    
+    
+    enregistrer_biblio(b, "saved.txt");
+    liberer_biblio(b);
+
     return 0;
 }
