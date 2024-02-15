@@ -25,7 +25,12 @@ Biblio* creer_biblio(){
 }
 
 void liberer_biblio(Biblio* b){
-    liberer_livre(b->L);
+    while(b->L){
+        Livre *suiv=b->L->suiv;
+        liberer_livre(b->L);
+        b->L=suiv;
+    }
+
     free(b);
 }
 
@@ -33,6 +38,14 @@ void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
     Livre *tete=creer_livre(num,titre,auteur);
     tete->suiv=b->L;
     b->L=tete;
+}
+
+void inserer_en_fin(Biblio *b,int num,char* titre,char* auteur){
+    Livre *fin=creer_livre(num,titre,auteur);
+    while(b->L->suiv){
+        b->L->suiv=b->L->suiv->suiv;
+    }
+    b-L->suiv=fin;
 }
 
 
@@ -75,4 +88,15 @@ Biblio* BiblioAuteur(Biblio*b,char* auteur){
         b->L=b->L->suiv;
     }
     return BiblioAut;
+}
+
+Biblio* FusionBiblio(Biblio* b1,Biblio* b2){
+
+    while(b2->L){
+        inserer_en_fin(b1,b2->L->num,b2->L->titre,b2->L->auteur);
+        Livre* suiv=b2->L->suiv;
+        liberer_livre(b2->L);
+        b2->L=suiv;
+    }
+    return b1;
 }
