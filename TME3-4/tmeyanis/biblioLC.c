@@ -124,3 +124,6 @@ Biblio* RecherchePlusieurs(Biblio *b){
     }
     return Bibliodoublon;
 }
+
+
+//Salut ines
