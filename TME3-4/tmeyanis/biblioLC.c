@@ -63,4 +63,12 @@ Livre* rechercheLivreTitre(Biblio *b,char* titre){
         }
         b->L=b->L->suiv;
     }
+    return NULL;
+}
+
+Biblio* BiblioAuteur(Biblio*b,char* auteur){
+    Biblio *BiblioAut=creer_biblio();
+    while(b->L){
+        
+    }
 }
