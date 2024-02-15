@@ -28,9 +28,10 @@ void enregistrer_biblio(Biblio *b, char* nomfic){;
         exit(1);
     }
 
-	while(b->L){
-        fprintf(f,"%d %s %s", b->L->num, b->L->titre, b->L->auteur);
-		b->L = b->L->suiv;
+    Livre* cour= b->L;
+	while(cour){
+        fprintf(f,"%d %s %s\n", cour->num, cour->titre, cour->auteur);
+		cour= cour->suiv;
 	}
 
     fclose(f);
