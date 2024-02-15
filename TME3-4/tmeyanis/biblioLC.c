@@ -42,6 +42,6 @@ void afficheLivre(Livre *l){
 void afficherBiblio(Biblio *b){
     while(b->L){
         afficheLivre(b->L);
-        b->L->suiv;
+        b->L=b->L->suiv;
     }
 }

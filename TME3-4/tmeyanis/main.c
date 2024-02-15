@@ -9,9 +9,7 @@ int main(int argc, char** argv){
     }else{
     //printf("nom fichier = %s , numero ligne %s \n",argv[1],argv[2]); 
     Biblio *bibli=charger_n_entrees(argv[1],atoi(argv[2]));
-    if(bibli){
-        afficherBiblio(bibli);
-    }
+    afficherBiblio(bibli);
     return 0;
 }
 }
