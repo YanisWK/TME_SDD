@@ -72,12 +72,29 @@ int main(int argc, char** argv){
                 char auteur[256];
                 printf("Veuillez ecrire le numero puis le nom et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
+
                 num=atoi(entree);
+                if(entree[0]=='\n'|| num==0){
+                    printf("Erreur format\n");
+                    break;
+                }
                 entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }              
                 strcpy(titre,entree);
                 entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
                 strcpy(auteur,entree);
-                printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
+                inserer_en_tete(B,num,titre,auteur);
+                printf("Insertion realisé ! \n");
+
+                //printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
+
             case 3:
             case 4:
             case 5:
