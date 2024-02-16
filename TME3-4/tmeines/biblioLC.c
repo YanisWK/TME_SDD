@@ -85,17 +85,19 @@ Biblio *rechaut(Biblio *b, char *auteur){
 }
 
 Biblio* fusion(Biblio *b1, Biblio *b2){
-    Livre *cour = b1->L;
-    while (cour != NULL && cour->suiv != NULL){
-        cour = cour->suiv;
+    Biblio *b3 = creer_biblio();
+
+    Livre *cour1 = b1->L;
+    Livre *cour2 = b2->L;
+
+    while (cour2){
+        inserer_en_tete(b3, cour2->num, cour2->titre, cour2->auteur);
+        cour2 = cour2->suiv;
     }
 
-    if (!cour){
-        cour->suiv = b2->L;
-    }else{
-        b1->L = b2->L;
+    while (cour1 != NULL){
+        inserer_en_tete(b3, cour1->num, cour1->titre, cour1->auteur);
+        cour1 = cour1->suiv;
     }
-
-    liberer_biblio(b2);
-    return b1;
+    return b3;
 }
