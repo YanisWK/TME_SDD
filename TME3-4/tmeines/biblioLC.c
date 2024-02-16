@@ -136,6 +136,7 @@ Biblio* rechexemplaires(Biblio* b){
         while (cour2){
             if (cour1->num != cour2->num && strcmp(cour1->titre, cour2->titre) == 0 && strcmp(cour1->auteur, cour2->auteur) == 0){            
                 inserer_en_tete(rb, cour1->num, cour1->titre, cour1->auteur);
+                break;
             }
             cour2 = cour2->suiv;
         }

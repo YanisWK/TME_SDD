@@ -46,8 +46,8 @@ int main(int argc, char** argv){
     
     liberer_biblio(b4);
     //liberer_biblio(b3);
-    //liberer_biblio(b2);
-    //liberer_biblio(b1);
+    liberer_biblio(b2);
+    liberer_biblio(b1);
 
     return 0;
 }
