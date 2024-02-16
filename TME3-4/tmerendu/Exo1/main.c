@@ -72,7 +72,7 @@ int main(int argc, char** argv){
             case 2:
             /*peut être je peux changer la variable entree par le buffer*/
 
-                printf("Veuillez ecrire le numero puis le nom et enfin l'auteur de l'ouvrage.\n");
+                printf("Veuillez ecrire le numero le titre et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
 
                 num=atoi(entree);
@@ -122,7 +122,7 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                book=rechercheLivreTitre(B,titre);
+                book=rechercheLivreTitre(B,entree);
                 if (book){
                     printf("Oeuvre trouvé !\n");
                     afficherLivre(book);

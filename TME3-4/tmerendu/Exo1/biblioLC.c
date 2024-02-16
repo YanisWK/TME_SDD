@@ -58,32 +58,35 @@ void afficherBiblio(Biblio *b){
 }
 
 Livre* rechercheLivreNum(Biblio *b,int num){
-    while(b->L){
-        if(b->L->num==num){
-            return (b->L);
+    Livre *cour=b->L;
+    while(cour){
+        if(cour->num==num){
+            return (cour);
         }
-        b->L=b->L->suiv;
+        cour=cour->suiv;
     }
     return NULL;
 }
 
 Livre* rechercheLivreTitre(Biblio *b,char* titre){
-    while(b->L){
-        if(strcmp(b->L->titre,titre)==0){
-            return(b->L);
+    Livre* cour=b->L;
+    while(cour){
+        if(strcmp(cour->titre,titre)==0){
+            return(cour);
         }
-        b->L=b->L->suiv;
+        cour=cour->suiv;
     }
     return NULL;
 }
 
 Biblio* BiblioAuteur(Biblio*b,char* auteur){
     Biblio *BiblioAut=creer_biblio();
-    while(b->L){
-        if(strcmp(b->L->auteur,auteur)==0){
-            inserer_en_tete(BiblioAut,b->L->num,b->L->titre,auteur);
+    Livre* cour=b->L;
+    while(cour){
+        if(strcmp(cour->auteur,auteur)==0){
+            inserer_en_tete(BiblioAut,cour->num,cour->titre,auteur);
         }
-        b->L=b->L->suiv;
+        cour=cour->suiv;
     }
     return BiblioAut;
 }
