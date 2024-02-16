@@ -99,6 +99,7 @@ int main(int argc, char** argv){
                 //printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
 
             case 3:
+                printf("Veuillez entree le numero de l'oeuvre que vous voulez trouver\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
                 num=atoi(entree);
                 if(num==0 || entree[0]=='\n'){
@@ -107,14 +108,28 @@ int main(int argc, char** argv){
                 }
                 Livre *book=rechercheLivreNum(B,num);
                 if (book){
-                    printf("Livre trouvé !\n");
-                    afficheLivre(book);
+                    printf("Oeuvre trouvé !\n");
+                    afficherLivre(book);
                     break;
                 }
-                printf("Le livre numero %d n'existe pas.",num);
+                printf("L'oeuvre numero %d n'existe pas.\n",num);
                 break;
                 
             case 4:
+                printf("Veuillez entree le titre de l'oeuvre que vous voulez trouver\n");
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                book=rechercheLivreTitre(B,titre);
+                if (book){
+                    printf("Oeuvre trouvé !\n");
+                    afficherLivre(book);
+                    break;
+                }
+                printf("L'oeuvre numero %d n'existe pas.\n",num);
+                break;
             case 5:
             case 6:
         }

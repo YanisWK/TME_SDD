@@ -18,7 +18,7 @@ Biblio* creer_biblio();
 void liberer_biblio(Biblio* b);
 void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur);
 
-void afficheLivre(Livre *l);
+void afficherLivre(Livre *l);
 void afficherBiblio(Biblio *b);
 
 Livre* rechercheLivreNum(Biblio *b,int num);
