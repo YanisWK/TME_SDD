@@ -44,12 +44,12 @@ void affichelivre(Livre *l){
 }
 
 void affichebiblio(Biblio *b){
-    if (b && b->L){
-        while (b->L){
-            affichelivre(b->L);
-            printf("\n");
-            b->L = b->L->suiv;
-        }
+    Livre *cour = b->L; 
+
+    while (cour){
+        affichelivre(cour);
+        printf("\n");
+        cour = cour->suiv;
     }
 }
 
@@ -99,5 +99,25 @@ Biblio* fusion(Biblio *b1, Biblio *b2){
         inserer_en_tete(b3, cour1->num, cour1->titre, cour1->auteur);
         cour1 = cour1->suiv;
     }
+
     return b3;
+}
+
+Biblio* rechexemplaires(Biblio* b){
+    Biblio* rb = creer_biblio();
+    
+    Livre* cour1 = b->L;
+
+    while (cour1){
+        Livre* cour2 = b->L;
+        while (cour2){
+            if (cour1->num != cour2->num && strcmp(cour1->titre, cour2->titre) == 0 && strcmp(cour1->auteur, cour2->auteur) == 0){            
+                inserer_en_tete(rb, cour1->num, cour1->titre, cour1->auteur);
+            }
+            cour2 = cour2->suiv;
+        }
+        cour1 = cour1->suiv;
+    }
+
+    return rb;
 }
