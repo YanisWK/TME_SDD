@@ -24,4 +24,4 @@ Livre *rechnum(Biblio *b, int num);
 Livre *rechtit(Biblio *b, char * titre);
 Biblio *rechaut(Biblio *b, char *auteur);
 Biblio* fusion(Biblio *b1, Biblio *b2);
-
+Biblio* rechexemplaires(Biblio* b);

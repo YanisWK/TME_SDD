@@ -100,6 +100,8 @@ Biblio* fusion(Biblio *b1, Biblio *b2){
         cour1 = cour1->suiv;
     }
 
+    liberer_biblio(b1);
+    liberer_biblio(b2);
     return b3;
 }
 
@@ -118,6 +120,5 @@ Biblio* rechexemplaires(Biblio* b){
         }
         cour1 = cour1->suiv;
     }
-
     return rb;
 }
