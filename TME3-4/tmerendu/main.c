@@ -77,7 +77,20 @@ int main(int argc, char** argv){
                 strcpy(titre,entree);
                 entree=fgets(buffer,BUFFERSIZE,stdin);
                 strcpy(auteur,entree);
+<<<<<<< HEAD
                 printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
+=======
+                if(num==0 || titre==NULL || auteur==NULL){
+                    printf("Erreur format\n");
+                }else{
+                    continue;
+                }
+                
+                break;
+                
+
+
+>>>>>>> a2b05bb5731a4c6509e0df0452990142ece7c21a
             case 3:
             case 4:
             case 5:
