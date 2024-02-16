@@ -110,8 +110,8 @@ Biblio* RecherchePlusieurs(Biblio *b){
     */
     Biblio * Bibliodoublon=creer_biblio();
     Livre* Livreactuel=b->L;
-    Livre* Livrecompare=b->L;
     while(Livreactuel){
+        Livre* Livrecompare=b->L;
         while(Livrecompare){
             if(Livreactuel->num!=Livrecompare->num && (strcmp(Livreactuel->auteur,Livrecompare->auteur)==0)&& (strcmp(Livreactuel->titre,Livrecompare->titre)==0)){
                 inserer_en_tete(Bibliodoublon,Livreactuel->num,Livreactuel->titre,Livreactuel->auteur);
@@ -119,7 +119,6 @@ Biblio* RecherchePlusieurs(Biblio *b){
             }
             Livrecompare=Livrecompare->suiv
         }
-        Livrecompare=b->L;
         Livreactuel=Livreactuel->suiv;
     }
     return Bibliodoublon;

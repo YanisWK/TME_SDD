@@ -3,6 +3,12 @@
 #include <string.h>
 #include "entreeSortieLC.h"
 
+void menu(){
+    printf("Que voulez vous faire ?")
+}
+
+
+
 int main(int argc, char** argv){
     if (argc != 3){
         printf("Erreur ./main <nomfichier> <un nombre>\n");
