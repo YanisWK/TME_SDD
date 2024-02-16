@@ -67,6 +67,7 @@ int main(int argc, char** argv){
                 afficherBiblio(B);
                 break;
             case 2:
+            /*peut être je peux changer la variable entree par le buffer*/
                 int num;
                 char titre[256];
                 char auteur[256];
@@ -96,6 +97,9 @@ int main(int argc, char** argv){
                 //printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
 
             case 3:
+                int num;
+                char entree;
+                entree=
             case 4:
             case 5:
             case 6:
