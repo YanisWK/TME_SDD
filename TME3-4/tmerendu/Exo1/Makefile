@@ -10,10 +10,8 @@ all: $(PROGRAMS)
 
 
 
-Biblio: entreeSortieLC.o BiblioLC.o main.o biblioH.o
+Biblio: entreeSortieLC.o BiblioLC.o main.o
 	$(CC) -o $@ $(CFLAGS) $^
-
-
 
 entreeSortieLC.o: entreeSortieLC.c
 	gcc $(CFLAGS) -c entreeSortieLC.c
@@ -22,13 +20,9 @@ BiblioLC.o: BiblioLC.c
 	gcc $(CFLAGS) -c BiblioLC.c
 
 
-main.o: main.c biblioLC.h biblioH.h
+main.o: main.c biblioLC.h 
 	$(CC) $(CFLAGS) -c $<
 
-
-
-biblioH.o: biblioH.c biblioH.h
-	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f *.o *~ $(PROGRAMS) 

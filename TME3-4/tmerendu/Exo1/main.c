@@ -60,6 +60,9 @@ int main(int argc, char** argv){
         menu();
         entree=fgets(buffer,BUFFERSIZE,stdin);
         rep=atoi(entree);
+        int num;
+        char titre[256];
+        char auteur[256];
         //scanf(" %d",&rep);
         switch(rep){
             case 1:
@@ -68,9 +71,7 @@ int main(int argc, char** argv){
                 break;
             case 2:
             /*peut être je peux changer la variable entree par le buffer*/
-                int num;
-                char titre[256];
-                char auteur[256];
+
                 printf("Veuillez ecrire le numero puis le nom et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
 
@@ -93,13 +94,26 @@ int main(int argc, char** argv){
                 strcpy(auteur,entree);
                 inserer_en_tete(B,num,titre,auteur);
                 printf("Insertion realisé ! \n");
+                break;
 
                 //printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
 
             case 3:
-                int num;
-                char entree;
-                entree=
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                num=atoi(entree);
+                if(num==0 || entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                Livre *book=rechercheLivreNum(B,num);
+                if (book){
+                    printf("Livre trouvé !\n");
+                    afficheLivre(book);
+                    break;
+                }
+                printf("Le livre numero %d n'existe pas.",num);
+                break;
+                
             case 4:
             case 5:
             case 6:
