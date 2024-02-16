@@ -23,5 +23,6 @@ void affichebiblio(Biblio *b);
 Livre *rechnum(Biblio *b, int num);
 Livre *rechtit(Biblio *b, char * titre);
 Biblio *rechaut(Biblio *b, char *auteur);
+void supprimelivre(Biblio* b, int num, char* titre, char* auteur);
 Biblio* fusion(Biblio *b1, Biblio *b2);
 Biblio* rechexemplaires(Biblio* b);

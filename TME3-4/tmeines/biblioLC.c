@@ -85,7 +85,7 @@ Biblio *rechaut(Biblio *b, char *auteur){
 }
 
 void supprimelivre(Biblio* b, int num, char* titre, char* auteur){
-    Livre* prec = NULL,cour = b->L;
+    Livre* prec = NULL, * cour = b->L;
 
     while (cour){
         if (cour->num == num && strcmp(cour->titre, titre) == 0 && strcmp(cour->auteur, auteur) == 0){

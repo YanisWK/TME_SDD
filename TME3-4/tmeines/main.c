@@ -28,7 +28,11 @@ int main(int argc, char** argv){
     
         
     Biblio *b4 = rechexemplaires(b1);
+
+    supprimelivre(b4,2,"Spy x Family 2","Tatsuya Endo");
     affichebiblio(b4);
+    
+
 
     liberer_biblio(b4);
     liberer_biblio(b2);
