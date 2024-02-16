@@ -128,7 +128,7 @@ int main(int argc, char** argv){
                     afficherLivre(book);
                     break;
                 }
-                printf("L'oeuvre numero %d n'existe pas.\n",num);
+                printf("L'oeuvre numero %s n'existe pas.\n",entree);
                 break;
             case 5:
             case 6:
