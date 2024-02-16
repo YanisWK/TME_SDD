@@ -84,21 +84,23 @@ Biblio *rechaut(Biblio *b, char *auteur){
     return res;
 }
 
-void supprimelivre(Biblio* b, int num, char* titre, char* auteur){
-    Livre* prec = NULL, * cour = b->L;
+void supprimer_ouvrage(Biblio* b, int num, char* titre, char* auteur){
+    Livre* prec = NULL,cour = b->L;
 
-    while (cour){
-        if (cour->num == num && strcmp(cour->titre, titre) == 0 && strcmp(cour->auteur, auteur) == 0){
-            if (!prec){
-                b->L = cour->suiv;
-            }else{
-                prec->suiv = cour->suiv;
+    while (courant != NULL) {
+        if (courant->num == num && strcmp(courant->titre, titre) == 0 && strcmp(courant->auteur, auteur) == 0) {
+            // Si c'est le premier livre de la bibliothèque
+            if (prec == NULL) {
+                b->L = courant->suiv;
+            } else {
+                prec->suiv = courant->suiv;
             }
-            liberer_livre(cour);
+
+            liberer_livre(courant);
             return;
         }
-        prec = cour;
-        cour = cour->suiv;
+        prec = courant;
+        courant = courant->suiv;
     }
 }
 

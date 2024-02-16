@@ -52,7 +52,7 @@ void afficherLivre(Livre *l){
 void afficherBiblio(Biblio *b){
     Livre *cour = b->L; 
     while (cour){
-        affichelivre(cour);
+        afficherLivre(cour);
         printf("\n");
         cour = cour->suiv;
     }
@@ -141,7 +141,7 @@ Biblio* RecherchePlusieurs(Biblio *b){
                 inserer_en_tete(Bibliodoublon,Livreactuel->num,Livreactuel->titre,Livreactuel->auteur);
                 Livrecompare=NULL; 
             }
-            Livrecompare=Livrecompare->suiv
+            Livrecompare=Livrecompare->suiv;
         }
         Livreactuel=Livreactuel->suiv;
     }

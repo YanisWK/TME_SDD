@@ -24,4 +24,6 @@ void afficherBiblio(Biblio *b);
 Livre* rechercheLivreNum(Biblio *b,int num);
 Livre* rechercheLivreTitre(Biblio *b,char* titre);
 Biblio* BiblioAuteur(Biblio*b,char* auteur);
-Biblio* FusionBiblio(Biblio* b1,Biblio* b2);
+void supprimerLivre(Biblio* b, int num, char* titre, char* auteur);
+Biblio* fusion(Biblio* b1,Biblio* b2);
+Biblio* RecherchePlusieurs(Biblio *b);
