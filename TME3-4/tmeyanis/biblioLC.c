@@ -40,22 +40,16 @@ void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
     b->L=tete;
 }
 
-void inserer_en_fin(Biblio *b,int num,char* titre,char* auteur){
-    Livre *fin=creer_livre(num,titre,auteur);
-    while(b->L->suiv){
-        b->L->suiv=b->L->suiv->suiv;
-    }
-    b->L->suiv=fin;
-}
 
 
 void afficheLivre(Livre *l){
     printf("Le livre qui se nomme %s ecris par %s possede le numero %d\n",l->titre,l->auteur,l->num);
 }
 void afficherBiblio(Biblio *b){
+    Biblio *courant=b;
     while(b->L){
-        afficheLivre(b->L);
-        b->L=b->L->suiv;
+        afficheLivre(courant->L);
+        courant->L=courant->L->suiv;
     }
 }
 
@@ -90,16 +84,22 @@ Biblio* BiblioAuteur(Biblio*b,char* auteur){
     return BiblioAut;
 }
 
-Biblio* FusionBiblio(Biblio* b1,Biblio* b2){
+Biblio* fusion(Biblio *b1, Biblio *b2){
+    Biblio *b3 = creer_biblio();
 
-    while(b2->L){
-        inserer_en_fin(b1,b2->L->num,b2->L->titre,b2->L->auteur);
-        Livre* suiv=b2->L->suiv;
-        liberer_livre(b2->L);
-        b2->L=suiv;
+    Livre *cour1 = b1->L;
+    Livre *cour2 = b2->L;
+
+    while (cour2){
+        inserer_en_tete(b3, cour2->num, cour2->titre, cour2->auteur);
+        cour2 = cour2->suiv;
     }
-    free(b2);
-    return b1;
+
+    while (cour1 != NULL){
+        inserer_en_tete(b3, cour1->num, cour1->titre, cour1->auteur);
+        cour1 = cour1->suiv;
+    }
+    return b3;
 }
 
 Biblio* RecherchePlusieurs(Biblio *b){
