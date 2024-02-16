@@ -72,15 +72,19 @@ int main(int argc, char** argv){
                 char auteur[256];
                 printf("Veuillez ecrire le numero puis le nom et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
-                
                 num=atoi(entree);
                 entree=fgets(buffer,BUFFERSIZE,stdin);
                 strcpy(titre,entree);
                 entree=fgets(buffer,BUFFERSIZE,stdin);
                 strcpy(auteur,entree);
-                //printf("num %d titre %s auteur %s\n",num,titre,auteur);
-
-
+                if(num==0 || titre==NULL || auteur==NULL){
+                    printf("Erreur format\n");
+                }else{
+                    continue;
+                }
+                
+                break;
+                
 
 
             case 3:
