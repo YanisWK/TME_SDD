@@ -84,6 +84,25 @@ Biblio *rechaut(Biblio *b, char *auteur){
     return res;
 }
 
+void supprimelivre(Biblio* b, int num, char* titre, char* auteur){
+    Livre* prec = NULL,cour = b->L;
+
+    while (cour){
+        if (cour->num == num && strcmp(cour->titre, titre) == 0 && strcmp(cour->auteur, auteur) == 0){
+            if (!prec){
+                b->L = cour->suiv;
+            }else{
+                prec->suiv = cour->suiv;
+            }
+            liberer_livre(cour);
+            return;
+        }
+        prec = cour;
+        cour = cour->suiv;
+    }
+}
+
+
 Biblio* fusion(Biblio *b1, Biblio *b2){
     Biblio *b3 = creer_biblio();
 
