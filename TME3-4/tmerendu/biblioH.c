@@ -49,7 +49,8 @@ void liberer_biblio_H(BiblioH *b){
     free(b);
 }
 
-int fonctionHachage(int cle, int m){
+int fonctionHachage(int cle, int m){ 
+    //cle est un appel à la fonction fonctionClef de l'auteur recherché
     //renvoie l'indice de la clé dans la table de hachage, où un élément avec cette clé doit être stocké
     return (int)floor(m*(cle*((sqrt(5)-1)/2)-floor(cle*((sqrt(5)-1)/2))));
 }
@@ -63,10 +64,7 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 void afficherLivre_H(LivreH *l){
-    printf("Clé : %d\n", l->clef);
-    printf("Numéro: %d\n", livre->num);
-    printf("Titre: %s\n", livre->titre);
-    printf("Auteur: %s\n", livre->auteur);
+    printf("Clé : %d Numéro: %d Titre: %s Auteur: %s\n", l->clef,l->num,l->titre,l->auteur);
 }
 
 void afficherBiblio_H(BiblioH *b){
@@ -106,13 +104,13 @@ LivreH* rechercheLivreTitre_H(BiblioH *b, char *titre){
     return NULL;
 }
 
-BiblioH* LivresAuteurs_H(BiblioH* b, char *auteur){
+BiblioH* LivresAuteurs_H(BiblioH *b, char *auteur){
     BiblioH* res = creer_biblio_H(b->m);
     for (int i = 0; i < b;->m; i++){
         LivreH* l = b->T[i];
         while (l){
             if (strcmp(l->auteur, auteur) == 0){
-                inserer(res, livre->num, l->titre, l->auteur);
+                inserer(res, l->num, l->titre, l->auteur);
             }
             l = l->suivant;
         }
@@ -120,7 +118,7 @@ BiblioH* LivresAuteurs_H(BiblioH* b, char *auteur){
     return res;
 }
 
-void supprimerLivre_H(BiblioH* b, int num, char *titre, char *auteur){
+void supprimerLivre_H(BiblioH *b, int num, char *titre, char *auteur){
     int ind = fonctionHachage(fonctionClef(auteur), b->m);
     LivreH* prec = NULL;
     LivreH* cour = b->T[ind];
@@ -141,6 +139,10 @@ void supprimerLivre_H(BiblioH* b, int num, char *titre, char *auteur){
     }
 }
 
-BiblioH* fusion_H(BiblioH* b1,BiblioH* b2){
-    
+BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
+    return;
+}
+
+BiblioH* RecherchePlusieurs_H(BiblioH *b){
+    return;
 }
