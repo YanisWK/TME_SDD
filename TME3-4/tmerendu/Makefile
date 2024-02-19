@@ -9,8 +9,8 @@ PROGRAMS =   Biblio
 all: $(PROGRAMS)
 
 
-Biblio: entreeSortieLC.o BiblioLC.o main.o entreeSortieH.o BiblioH.o
-	$(CC) -o $@ $(CFLAGS) $^
+Biblio: entreeSortieLC.o BiblioLC.o main.o entreeSortieH.o BiblioH.o 
+	$(CC) -o $@ $(CFLAGS) $^ -lm
 
 entreeSortieLC.o: entreeSortieLC.c
 	gcc $(CFLAGS) -c entreeSortieLC.c
