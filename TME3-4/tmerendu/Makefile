@@ -10,7 +10,7 @@ all: $(PROGRAMS)
 
 
 
-Biblio: entreeSortieLC.o BiblioLC.o main.o
+Biblio: entreeSortieLC.o BiblioLC.o main.o entreeSortieH.o BiblioH.o
 	$(CC) -o $@ $(CFLAGS) $^
 
 entreeSortieLC.o: entreeSortieLC.c
@@ -19,6 +19,12 @@ entreeSortieLC.o: entreeSortieLC.c
 BiblioLC.o: BiblioLC.c
 	gcc $(CFLAGS) -c BiblioLC.c
 
+
+BiblioH.o: BiblioH.c
+	gcc $(CFLAGS) -c BiblioH.c
+
+entreeSortieH.o: entreeSortieH.c
+	gcc $(CFLAGS) -c entreeSortieH.c
 
 main.o: main.c biblioLC.h 
 	$(CC) $(CFLAGS) -c $<
