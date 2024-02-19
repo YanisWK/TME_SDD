@@ -131,22 +131,23 @@ int main(int argc, char** argv){
                 printf("L'oeuvre %s n'existe pas.\n",entree);
                 break;
             case 5:
-                printf("Veuillez entree le nom de l'auteur.");
+                printf("Veuillez entree le nom de l'auteur.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
                 if(entree[0]=='\n'){
                     printf("Erreur format\n");
                     break;
                 }
-                Biblio Bibauteur=BiblioAuteur(B,entree);
+                Biblio *Bibauteur=BiblioAuteur(B,entree);
                 if(Bibauteur){
-                    printf("Livres de l'auteur trouvé !");
+                    printf("Livres de l'auteur trouvé !\n");
                     afficherBiblio(Bibauteur);
+                    
                     break;
                 }
-                printf("Il n'y a pas de livre écris par cet auteur !");
+                printf("Il n'y a pas de livre écris par cet auteur !\n");
                 break;
             case 6:
-                printf("Veuillez entree le numero le titre et l'auteur de l'ouvrage a supprimé");
+                printf("Veuillez entree le numero le titre et l'auteur de l'ouvrage a supprimé\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
 
                 num=atoi(entree);
@@ -165,6 +166,11 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
+                strcpy(auteur,entree);
+                printf("Supression en cours du livre de numero %d de nom %s d'auteur %s \n",num,titre,auteur);
+                supprimerLivre(B,num,titre,auteur);
+                //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
+
         }
     }while(rep!=0);
 
