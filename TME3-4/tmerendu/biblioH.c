@@ -79,7 +79,7 @@ void afficherBiblio(BiblioH *b){
     }
 }
 
-LivreH* rechercherClef(BiblioH *b, int clef){
+LivreH* rechercheClef(BiblioH *b, int clef){
     for (int i=0; i<b->m; i++){
         LivreH* cour = b->T[i];
         while (cour){
@@ -88,5 +88,25 @@ LivreH* rechercherClef(BiblioH *b, int clef){
             }
             cour = cour->suivant;
         }
+    }
+}
+
+void supprimerLivre(BiblioH* b, int clef){
+    int ind = fonctionHachage(clef, b->m);
+    LivreH* prec = NULL, cour = b->T[ind];
+
+    while (cour){
+        if (cour->clef==clef){ //cherche si le livre courant a la clef recherchee
+            if (prec==NULL){ //cas où le livre est en tete de la liste 
+                b->T[ind]= cour->suivant;
+            }else{
+                prec->suivant = cour->suivant;
+            }
+            liberer_livre(cour);
+            b->nE--; //diminue le nombre d'elements de 1
+            return;
+        }
+        prec = cour;
+        cour = cour->suivant;
     }
 }
