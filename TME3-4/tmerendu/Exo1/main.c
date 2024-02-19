@@ -13,7 +13,7 @@ void menu(){
     printf("4 - Rechercher ouvrage par titre\n");
     printf("5 - Rechercher tous les livres d'un même auteur\n");
     printf("6 - Supprimer  ouvrage\n");
-
+    /*Peut etre ajout de la fusion et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
     printf("Que voulez vous faire ?\n");
 
 }
@@ -70,8 +70,7 @@ int main(int argc, char** argv){
                 afficherBiblio(B);
                 break;
             case 2:
-            /*peut être je peux changer la variable entree par le buffer*/
-
+                /*Pour le numero faire le cas où le numero est déjà present dans la biblio*/            
                 printf("Veuillez ecrire le numero le titre et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
 
