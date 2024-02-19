@@ -63,9 +63,10 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 void afficherLivre_H(LivreH *l){
-    if (l){
-        printf("Clé : %d\n", l->clef);
-    }
+    printf("Clé : %d\n", l->clef);
+    printf("Numéro: %d\n", livre->num);
+    printf("Titre: %s\n", livre->titre);
+    printf("Auteur: %s\n", livre->auteur);
 }
 
 void afficherBiblio_H(BiblioH *b){
@@ -79,16 +80,30 @@ void afficherBiblio_H(BiblioH *b){
     }
 }
 
-LivreH* rechercheClef(BiblioH *b, int clef){
+LivreH* rechercheNum(BiblioH* b, int num) {
     for (int i=0; i<b->m; i++){
-        LivreH* cour = b->T[i];
-        while (cour){
-            if (cour->clef==clef){
-                return cour;
+        LivreH* l=b->T[i];
+        while (l){
+            if (l->num == num){
+                return l;
             }
-            cour = cour->suivant;
+            l = l->suivant;
         }
     }
+    return NULL;
+}
+
+LivreH* rechercheTitre(BiblioH* b, char* titre){
+    for (int i=0; i<b->m; i++){
+        LivreH* l = b->T[i];
+        while (l){
+            if (strcmp(l->titre, titre) == 0){
+                return l;
+            }
+            l = l->suivant;
+        }
+    }
+    return NULL;
 }
 
 void supprimerLivre_H(BiblioH* b, int clef){
