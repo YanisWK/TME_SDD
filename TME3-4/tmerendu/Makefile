@@ -1,5 +1,5 @@
 #CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter
-CFLAGS = -g -Wno-unused-parameter
+CFLAGS = -g -Wno-unused-parameter 
 CC = gcc
 
 PROGRAMS =   Biblio 
@@ -7,7 +7,6 @@ PROGRAMS =   Biblio
 .PHONY:	all clean
 
 all: $(PROGRAMS)
-
 
 
 Biblio: entreeSortieLC.o BiblioLC.o main.o entreeSortieH.o BiblioH.o
@@ -19,9 +18,8 @@ entreeSortieLC.o: entreeSortieLC.c
 BiblioLC.o: BiblioLC.c
 	gcc $(CFLAGS) -c BiblioLC.c
 
-
 BiblioH.o: BiblioH.c
-	gcc $(CFLAGS) -c BiblioH.c
+	gcc $(CFLAGS) -c BiblioH.c -lm
 
 entreeSortieH.o: entreeSortieH.c
 	gcc $(CFLAGS) -c entreeSortieH.c
