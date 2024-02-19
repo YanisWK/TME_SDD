@@ -13,6 +13,9 @@ void menu(){
     printf("4 - Rechercher ouvrage par titre\n");
     printf("5 - Rechercher tous les livres d'un même auteur\n");
     printf("6 - Supprimer  ouvrage\n");
+    printf("7 - Fusionner deux bibliothèques\n");
+    printf("8 - Rechercher tous les exemplaires de chaque ouvrage d'une bibliothèque\n"); // Nouvelle option
+
     /*Peut etre ajout de la fusion et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
     printf("Que voulez vous faire ?\n");
 
