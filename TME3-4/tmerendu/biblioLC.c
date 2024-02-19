@@ -113,21 +113,20 @@ void supprimerLivre_LC(Biblio* b, int num, char* titre, char* auteur){
 }
 
 Biblio* fusion_LC(Biblio *b1, Biblio *b2){
-    Biblio *b3 = creer_biblio_LC();
-
     Livre *cour1 = b1->L;
     Livre *cour2 = b2->L;
 
     while (cour2){
-        inserer_en_tete_LC(b3, cour2->num, cour2->titre, cour2->auteur);
+        inserer_en_tete_LC(b1, cour2->num, cour2->titre, cour2->auteur);
         cour2 = cour2->suiv;
     }
 
-    while (cour1 != NULL){
-        inserer_en_tete_LC(b3, cour1->num, cour1->titre, cour1->auteur);
+    while (cour1){
+        inserer_en_tete_LC(b1, cour1->num, cour1->titre, cour1->auteur);
         cour1 = cour1->suiv;
     }
-    return b3;
+    liberer_biblio_LC(b2);
+    return b1;
 }
 
 Biblio* RecherchePlusieurs_LC(Biblio* b) {
