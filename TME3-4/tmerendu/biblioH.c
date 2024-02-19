@@ -80,7 +80,7 @@ void afficherBiblio_H(BiblioH *b){
     }
 }
 
-LivreH* rechercheNum(BiblioH* b, int num) {
+LivreH* rechercheLivreNum_H(BiblioH *b, int num) {
     for (int i=0; i<b->m; i++){
         LivreH* l=b->T[i];
         while (l){
@@ -93,7 +93,7 @@ LivreH* rechercheNum(BiblioH* b, int num) {
     return NULL;
 }
 
-LivreH* rechercheTitre(BiblioH* b, char* titre){
+LivreH* rechercheLivreTitre_H(BiblioH *b, char *titre){
     for (int i=0; i<b->m; i++){
         LivreH* l = b->T[i];
         while (l){
@@ -106,13 +106,27 @@ LivreH* rechercheTitre(BiblioH* b, char* titre){
     return NULL;
 }
 
-void supprimerLivre_H(BiblioH* b, int clef){
-    int ind = fonctionHachage(clef, b->m);
+BiblioH* LivresAuteurs_H(BiblioH* b, char *auteur){
+    BiblioH* res = creer_biblio_H(b->m);
+    for (int i = 0; i < b;->m; i++){
+        LivreH* l = b->T[i];
+        while (l){
+            if (strcmp(l->auteur, auteur) == 0){
+                inserer(res, livre->num, l->titre, l->auteur);
+            }
+            l = l->suivant;
+        }
+    }
+    return res;
+}
+
+void supprimerLivre_H(BiblioH* b, int num, char *titre, char *auteur){
+    int ind = fonctionHachage(fonctionClef(auteur), b->m);
     LivreH* prec = NULL;
     LivreH* cour = b->T[ind];
 
     while (cour){
-        if (cour->clef==clef){ //cherche si le livre courant a la clef recherchee
+        if (cour->num == num && strcmp(cour->titre, titre) == 0 && strcmp(cour->auteur,auteur) == 0){
             if (prec==NULL){ //cas où le livre est en tete de la liste 
                 b->T[ind]= cour->suivant;
             }else{
