@@ -56,7 +56,7 @@ int fonctionHachage(int cle, int m){
 
 void inserer(BiblioH *b, int num, char *titre, char *auteur){
     int ind=fonctionHachage(fonctionClef(auteur), b->m);
-    LivreH* new = creer_livre(num, titre, auteur);
+    LivreH* new = creer_livre_H(num, titre, auteur);
     new->suivant = b->T[ind];
     b->T[ind] = new;
     b->nE++; //nb d'éléments+1
@@ -93,7 +93,8 @@ LivreH* rechercheClef(BiblioH *b, int clef){
 
 void supprimerLivre_H(BiblioH* b, int clef){
     int ind = fonctionHachage(clef, b->m);
-    LivreH* prec = NULL, cour = b->T[ind];
+    LivreH* prec = NULL;
+    LivreH* cour = b->T[ind];
 
     while (cour){
         if (cour->clef==clef){ //cherche si le livre courant a la clef recherchee

@@ -47,7 +47,7 @@ int main(int argc, char** argv){
     // inserer_en_tete_LC(b1,3,"Spy x Family 3","Tatsuya Endo");
     // inserer_en_tete_LC(b1,4,"Spy x Family 2","Tatsuya Endo");
 
-    Biblio *b4 = RecherchePlusieurs_LC(b1);
+    Biblio *b4 = RecherchePlusieurs_LC(b4);
     //afficherBiblio_LC(b4);
     
     // liberer_biblio_LC(b4);
