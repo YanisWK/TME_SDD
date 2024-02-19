@@ -54,7 +54,7 @@ int fonctionHachage(int cle, int m){
     return (int)floor(m*(cle*((sqrt(5)-1)/2)-floor(cle*((sqrt(5)-1)/2))));
 }
 
-void inserer(BiblioH* b, int num, char *titre, char *auteur){
+void inserer(BiblioH *b, int num, char *titre, char *auteur){
     int ind=fonctionHachage(fonctionClef(auteur), b->m);
     LivreH* new = creer_livre(num, titre, auteur);
     new->suivant = b->T[ind];
@@ -62,18 +62,30 @@ void inserer(BiblioH* b, int num, char *titre, char *auteur){
     b->nE++; //nb d'éléments+1
 }
 
-void afficherLivre(LivreH* l){
+void afficherLivre(LivreH *l){
     if (l){
         printf("Clé : %d\n", l->clef);
     }
 }
 
-void afficherBiblio(BiblioH* b){
+void afficherBiblio(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH* cour = b->T[i];
         while (cour){
             afficherLivre(cour);
             printf("\n");
+            cour = cour->suivant;
+        }
+    }
+}
+
+LivreH* rechercherClef(BiblioH *b, int clef){
+    for (int i=0; i<b->m; i++){
+        LivreH* cour = b->T[i];
+        while (cour){
+            if (cour->clef==clef){
+                return cour;
+            }
             cour = cour->suivant;
         }
     }
