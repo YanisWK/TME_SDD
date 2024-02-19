@@ -20,12 +20,12 @@ void menu(){
 
 
 int main(int argc, char** argv){
-    // if (argc != 3){
-    //     printf("Erreur ./main <nomfichier> <un nombre>\n");
-    //     exit(1);
-    // }
+    if (argc != 3){
+        printf("Erreur ./main <nomfichier> <un nombre>\n");
+        exit(1);
+    }
 
-    // Biblio *b = charger_n_entrees(argv[1],atoi(argv[2]));    
+    Biblio *B = charger_n_entrees(argv[1],atoi(argv[2]));    
     
     // enregistrer_biblio(b, "saved.txt");
 
@@ -52,7 +52,7 @@ int main(int argc, char** argv){
     liberer_biblio(b2);
     liberer_biblio(b1);
 
-    Biblio* B=creer_biblio();
+
     char *entree;
     int rep;
     do{
@@ -138,7 +138,7 @@ int main(int argc, char** argv){
                     break;
                 }
                 Biblio *Bibauteur=BiblioAuteur(B,entree);
-                if(Bibauteur){
+                if(Bibauteur->L){
                     printf("Livres de l'auteur trouvé !\n");
                     afficherBiblio(Bibauteur);
                     
