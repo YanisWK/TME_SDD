@@ -112,5 +112,5 @@ void supprimerLivre_H(BiblioH* b, int clef){
 }
 
 BiblioH* fusion_H(BiblioH* b1,BiblioH* b2){
-    BiblioH *b3
+    
 }

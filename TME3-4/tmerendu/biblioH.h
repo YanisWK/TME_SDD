@@ -3,7 +3,10 @@
 
 
 typedef struct livreh {
-    int clef; 
+    int clef;
+    int num;
+    char *titre;
+    char *auteur; 
     struct livreh* suivant;
 } LivreH;
 
