@@ -61,3 +61,20 @@ void inserer(BiblioH* b, int num, char *titre, char *auteur){
     b->T[ind] = new;
     b->nE++; //nb d'éléments+1
 }
+
+void afficherLivre(LivreH* l){
+    if (l){
+        printf("Clé : %d\n", l->clef);
+    }
+}
+
+void afficherBiblio(BiblioH* b){
+    for (int i=0; i<b->m; i++){
+        LivreH* cour = b->T[i];
+        while (cour){
+            afficherLivre(cour);
+            printf("\n");
+            cour = cour->suivant;
+        }
+    }
+}
