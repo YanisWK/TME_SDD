@@ -3,7 +3,7 @@
 #include <string.h>
 #include "biblioLC.h"
 
-Livre* creer_livre(int num,char* titre,char* auteur){
+Livre* creer_livre_LC(int num,char* titre,char* auteur){
     Livre *new= malloc(sizeof(Livre));
     new->num= num;
     new->titre=strdup(titre);
@@ -12,36 +12,36 @@ Livre* creer_livre(int num,char* titre,char* auteur){
     return new;
 }
 
-void liberer_livre(Livre *l){
+void liberer_livre_LC(Livre *l){
     free(l->titre);
     free(l->auteur);
     free(l);
 }
 
-Biblio* creer_biblio(){
+Biblio* creer_biblio_LC(){
     Biblio *new = malloc(sizeof(Biblio));
     new->L= NULL;
     return new;
 }
 
-void liberer_biblio(Biblio* b){
+void liberer_biblio_LC(Biblio* b){
     while(b->L){
         Livre *suiv=b->L->suiv;
-        liberer_livre(b->L);
+        liberer_livre_LC(b->L);
         b->L=suiv;
     }
 
     free(b);
 }
 
-void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
-    Livre *tete=creer_livre(num,titre,auteur);
+void inserer_en_tete_LC(Biblio* b,int num,char* titre,char* auteur){
+    Livre *tete=creer_livre_LC(num,titre,auteur);
     tete->suiv=b->L;
     b->L=tete;
 }
 
 
-void afficherLivre(Livre *l){
+void afficherLivre_LC(Livre *l){
     if (l){
         printf("Numéro : %d\n", l->num);
         printf("Titre : %s\n", l->titre);
@@ -50,16 +50,16 @@ void afficherLivre(Livre *l){
     }
 }
 
-void afficherBiblio(Biblio *b){
+void afficherBiblio_LC(Biblio *b){
     Livre *cour = b->L; 
     while (cour){
-        afficherLivre(cour);
+        afficherLivre_LC(cour);
         printf("\n");
         cour = cour->suiv;
     }
 }
 
-Livre* rechercheLivreNum(Biblio *b,int num){
+Livre* rechercheLivreNum_LC(Biblio *b,int num){
     Livre *cour=b->L;
     while(cour){
         if(cour->num==num){
@@ -70,7 +70,7 @@ Livre* rechercheLivreNum(Biblio *b,int num){
     return NULL;
 }
 
-Livre* rechercheLivreTitre(Biblio *b,char* titre){
+Livre* rechercheLivreTitre_LC(Biblio *b,char* titre){
     Livre* cour=b->L;
     while(cour){
         if(strcmp(cour->titre,titre)==0){
@@ -81,12 +81,12 @@ Livre* rechercheLivreTitre(Biblio *b,char* titre){
     return NULL;
 }
 
-Biblio* BiblioAuteur(Biblio*b,char* auteur){
-    Biblio *BiblioAut=creer_biblio();
+Biblio* LivresAuteurs_LC(Biblio*b,char* auteur){
+    Biblio *BiblioAut=creer_biblio_LC();
     Livre* cour=b->L;
     while(cour){
         if(strcmp(cour->auteur,auteur)==0){
-            inserer_en_tete(BiblioAut,cour->num,cour->titre,auteur);
+            inserer_en_tete_LC(BiblioAut,cour->num,cour->titre,auteur);
         }
         cour=cour->suiv;
     }
@@ -94,7 +94,7 @@ Biblio* BiblioAuteur(Biblio*b,char* auteur){
 }
 
 
-void supprimerLivre(Biblio* b, int num, char* titre, char* auteur){
+void supprimerLivre_LC(Biblio* b, int num, char* titre, char* auteur){
     Livre* prec = NULL, * cour = b->L;
 
     while (cour){
@@ -104,7 +104,7 @@ void supprimerLivre(Biblio* b, int num, char* titre, char* auteur){
             }else{
                 prec->suiv = cour->suiv;
             }
-            liberer_livre(cour);
+            liberer_livre_LC(cour);
             return;
         }
         prec = cour;
@@ -112,26 +112,26 @@ void supprimerLivre(Biblio* b, int num, char* titre, char* auteur){
     }
 }
 
-Biblio* fusion(Biblio *b1, Biblio *b2){
-    Biblio *b3 = creer_biblio();
+Biblio* fusion_LC(Biblio *b1, Biblio *b2){
+    Biblio *b3 = creer_biblio_LC();
 
     Livre *cour1 = b1->L;
     Livre *cour2 = b2->L;
 
     while (cour2){
-        inserer_en_tete(b3, cour2->num, cour2->titre, cour2->auteur);
+        inserer_en_tete_LC(b3, cour2->num, cour2->titre, cour2->auteur);
         cour2 = cour2->suiv;
     }
 
     while (cour1 != NULL){
-        inserer_en_tete(b3, cour1->num, cour1->titre, cour1->auteur);
+        inserer_en_tete_LC(b3, cour1->num, cour1->titre, cour1->auteur);
         cour1 = cour1->suiv;
     }
     return b3;
 }
 
-Biblio* RecherchePlusieurs(Biblio* b) {
-    Biblio* Bibliodoublon = creer_biblio();
+Biblio* RecherchePlusieurs_LC(Biblio* b) {
+    Biblio* Bibliodoublon = creer_biblio_LC();
     Livre* Livreactuel = b->L;
 
     while (Livreactuel) {
@@ -139,7 +139,7 @@ Biblio* RecherchePlusieurs(Biblio* b) {
         while (Livrecompare) {
             if (Livreactuel->num != Livrecompare->num && strcmp(Livreactuel->auteur, Livrecompare->auteur) == 0 &&
                 strcmp(Livreactuel->titre, Livrecompare->titre) == 0){
-                inserer_en_tete(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
+                inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
                 break;
             }
             Livrecompare = Livrecompare->suiv;

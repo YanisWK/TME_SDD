@@ -3,5 +3,5 @@
 #include <string.h>
 #include "biblioLC.h"
 
-Biblio* charger_n_entrees(char* nomfic, int n);
-void enregistrer_biblio(Biblio *b, char* nomfic);
+Biblio* charger_n_entrees_LC(char* nomfic, int n);
+void enregistrer_biblio_LC(Biblio *b, char* nomfic);

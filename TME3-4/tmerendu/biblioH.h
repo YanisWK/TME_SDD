@@ -15,15 +15,15 @@ typedef struct {
 
 
 int fonctionClef(char *auteur);
-LivreH* creer_livre(int num, char* titre, char* auteur);
-void liberer_livre(LivreH* l);
-BiblioH* creer_biblio(int m);
-void liberer_biblio(BiblioH* b);
+LivreH* creer_livre_H(int num, char* titre, char* auteur);
+void liberer_livre_H(LivreH* l);
+BiblioH* creer_biblio_H(int m);
+void liberer_biblio_H(BiblioH* b);
 int fonctionHachage(int cle, int m);
 void inserer(BiblioH* b, int num, char* titre, char* auteur);
-void afficherLivre(LivreH* livre);
-void afficherBiblio(BiblioH* b);
+void afficherLivre_H(LivreH* livre);
+void afficherBiblio_H(BiblioH* b);
 LivreH* rechercheClef(BiblioH *b,int clef);
-void supprimerLivre(BiblioH* b, int clef);
+void supprimerLivre_H(BiblioH* b, int clef);
 BiblioH* fusion(BiblioH* b1,BiblioH* b2);
-BiblioH* RecherchePlusieurs(BiblioH *b);
+BiblioH* RecherchePlusieurs_H(BiblioH *b);

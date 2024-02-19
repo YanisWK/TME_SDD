@@ -13,10 +13,10 @@ void menu(){
     printf("4 - Rechercher ouvrage par titre\n");
     printf("5 - Rechercher tous les livres d'un même auteur\n");
     printf("6 - Supprimer  ouvrage\n");
-    printf("7 - Fusionner deux bibliothèques\n");
+    printf("7 - Fusion_fusion_LCner deux bibliothèques\n");
     printf("8 - Rechercher tous les exemplaires de chaque ouvrage d'une bibliothèque\n"); // Nouvelle option
 
-    /*Peut etre ajout de la fusion et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
+    /*Peut etre ajout de la fusion_LC et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
     printf("Que voulez vous faire ?\n");
 
 }
@@ -28,32 +28,32 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    Biblio *B = charger_n_entrees(argv[1],atoi(argv[2]));    
+    Biblio *B = charger_n_entrees_LC(argv[1],atoi(argv[2]));    
     
     // enregistrer_biblio(b, "saved.txt");
 
-    Biblio *b1= creer_biblio();
-    Biblio *b2= creer_biblio();
+    // Biblio *b1= creer_biblio_LC();
+    // Biblio *b2= creer_biblio_LC();
 
-    inserer_en_tete(b1,1,"Spy x Family 1","Tatsuya Endo");
-    inserer_en_tete(b1,2,"Spy x Family 2","Tatsuya Endo");    
-    inserer_en_tete(b2,3,"Spy x Family 3","Tatsuya Endo");
-    inserer_en_tete(b2,4,"Spy x Family 4","Tatsuya Endo");
+    // inserer_en_tete_LC(b1,1,"Spy x Family 1","Tatsuya Endo");
+    // inserer_en_tete_LC(b1,2,"Spy x Family 2","Tatsuya Endo");    
+    // inserer_en_tete_LC(b2,3,"Spy x Family 3","Tatsuya Endo");
+    // inserer_en_tete_LC(b2,4,"Spy x Family 4","Tatsuya Endo");
 
-    // Biblio *b3 = fusion(b1,b2);
-    // supprimerLivre(b3,2,"Spy x Family 2","Tatsuya Endo");
-    // afficherBiblio(b3);
+    // Biblio *b3 = fusion_LC(b1,b2);
+    // supprimerLivre_LC(b3,2,"Spy x Family 2","Tatsuya Endo");
+    // afficherBiblio_LC(b3);
     
-    inserer_en_tete(b1,3,"Spy x Family 3","Tatsuya Endo");
-    inserer_en_tete(b1,4,"Spy x Family 2","Tatsuya Endo");
+    // inserer_en_tete_LC(b1,3,"Spy x Family 3","Tatsuya Endo");
+    // inserer_en_tete_LC(b1,4,"Spy x Family 2","Tatsuya Endo");
 
-    Biblio *b4 = RecherchePlusieurs(b1);
-    //afficherBiblio(b4);
+    Biblio *b4 = RecherchePlusieurs_LC(b1);
+    //afficherBiblio_LC(b4);
     
-    liberer_biblio(b4);
-    //liberer_biblio(b3);
-    liberer_biblio(b2);
-    liberer_biblio(b1);
+    // liberer_biblio_LC(b4);
+    //liberer_biblio_LC(b3);
+    // liberer_biblio_LC(b2);
+    // liberer_biblio_LC(b1);
 
 
     char *entree;
@@ -70,7 +70,7 @@ int main(int argc, char** argv){
         switch(rep){
             case 1:
                 printf("Affichage :\n");
-                afficherBiblio(B);
+                afficherBiblio_LC(B);
                 break;
             case 2:
                 /*Pour le numero faire le cas où le numero est déjà present dans la biblio*/            
@@ -94,11 +94,9 @@ int main(int argc, char** argv){
                     break;
                 }
                 strcpy(auteur,entree);
-                inserer_en_tete(B,num,titre,auteur);
+                inserer_en_tete_LC(B,num,titre,auteur);
                 printf("Insertion realisé ! \n");
                 break;
-
-                //printf("num : %d\n titre : %s\n auteur : %s\n",num,titre,auteur);
 
             case 3:
                 printf("Veuillez entree le numero de l'oeuvre que vous voulez trouver\n");
@@ -108,10 +106,10 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                Livre *book=rechercheLivreNum(B,num);
+                Livre *book=rechercheLivreNum_LC(B,num);
                 if (book){
                     printf("Oeuvre trouvé !\n");
-                    afficherLivre(book);
+                    afficherLivre_LC(book);
                     break;
                 }
                 printf("L'oeuvre numero %d n'existe pas.\n",num);
@@ -124,10 +122,10 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                book=rechercheLivreTitre(B,entree);
+                book=rechercheLivreTitre_LC(B,entree);
                 if (book){
                     printf("Oeuvre trouvé !\n");
-                    afficherLivre(book);
+                    afficherLivre_LC(book);
                     break;
                 }
                 printf("L'oeuvre %s n'existe pas.\n",entree);
@@ -139,10 +137,10 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                Biblio *Bibauteur=BiblioAuteur(B,entree);
+                Biblio *Bibauteur=LivresAuteurs_LC(B,entree);
                 if(Bibauteur->L){
                     printf("Livres de l'auteur trouvé !\n");
-                    afficherBiblio(Bibauteur);
+                    afficherBiblio_LC(Bibauteur);
                     
                     break;
                 }
@@ -170,7 +168,7 @@ int main(int argc, char** argv){
                 }
                 strcpy(auteur,entree);
                 printf("Supression en cours du livre de numero %d de nom %s d'auteur %s \n",num,titre,auteur);
-                supprimerLivre(B,num,titre,auteur);
+                supprimerLivre_LC(B,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
 
         }

@@ -13,7 +13,7 @@ int fonctionClef(char *auteur){
     return clef;
 }
 
-LivreH *creer_livre(int num, char *titre, char *auteur){
+LivreH *creer_livre_H(int num, char *titre, char *auteur){
     LivreH *new = malloc(sizeof(LivreH));
     new->clef = fonctionClef(auteur);
     new->suivant = NULL;
@@ -21,11 +21,11 @@ LivreH *creer_livre(int num, char *titre, char *auteur){
 }
 
 
-void liberer_livre(LivreH *l){
+void liberer_livre_H(LivreH *l){
     free(l);
 }
 
-BiblioH *creer_biblio(int m){
+BiblioH *creer_biblio_H(int m){
     BiblioH *new = malloc(sizeof(BiblioH));
     new->nE = 0;
     new->m = m;
@@ -36,12 +36,12 @@ BiblioH *creer_biblio(int m){
     return new;
 }
 
-void liberer_biblio(BiblioH *b){
+void liberer_biblio_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH *cour = b->T[i];
         while (cour != NULL){
             LivreH *tmp = cour->suivant;
-            liberer_livre(cour);
+            liberer_livre_H(cour);
             cour = tmp;
         }
     }
@@ -62,17 +62,17 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
     b->nE++; //nb d'éléments+1
 }
 
-void afficherLivre(LivreH *l){
+void afficherLivre_H(LivreH *l){
     if (l){
         printf("Clé : %d\n", l->clef);
     }
 }
 
-void afficherBiblio(BiblioH *b){
+void afficherBiblio_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH* cour = b->T[i];
         while (cour){
-            afficherLivre(cour);
+            afficherLivre_H(cour);
             printf("\n");
             cour = cour->suivant;
         }
@@ -91,7 +91,7 @@ LivreH* rechercheClef(BiblioH *b, int clef){
     }
 }
 
-void supprimerLivre(BiblioH* b, int clef){
+void supprimerLivre_H(BiblioH* b, int clef){
     int ind = fonctionHachage(clef, b->m);
     LivreH* prec = NULL, cour = b->T[ind];
 
@@ -102,11 +102,15 @@ void supprimerLivre(BiblioH* b, int clef){
             }else{
                 prec->suivant = cour->suivant;
             }
-            liberer_livre(cour);
+            liberer_livre_H(cour);
             b->nE--; //diminue le nombre d'elements de 1
             return;
         }
         prec = cour;
         cour = cour->suivant;
     }
+}
+
+BiblioH* fusion_H(BiblioH* b1,BiblioH* b2){
+    BiblioH *b3
 }
