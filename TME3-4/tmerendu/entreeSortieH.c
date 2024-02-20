@@ -9,6 +9,10 @@ BiblioH* charger_n_entrees_H(char *nomfic, int n, int m){
     char titre[256];
     char auteur[256];
     FILE *f=fopen(nomfic,"r");
+    if(f == NULL){
+        printf("Erreur d'ouverture de : %s\n", nomfic);
+        exit(1);
+    }
     BiblioH *b=creer_biblio_H(m);
     char buffer[256];
     int i=0;
