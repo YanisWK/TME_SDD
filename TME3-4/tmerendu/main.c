@@ -29,13 +29,13 @@ void choixStructure(){
 
 
 int main(int argc, char** argv){
-    
+
     if (argc != 3){
         printf("Erreur ./main <nomfichier> <un nombre>\n");
         exit(1);
     }
 
-    Biblio *B = charger_n_entrees_LC(argv[1],atoi(argv[2]));    
+    
     
     // enregistrer_biblio(b, "saved.txt");
 
@@ -49,6 +49,7 @@ int main(int argc, char** argv){
 
     if(choix==1){
         do{
+            Biblio *BibLC = charger_n_entrees_LC(argv[1],atoi(argv[2]));
             menu();
             entree=fgets(buffer,BUFFERSIZE,stdin);
             rep=atoi(entree);
@@ -162,7 +163,6 @@ int main(int argc, char** argv){
 
         }
     }while(rep!=0);
-
     }else if(choix==2){
         do
         {
@@ -172,6 +172,11 @@ int main(int argc, char** argv){
             int num;
             char titre[256];
             char auteur[256];
+
+        switch (rep)
+        {
+
+        
             case 1:
                 printf("Affichage :\n");
                 afficherBiblio_LC(B);
@@ -275,14 +280,11 @@ int main(int argc, char** argv){
                 supprimerLivre_LC(B,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
             
-        } while (rep!=0);
-        
+            }
+        }while (rep!=0);
     }else{
         printf("Erreur format\n");
         return 0;
     }
-    
-
-    
     return 0;
 }
