@@ -140,7 +140,18 @@ void supprimerLivre_H(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
-    return;
+    for (int i = 0; i<b2->m; i++){
+        LivreH* l = b2->T[i];
+        while (l){
+            inserer(b1, l->num, l->titre, l->auteur);
+            LivreH* tmp = l;
+            l = l->suivant;
+            free(tmp);
+        }
+    }
+    free(b2->T);
+    free(b2);
+    return b1;
 }
 
 BiblioH* RecherchePlusieurs_H(BiblioH *b){
