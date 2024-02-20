@@ -76,7 +76,6 @@ int main(){
                     clock_t endLCnumWorst = clock();
                     double LCnumworst = (double)(endLCnumWorst - beginLCnumWorst) / CLOCKS_PER_SEC;
                     printf("Pire temps de recherche par num en LC : %.12fs\n", LCnumworst);
-                
 
                 printf("---------------------------------------------------\n");
                 printf("----------------Recherche par titre----------------\n");
@@ -151,6 +150,8 @@ int main(){
                 liberer_biblio_LC(rec11);
                 liberer_biblio_LC(rec12);
 
+                break;
+
             case 2:
                 int n=1000;
                 FILE * f=fopen("fichier.txt","w");
@@ -171,8 +172,9 @@ int main(){
                     double timeH=(double)(endH-beginH)/CLOCKS_PER_SEC;
                     
                     fprintf(f,"%d %.2f %.2f\n",n,timeH,timeLC);
-                    n+=1000;
+                    n+=100;
                 }
+                break;
         }
     
     
