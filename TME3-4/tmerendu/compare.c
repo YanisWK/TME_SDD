@@ -137,6 +137,32 @@ int main(){
                 liberer_biblio_H(rec10);
                 liberer_biblio_LC(rec11);
                 liberer_biblio_LC(rec12);
+
+            case 2:
+                int n=1000;
+                FILE * f=fopen("fichier.txt","w");
+                while(n<=3000){
+                    Biblio * BibLC=charger_n_entrees_LC("GdeBiblio.txt",n);
+                    BiblioH * BibH=charger_n_entrees_H("GdeBiblio.txt",n,100);
+
+                    clock_t beginLC=clock();
+                    RecherchePlusieurs_LC(BibLC);
+                    clock_t endLC=clock();
+
+                    double timeLC=(double)(endLC-beginLC)/CLOCKS_PER_SEC;
+
+                    clock_t beginH=clock();
+                    RecherchePlusieurs_H(BibH);
+                    clock_t endH=clock();
+
+                    double timeH=(double)(endH-beginH)/CLOCKS_PER_SEC;
+                    
+                    fprintf(f,"%d %.2f %.2f\n",n,timeH,timeLC);
+                    n+=1000;
+                }
+
+
+
         }
     
     
