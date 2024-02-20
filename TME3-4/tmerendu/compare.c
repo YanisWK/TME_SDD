@@ -15,17 +15,38 @@ int main(){
     Biblio * LC=creer_biblio_LC();
     BiblioH * H=creer_biblio_H(30);
 
-    LivreH* LH1=creer_livre_H(1,"spy","endo");
-    LivreH* LH2=creer_livre_H(2,"x","tatsu");
-    LivreH* LH3=creer_livre_H(3,"family","ya");
-    LivreH* LH4=creer_livre_H(4,"is","ama");
-    LivreH* LH5=creer_livre_H(5,"goated","zing");
 
-    Livre *LC1=creer_livre_LC(1,"spy","endo");
-    Livre *LC2=creer_livre_LC(2,"x","tatsu");
-    Livre *LC3=creer_livre_LC(3,"family","ya");
-    Livre *LC4=creer_livre_LC(4,"is","ama");
-    Livre *LC5=creer_livre_LC(5,"goated","zing");
+    inserer(H,1,"spy","endo");
+    inserer(H,2,"x","tatsu");
+    inserer(H,3,"family","ya");
+    inserer(H,4,"is","ama");
+    inserer(H,5,"goated","zing");
+
+    inserer_en_tete_LC(LC,1,"spy","endo");
+    inserer_en_tete_LC(LC,2,"x","tatsu");
+    inserer_en_tete_LC(LC,3,"family","ya");
+    inserer_en_tete_LC(LC,4,"is","ama");
+    inserer_en_tete_LC(LC,5,"goated","zing");
+
+    printf("Recherche numero Hachage\n");
+    /*
+    Faire la recherche du premier numero et d'un numero qui n'existe pas
+    et repeter ça pour titre auteur,(meilleure pire des cas en gros)
+    et le faire avec LC et comparer les resultats
+    */
+    printf("Meilleure\n");
+    clock_t beginHnumBest = clock();
+
+    rechercheLivreNum_H(H,1);
+
+    clock_t endHnumBest = clock();
+    double Hnumbest=(double)(endHnumBest - beginHnumBest) / CLOCKS_PER_SEC;
+    printf("Pire\n");
+    clock_t beginHnumWorst=clock();
+    rechercheLivreNum_H(H,6);
+    clock_t endHnumWorst=clock();
+    double Hnumworst=(double)(endHnumWorst - beginHnumWorst) / CLOCKS_PER_SEC;
+
 
 
     
