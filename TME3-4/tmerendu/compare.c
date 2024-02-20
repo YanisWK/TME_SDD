@@ -87,7 +87,7 @@ int main(){
     printf("Meilleur temps de recherche par auteur en H : %.2fs\n", Hautbest);
 
     clock_t beginHautworst = clock();
-    BiblioH* rec10 = LivresAuteurs_H(H, "zing");
+    BiblioH* rec10 = LivresAuteurs_H(H, "jing");
     clock_t endHautworst = clock();
     double Hautworst = (double)(endHautworst - beginHautworst) / CLOCKS_PER_SEC;
     printf("Pire temps de recherche par auteur en H : %.2fs\n", Hautworst);
