@@ -21,4 +21,20 @@ Biblio* charger_n_entrees_LC(char* nomfic, int n){
 	return b;
 }
 
+void enregistrer_biblio(Biblio *b, char* nomfic){;
+    FILE *f = fopen(nomfic, "w");
+    if(f == NULL){
+        printf("Erreur d'ouverture de : %s\n", nomfic);
+        exit(1);
+    }
+
+    Livre* cour= b->L;
+	while(cour){
+        fprintf(f,"%d %s %s\n", cour->num, cour->titre, cour->auteur);
+		cour= cour->suiv;
+	}
+
+    fclose(f);
+}
+
 
