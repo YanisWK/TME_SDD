@@ -61,6 +61,24 @@ int main(){
                     double Hnumbest=(double)(endHnumBest - beginHnumBest) / CLOCKS_PER_SEC;
                     printf("Meilleur temps de recherche par num en H : %.12fs\n", Hnumbest);
                     
+                    clock_t beginHnum1 = clock();
+                    LivreH* rm1 = rechercheLivreNum_H(H,150);
+                    clock_t endHnum1 = clock();
+                    double Hnum1=(double)(endHnum1 - beginHnum1) / CLOCKS_PER_SEC;
+                    printf("Temps de recherche pour num =150 en H : %.12fs\n", Hnum1);
+                    
+                    clock_t beginHnum2 = clock();
+                    LivreH* rm2 = rechercheLivreNum_H(H,2500);
+                    clock_t endHnum2 = clock();
+                    double Hnum2=(double)(endHnum2 - beginHnum2) / CLOCKS_PER_SEC;
+                    printf("Temps de recherche pour num =2500 en H : %.12fs\n", Hnum2);
+                    
+                    clock_t beginHnum3 = clock();
+                    LivreH* rm3 = rechercheLivreNum_H(H,7500);
+                    clock_t endHnum3 = clock();
+                    double Hnum3=(double)(endHnum3 - beginHnum3) / CLOCKS_PER_SEC;
+                    printf("Temps de recherche pour num =7500 en H : %.12fs\n", Hnum3);
+
                     clock_t beginHnumWorst=clock();
                     LivreH* rec2 = rechercheLivreNum_H(H,10000);
                     clock_t endHnumWorst=clock();
