@@ -112,7 +112,7 @@ LivreH* rechercheLivreTitre_H(BiblioH *b, char *titre){
 
 BiblioH* LivresAuteurs_H(BiblioH *b, char *auteur){
     BiblioH* res = creer_biblio_H(b->m);
-    for (int i = 0; i < b;->m; i++){
+    for (int i = 0; i < b->m; i++){
         LivreH* l = b->T[i];
         while (l){
             if (strcmp(l->auteur, auteur) == 0){
