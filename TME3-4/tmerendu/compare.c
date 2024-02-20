@@ -140,7 +140,7 @@ int main(){
         }
     
     
-}while(rep!=0);
+}
 
 
     return 0;
