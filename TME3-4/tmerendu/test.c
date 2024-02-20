@@ -1,23 +1,57 @@
+#include <stdio.h>
+#include "entreeSortieLC.h"
 
-    // Biblio *b1= creer_biblio_LC();
-    // Biblio *b2= creer_biblio_LC();
+int main(){
 
-    // inserer_en_tete_LC(b1,1,"Spy x Family 1","Tatsuya Endo");
-    // inserer_en_tete_LC(b1,2,"Spy x Family 2","Tatsuya Endo");    
-    // inserer_en_tete_LC(b2,3,"Spy x Family 3","Tatsuya Endo");
-    // inserer_en_tete_LC(b2,4,"Spy x Family 4","Tatsuya Endo");
+    // Création d'une bibliothèque biblio_LC
+    Biblio *b1 = creer_biblio_LC();
+    inserer_en_tete_LC(b1, 1, "Ascent", "Phoenix");
+    inserer_en_tete_LC(b1, 2, "Lotus", "Raze");
 
-    // Biblio *b3 = fusion_LC(b1,b2);
-    // supprimerLivre_LC(b3,2,"Spy x Family 2","Tatsuya Endo");
-    // afficherBiblio_LC(b3);
+    afficherBiblio_LC(b1);
+    printf("\n");
+
+    // Recherche de livre par titre (l1) et par numéro (l2)
+    Livre *l1 = rechercheLivreTitre_LC(b1, "Book1"),*l2 = rechercheLivreNum_LC(b1, 2);
+    printf("Recherche par titre:\n");
+    afficherLivre_LC(l1);
+    printf("\n");
+    printf("Recherche par numéro:\n");
+    afficherLivre_LC(l2);
+    printf("\n");
+
     
-    // inserer_en_tete_LC(b1,3,"Spy x Family 3","Tatsuya Endo");
-    // inserer_en_tete_LC(b1,4,"Spy x Family 2","Tatsuya Endo");
+    Biblio *b2 = creer_biblio_LC();
+    inserer_en_tete_LC(b2, 3, "Haven", "Omen");
+    inserer_en_tete_LC(b2, 4, "Breeze", "Yoru");
+    printf("Library 2:\n");
+    afficherBiblio_LC(b2);
+    printf("\n");
 
-    Biblio *b4 = RecherchePlusieurs_LC(b4);
-    //afficherBiblio_LC(b4);
-    
-    // liberer_biblio_LC(b4);
-    //liberer_biblio_LC(b3);
-    // liberer_biblio_LC(b2);
-    // liberer_biblio_LC(b1);
+    // Fusion de b1 et b2
+    Biblio *bfusion = fusion_LC(b1, b2);
+    printf("Fusion de bibliothèques:\n");
+    afficherBiblio_LC(bfusion);
+    printf("\n");
+
+    // Enregistrement et chargement de la bibliothèque bfusion dans un fichier saved.txt
+    enregistrer_biblio_LC(bfusion, "saved.txt");
+    Biblio *bchargee = charger_n_entrees_LC("saved.txt", 4);
+    printf("Chargement de n entrées:\n");
+    afficherBiblio_LC(bchargee);
+    printf("\n");
+
+    // Recherche d'exemplaires dans la bibliothèque bchargee
+    Biblio *bdouble = RecherchePlusieurs_LC(bchargee);
+    printf("Bibliothèque des livres à plusieurs exemplaires:\n");
+    afficherBiblio_LC(bdouble);
+
+    // Libération de la mémoire
+    liberer_biblio_LC(b1);
+    liberer_biblio_LC(b2);
+    liberer_biblio_LC(bfusion);
+    liberer_biblio_LC(bchargee);
+    liberer_biblio_LC(bdouble);
+
+    return 0;
+}
