@@ -76,10 +76,7 @@ void afficherLivre_H(LivreH *l){
 }
 
 void afficherBiblio_H(BiblioH *b){
-    if (b == NULL){
-        return NULL;
-    }
-    
+
     for (int i=0; i<b->m; i++){
         LivreH* cour = b->T[i];
         while (cour){
