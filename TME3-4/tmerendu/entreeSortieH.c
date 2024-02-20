@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "entreeSortieH.h"
 
 
@@ -32,7 +33,7 @@ void enregistrer_biblio_H(BiblioH *b, char *nomfic){
         LivreH *cour = b->T[i];
         while (cour){
             fprintf(f,"%d %s %s\n", cour->num, cour->titre, cour->auteur);
-            cour= cour->suiv;
+            cour= cour->suivant;
         }
 	}
 

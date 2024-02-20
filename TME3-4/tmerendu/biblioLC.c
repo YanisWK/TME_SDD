@@ -25,12 +25,12 @@ Biblio* creer_biblio_LC(){
 }
 
 void liberer_biblio_LC(Biblio* b){
-    while(b->L){
-        Livre *suiv=b->L->suiv;
-        liberer_livre_LC(b->L);
-        b->L=suiv;
+    Livre *cour = b->L;
+    while(cour){
+        Livre *tmp=cour;
+        cour=cour->suiv;
+        liberer_livre_LC(tmp);
     }
-
     free(b);
 }
 

@@ -6,10 +6,6 @@
 
 #define TAILLE 10
 
-
-
-
-
 int main(){
 
     Biblio * LC=creer_biblio_LC();
@@ -34,23 +30,40 @@ int main(){
     et repeter ça pour titre auteur,(meilleure pire des cas en gros)
     et le faire avec LC et comparer les resultats
     */
-    printf("Meilleure\n");
+    printf("Meilleur cas H\n");
     clock_t beginHnumBest = clock();
-
-    rechercheLivreNum_H(H,1);
-
+    LivreH* rec1 = rechercheLivreNum_H(H,1);
     clock_t endHnumBest = clock();
     double Hnumbest=(double)(endHnumBest - beginHnumBest) / CLOCKS_PER_SEC;
-    printf("Pire\n");
+    printf("Meilleur temps de recherche par num en H : %.2fs\n", Hnumbest);
+    
+    printf("Pire cas H (livre absent)\n");
     clock_t beginHnumWorst=clock();
-    rechercheLivreNum_H(H,6);
+    LivreH* rec2 = rechercheLivreNum_H(H,6);
     clock_t endHnumWorst=clock();
     double Hnumworst=(double)(endHnumWorst - beginHnumWorst) / CLOCKS_PER_SEC;
+    afficherLivre_H(rec2);
+    printf("Pire temps de recherche par num en H : %.2fs\n", Hnumworst);;
 
 
+    printf("Meilleur cas LC\n");
+    clock_t beginLCnumBest = clock();
+    Livre* rec3 = rechercheLivreNum_LC(LC, 1);
+    clock_t endLCnumBest = clock();
+    double LCnumbest = (double)(endLCnumBest - beginLCnumBest) / CLOCKS_PER_SEC;
+    printf("Meilleur temps de recherche par num en LC : %.2fs\n", LCnumbest);
 
-    
 
+    printf("Pire cas LC (livre absent)\n");
+    clock_t beginLCnumWorst = clock();
+    Livre* rec4 = rechercheLivreNum_LC(LC, 6);
+    clock_t endLCnumWorst = clock();
+    double LCnumworst = (double)(endLCnumWorst - beginLCnumWorst) / CLOCKS_PER_SEC;
+    printf("Pire temps de recherche par num en LC : %.2fs\n", LCnumworst);
 
-
+    liberer_livre_H(rec1);
+    liberer_livre_H(rec2);
+    liberer_livre_LC(rec3);
+    liberer_livre_LC(rec4);
+    return 0;
 }

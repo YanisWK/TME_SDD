@@ -20,6 +20,8 @@ LivreH *creer_livre_H(int num, char *titre, char *auteur){
     new->titre = strdup(titre); 
     new->auteur = strdup(auteur);
     new->suivant = NULL;
+
+    return new;
 }
 
 
@@ -70,7 +72,7 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 void afficherLivre_H(LivreH *l){
-    printf("Clé : %d Numéro: %d Titre: %s Auteur: %s\n", l->clef,l->num,l->titre,l->auteur);
+    printf("Numéro: %d Titre: %s Auteur: %s\n",l->num,l->titre,l->auteur);
 }
 
 void afficherBiblio_H(BiblioH *b){
@@ -152,7 +154,7 @@ BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
             inserer(b1, l->num, l->titre, l->auteur);
             LivreH* tmp=l; //supprime un par un les livres de b2
             l = l->suivant;
-            free(tmp);
+            liberer_livre_H(tmp);
         }
     }
     free(b2->T);
@@ -175,7 +177,7 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
                     }
                     livreCompare = livreCompare->suivant;
                 }
-            livreActuel = livreActuel->suivant;
+            }livreActuel = livreActuel->suivant;
         }
     }
     return bibliodoublon;
