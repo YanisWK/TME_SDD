@@ -13,9 +13,11 @@ Livre* creer_livre_LC(int num,char* titre,char* auteur){
 }
 
 void liberer_livre_LC(Livre *l){
-    free(l->titre);
-    free(l->auteur);
-    free(l);
+    if (l){
+        free(l->titre);
+        free(l->auteur);
+        free(l);
+    }
 }
 
 Biblio* creer_biblio_LC(){
