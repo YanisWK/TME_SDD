@@ -143,18 +143,13 @@ Biblio* RecherchePlusieurs_LC(Biblio* b){
 
     while (Livreactuel) {
         Livre* Livrecompare = b->L;
-        int count = 0;
         while (Livrecompare){
             if (Livreactuel->num != Livrecompare->num && strcmp(Livreactuel->auteur, Livrecompare->auteur) == 0 &&
                 strcmp(Livreactuel->titre, Livrecompare->titre) == 0){
-                // inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
-                // break;
-                count++;
+                inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
+                break;
             }
             Livrecompare = Livrecompare->suiv;
-        }
-        if (count > 0) {
-            inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
         }
 
         Livreactuel = Livreactuel->suiv;
