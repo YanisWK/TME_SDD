@@ -66,19 +66,19 @@ int main(int argc, char** argv){
     int rep;
     int choix;
     choixStructure();
+    char buffer[BUFFERSIZE];
     entree=fgets(buffer,BUFFERSIZE,stdin);
     choix=atoi(entree);
 
     if(choix==1){
         do{
-        char buffer[BUFFERSIZE];
-        menu();
-        entree=fgets(buffer,BUFFERSIZE,stdin);
-        rep=atoi(entree);
-        int num;
-        char titre[256];
-        char auteur[256];
-        //scanf(" %d",&rep);
+            menu();
+            entree=fgets(buffer,BUFFERSIZE,stdin);
+            rep=atoi(entree);
+            int num;
+            char titre[256];
+            char auteur[256];
+            
         switch(rep){
             case 1:
                 printf("Affichage :\n");
@@ -185,7 +185,7 @@ int main(int argc, char** argv){
 
         }
     }while(rep!=0);
-    
+
     }
     
 
