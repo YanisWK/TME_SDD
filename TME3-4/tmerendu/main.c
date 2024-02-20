@@ -18,6 +18,12 @@ void menu(){
 
     /*Peut etre ajout de la fusion_LC et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
     printf("Que voulez vous faire ?\n");
+}
+
+void choixStructure(){
+    printf("1 - Structure Liste Chainées\n");
+    printf("2 - Structure Hachage\n");
+    printf("Quel structure voulez vous utilisez ?\n");
 
 }
 
@@ -58,7 +64,13 @@ int main(int argc, char** argv){
 
     char *entree;
     int rep;
-    do{
+    int choix;
+    choixStructure();
+    entree=fgets(buffer,BUFFERSIZE,stdin);
+    choix=atoi(entree);
+
+    if(choix==1){
+        do{
         char buffer[BUFFERSIZE];
         menu();
         entree=fgets(buffer,BUFFERSIZE,stdin);
@@ -173,6 +185,9 @@ int main(int argc, char** argv){
 
         }
     }while(rep!=0);
+    
+    }
+    
 
     
     return 0;
