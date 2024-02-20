@@ -140,8 +140,6 @@ int main(){
                 liberer_biblio_LC(rec11);
                 liberer_biblio_LC(rec12);
         }
-    
-    
 }
 
 

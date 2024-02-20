@@ -78,7 +78,7 @@ int main(int argc, char** argv){
             int num;
             char titre[256];
             char auteur[256];
-            
+
         switch(rep){
             case 1:
                 printf("Affichage :\n");
@@ -186,6 +186,21 @@ int main(int argc, char** argv){
         }
     }while(rep!=0);
 
+    }else if(choix==2){
+        do
+        {
+            menu();
+            entree=fgets(buffer,BUFFERSIZE,stdin);
+            rep=atoi(entree);
+            int num;
+            char titre[256];
+            char auteur[256];
+            
+        } while (rep!=0);
+        
+    }else{
+        printf("Erreur format\n");
+        return 0;
     }
     
 
