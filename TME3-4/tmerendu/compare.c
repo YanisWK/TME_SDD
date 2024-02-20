@@ -39,7 +39,6 @@ int main(){
     LivreH* rec2 = rechercheLivreNum_H(H,6);
     clock_t endHnumWorst=clock();
     double Hnumworst=(double)(endHnumWorst - beginHnumWorst) / CLOCKS_PER_SEC;
-    afficherLivre_H(rec2);
     printf("Pire temps de recherche par num en H : %.2fs\n", Hnumworst);;
 
 

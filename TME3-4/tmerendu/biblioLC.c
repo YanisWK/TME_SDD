@@ -51,6 +51,10 @@ void afficherLivre_LC(Livre *l){
 }
 
 void afficherBiblio_LC(Biblio *b){
+    if (b == NULL){
+        return NULL;
+    }
+    
     Livre *cour = b->L; 
     while (cour){
         afficherLivre_LC(cour);
