@@ -48,12 +48,10 @@ void afficherLivre_LC(Livre *l){
         printf("Numéro : %d\n", l->num);
         printf("Titre : %s\n", l->titre);
         printf("Auteur : %s\n", l->auteur);
-
     }
 }
 
 void afficherBiblio_LC(Biblio *b){
-
     Livre *cour = b->L; 
     while (cour){
         afficherLivre_LC(cour);
@@ -135,29 +133,30 @@ Biblio* fusion_LC(Biblio *b1, Biblio *b2){
         inserer_en_tete_LC(b1, cour2->num, cour2->titre, cour2->auteur);
         cour2 = cour2->suiv;
     }
-
-    while (cour1){
-        inserer_en_tete_LC(b1, cour1->num, cour1->titre, cour1->auteur);
-        cour1 = cour1->suiv;
-    }
     liberer_biblio_LC(b2);
     return b1;
 }
 
-Biblio* RecherchePlusieurs_LC(Biblio* b) {
+Biblio* RecherchePlusieurs_LC(Biblio* b){
     Biblio* Bibliodoublon = creer_biblio_LC();
     Livre* Livreactuel = b->L;
 
     while (Livreactuel) {
         Livre* Livrecompare = b->L;
-        while (Livrecompare) {
+        int count = 0;
+        while (Livrecompare){
             if (Livreactuel->num != Livrecompare->num && strcmp(Livreactuel->auteur, Livrecompare->auteur) == 0 &&
                 strcmp(Livreactuel->titre, Livrecompare->titre) == 0){
-                inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
-                break;
+                // inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
+                // break;
+                count++;
             }
             Livrecompare = Livrecompare->suiv;
         }
+        if (count > 0) {
+            inserer_en_tete_LC(Bibliodoublon, Livreactuel->num, Livreactuel->titre, Livreactuel->auteur);
+        }
+
         Livreactuel = Livreactuel->suiv;
     }
     return Bibliodoublon;
