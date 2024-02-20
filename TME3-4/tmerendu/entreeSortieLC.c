@@ -20,3 +20,5 @@ Biblio* charger_n_entrees_LC(char* nomfic, int n){
     fclose(f);
 	return b;
 }
+
+
