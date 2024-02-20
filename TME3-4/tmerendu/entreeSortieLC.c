@@ -21,7 +21,7 @@ Biblio* charger_n_entrees_LC(char* nomfic, int n){
 	return b;
 }
 
-void enregistrer_biblio(Biblio *b, char* nomfic){;
+void enregistrer_biblio_LC(Biblio *b, char* nomfic){;
     FILE *f = fopen(nomfic, "w");
     if(f == NULL){
         printf("Erreur d'ouverture de : %s\n", nomfic);
