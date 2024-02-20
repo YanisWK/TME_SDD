@@ -59,7 +59,35 @@ int main(){
     printf("Pire temps de recherche par num en LC : %.2fs\n", LCnumworst);
 
 //---------------------------------------------------
-    
+    printf("Meilleur cas LC\n");
+    clock_t beginLCtitbest = clock();
+    Livre* rec5 = rechercheLivreTitre_LC(LC, "family");
+    clock_t endLCtitbest = clock();
+    double LCtitbest = (double)(endLCtitbest - beginLCtitbest) / CLOCKS_PER_SEC;
+    printf("Meilleur temps de recherche par titre en LC : %.2fs\n", LCtitbest);
+
+    printf("Pire cas LC (livre absent)\n");
+    clock_t beginLCtitworst = clock();
+    Livre* rec6 = rechercheLivreTitre_LC(LC, "panini");
+    clock_t endLCtitworst = clock();
+    double LCtitworst = (double)(endLCtitworst - beginLCtitworst) / CLOCKS_PER_SEC;
+    printf("Pire temps de recherche par titre en LC : %.2fs\n", LCtitworst);
+
+    printf("Meilleur cas LC\n");
+    clock_t beginLCautbest = clock();
+    Biblio* rec7 = LivresAuteurs_LC(LC, "zing");
+    clock_t endLCautbest = clock();
+    double LCautbest = (double)(endLCautbest - beginLCautbest) / CLOCKS_PER_SEC;
+    printf("Meilleur temps de recherche par auteur en LC : %.2fs\n", LCautbest);
+
+    printf("Pire cas LC\n");
+    clock_t beginLCautbest = clock();
+    Biblio* rec7 = LivresAuteurs_LC(LC, "jing");
+    clock_t endLCautbest = clock();
+    double LCautbest = (double)(endLCautbest - beginLCautbest) / CLOCKS_PER_SEC;
+    printf("Pire temps de recherche par auteur en LC : %.2fs\n", LCautbest);
+
+
     liberer_livre_H(rec1);
     liberer_livre_H(rec2);
     liberer_livre_LC(rec3);
