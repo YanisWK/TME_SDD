@@ -30,30 +30,9 @@ int main(){
                 Biblio * LC= charger_n_entrees_LC("GdeBiblio.txt",5000);
                 BiblioH *H = charger_n_entrees_H("GdeBiblio.txt",5000,10000);
 
-                // inserer(H,1,"spy","endo");
-                // inserer(H,2,"x","tatsu");
-                // inserer(H,3,"family","ya");
-                // inserer(H,4,"is","ama");
-                // inserer(H,5,"goated","zing");
-
-                // inserer_en_tete_LC(LC,1,"spy","endo");
-                // inserer_en_tete_LC(LC,2,"x","tatsu");
-                // inserer_en_tete_LC(LC,3,"family","ya");
-                // inserer_en_tete_LC(LC,4,"is","ama");
-                // inserer_en_tete_LC(LC,5,"goated","zing");;
-
                 printf("---------------------------------------------------\n");
                 printf("-----------------Recherche par num-----------------\n");
                 printf("---------------------------------------------------\n");
-
-                //3.3
-                // for (int i=0; i<5000; i++){
-                //     clock_t beginHnum = clock();
-                //     LivreH* resnumH = rechercheLivreNum_H(H,i);
-                //     clock_t endHnum = clock();
-                //     double Hnum=(double)(endHnum - beginHnum) / CLOCKS_PER_SEC;
-                //     printf("Meilleur temps de recherche par num en H : %.12fs\n", Hnum);
-                // }
 
                     clock_t beginHnumBest = clock();
                     LivreH* rec1 = rechercheLivreNum_H(H,1);
@@ -97,20 +76,11 @@ int main(){
                     clock_t endLCnumWorst = clock();
                     double LCnumworst = (double)(endLCnumWorst - beginLCnumWorst) / CLOCKS_PER_SEC;
                     printf("Pire temps de recherche par num en LC : %.12fs\n", LCnumworst);
-                
 
                 printf("---------------------------------------------------\n");
                 printf("----------------Recherche par titre----------------\n");
                 printf("---------------------------------------------------\n");
-                //3.3
-                // LivreH *courtitH = H->L;
-                // while (courtitH){
-                    // clock_t beginHtit = clock();
-                    // BiblioH *restitH = LivresAuteurs_H(H, );
-                    // clock_t endHtit = clock();
-                    // double Htit = (double)(endHtit - beginHtit) / CLOCKS_PER_SEC;
-                    // printf("Meilleur temps de recherche par auteur en H : %.12fs\n", Htit);
-                //}
+
                     clock_t beginHtitbest = clock();
                     LivreH* rec5 = rechercheLivreTitre_H(H,"WLRBBMQBHCDARZOWK");
                     clock_t endHtitbest = clock();
@@ -140,29 +110,6 @@ int main(){
                 printf("---------------------------------------------------\n");
                 printf("---------------Recherche par auteur----------------\n");
                 printf("---------------------------------------------------\n");
-
-                //3.3
-                // LivreH *courautH = H->L;
-                // while (courautH){
-                //     clock_t beginHaut = clock();
-                //     BiblioH *resautH = LivresAuteurs_H(H, courautH->auteur);
-                //     clock_t endHaut = clock();
-                //     double tempsH = (double)(endHaut - beginHaut) / CLOCKS_PER_SEC;
-                //     printf("Auteur: %s - Temps: %.12fs\n", courautH->auteur, tempsH);
-                //     liberer_biblio_H(resautH);
-                //     courautH = courautH->suivant;
-                // }
-                //Livre *courautLC = LC->L;
-                // while (courautLC){
-                //     clock_t beginLCaut = clock();
-                //     Biblio *resautLC = LivresAuteurs_LC(LC, courautLC->auteur);
-                //     clock_t endLCaut = clock();
-                //     double tempsLC = (double)(endLCaut - beginLCaut) / CLOCKS_PER_SEC;
-                //     printf("Auteur: %s - Temps: %.12fs\n", courautLC->auteur, tempsLC);
-                //     liberer_biblio_LC(resautLC);
-                //     courautLC = courautLC->suivant;
-                // }
-
                 
                 clock_t beginHautbest = clock();
                 BiblioH* rec9 = LivresAuteurs_H(H,"yhidd");
@@ -203,6 +150,8 @@ int main(){
                 liberer_biblio_LC(rec11);
                 liberer_biblio_LC(rec12);
 
+                break;
+
             case 2:
                 int n=1000;
                 FILE * f=fopen("fichier.txt","w");
@@ -225,14 +174,11 @@ int main(){
                     fprintf(f,"%d %.5f %.5f\n",n,timeH,timeLC);
                     n+=1000;
                 }
-
-
-
+                break;
         }
     
     
 }while(rep!=0);
-
 
     return 0;
 }
