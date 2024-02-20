@@ -86,7 +86,11 @@ void afficherBiblio_H(BiblioH *b){
     }
 }
 
-LivreH* rechercheLivreNum_H(BiblioH *b, int num) {
+LivreH* rechercheLivreNum_H(BiblioH *b, int num){
+    if (b == NULL){
+        return NULL;
+    }
+
     for (int i=0; i<b->m; i++){
         LivreH* l=b->T[i];
         while (l){
@@ -100,6 +104,10 @@ LivreH* rechercheLivreNum_H(BiblioH *b, int num) {
 }
 
 LivreH* rechercheLivreTitre_H(BiblioH *b, char *titre){
+    if (b == NULL){
+        return NULL;
+    }
+
     for (int i=0; i<b->m; i++){
         LivreH* l = b->T[i];
         while (l){
@@ -113,6 +121,10 @@ LivreH* rechercheLivreTitre_H(BiblioH *b, char *titre){
 }
 
 BiblioH* LivresAuteurs_H(BiblioH *b, char *auteur){
+    if (b == NULL){
+        return NULL;
+    }
+    
     BiblioH* res = creer_biblio_H(b->m);
     for (int i = 0; i < b->m; i++){
         LivreH* l = b->T[i];

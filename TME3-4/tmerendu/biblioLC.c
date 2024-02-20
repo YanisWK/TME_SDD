@@ -60,6 +60,10 @@ void afficherBiblio_LC(Biblio *b){
 }
 
 Livre* rechercheLivreNum_LC(Biblio *b,int num){
+    if (b == NULL){
+        return NULL;
+    }
+
     Livre *cour=b->L;
     while(cour){
         if(cour->num==num){
@@ -71,6 +75,10 @@ Livre* rechercheLivreNum_LC(Biblio *b,int num){
 }
 
 Livre* rechercheLivreTitre_LC(Biblio *b,char* titre){
+    if (b == NULL){
+        return NULL;
+    }
+
     Livre* cour=b->L;
     while(cour){
         if(strcmp(cour->titre,titre)==0){
@@ -82,6 +90,10 @@ Livre* rechercheLivreTitre_LC(Biblio *b,char* titre){
 }
 
 Biblio* LivresAuteurs_LC(Biblio*b,char* auteur){
+    if (b == NULL){
+        return NULL;
+    }
+    
     Biblio *BiblioAut=creer_biblio_LC();
     Livre* cour=b->L;
     while(cour){
