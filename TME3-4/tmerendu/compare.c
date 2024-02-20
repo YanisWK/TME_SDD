@@ -206,7 +206,7 @@ int main(){
             case 2:
                 int n=1000;
                 FILE * f=fopen("fichier.txt","w");
-                while(n<=3000){
+                while(n<=50000){
                     Biblio * BibLC=charger_n_entrees_LC("GdeBiblio.txt",n);
                     BiblioH * BibH=charger_n_entrees_H("GdeBiblio.txt",n,100);
 
@@ -222,7 +222,7 @@ int main(){
 
                     double timeH=(double)(endH-beginH)/CLOCKS_PER_SEC;
                     
-                    fprintf(f,"%d %.2f %.2f\n",n,timeH,timeLC);
+                    fprintf(f,"%d %.5f %.5f\n",n,timeH,timeLC);
                     n+=1000;
                 }
 
