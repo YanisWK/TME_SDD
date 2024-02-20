@@ -16,13 +16,19 @@ int fonctionClef(char *auteur){
 LivreH *creer_livre_H(int num, char *titre, char *auteur){
     LivreH *new = malloc(sizeof(LivreH));
     new->clef = fonctionClef(auteur);
+    new->num = num;
+    new->titre = strdup(titre); 
+    new->auteur = strdup(auteur);
     new->suivant = NULL;
-    return new;
 }
 
 
 void liberer_livre_H(LivreH *l){
-    free(l);
+    if (l){
+        free(l->titre);
+        free(l->auteur);
+        free(l);
+    }
 }
 
 BiblioH *creer_biblio_H(int m){
@@ -39,10 +45,10 @@ BiblioH *creer_biblio_H(int m){
 void liberer_biblio_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH *cour = b->T[i];
-        while (cour != NULL){
-            LivreH *tmp = cour->suivant;
-            liberer_livre_H(cour);
-            cour = tmp;
+        while (cour){
+            LivreH* tmp = cour;
+            cour = cour->suivant;
+            liberer_livre_H(tmp);
         }
     }
     free(b->T);
@@ -140,11 +146,11 @@ void supprimerLivre_H(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
-    for (int i = 0; i<b2->m; i++){
+    for (int i=0; i<b2->m; i++){
         LivreH* l = b2->T[i];
         while (l){
             inserer(b1, l->num, l->titre, l->auteur);
-            LivreH* tmp = l;
+            LivreH* tmp=l; //supprime un par un les livres de b2
             l = l->suivant;
             free(tmp);
         }
@@ -155,5 +161,22 @@ BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
 }
 
 BiblioH* RecherchePlusieurs_H(BiblioH *b){
-    return;
+    BiblioH* bibliodoublon = creer_biblio_H(b->m);
+
+    for (int i=0; i<b->m; i++){
+        LivreH* livreActuel = b->T[i];
+        while (livreActuel){
+            for (int j=0; j<bibliodoublon->m; j++){
+                LivreH* livreCompare = bibliodoublon->T[j];
+                while (livreCompare){
+                    if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){
+                        inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
+                        break;
+                    }
+                    livreCompare = livreCompare->suivant;
+                }
+            livreActuel = livreActuel->suivant;
+        }
+    }
+    return bibliodoublon;
 }
