@@ -11,7 +11,6 @@ int main(){
     Biblio * LC=creer_biblio_LC();
     BiblioH * H=creer_biblio_H(30);
 
-
     inserer(H,1,"spy","endo");
     inserer(H,2,"x","tatsu");
     inserer(H,3,"family","ya");
@@ -22,9 +21,7 @@ int main(){
     inserer_en_tete_LC(LC,2,"x","tatsu");
     inserer_en_tete_LC(LC,3,"family","ya");
     inserer_en_tete_LC(LC,4,"is","ama");
-    inserer_en_tete_LC(LC,5,"goated","zing");
-
-    printf("Recherche numero Hachage\n");
+    inserer_en_tete_LC(LC,5,"goated","zing");;
     /*
     Faire la recherche du premier numero et d'un numero qui n'existe pas
     et repeter ça pour titre auteur,(meilleure pire des cas en gros)
@@ -61,9 +58,12 @@ int main(){
     double LCnumworst = (double)(endLCnumWorst - beginLCnumWorst) / CLOCKS_PER_SEC;
     printf("Pire temps de recherche par num en LC : %.2fs\n", LCnumworst);
 
+//---------------------------------------------------
+    
     liberer_livre_H(rec1);
     liberer_livre_H(rec2);
     liberer_livre_LC(rec3);
     liberer_livre_LC(rec4);
+
     return 0;
 }
