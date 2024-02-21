@@ -37,6 +37,8 @@ int main(){
     afficherBiblio_LC(bchargee);
     printf("\n");
 
+    inserer_en_tete_LC(bchargee, 5, "Lotus", "Raze");
+    inserer_en_tete_LC(bchargee, 6, "Breeze", "Yoru");
     // Recherche d'exemplaires dans la bibliothèque bchargee
     Biblio *bdouble = RecherchePlusieurs_LC(bchargee);
     printf("Bibliothèque des livres à plusieurs exemplaires:\n");
@@ -51,9 +53,9 @@ int main(){
     // Libération de la mémoire
     liberer_biblio_LC(b1);
     liberer_biblio_LC(b2);
-    liberer_biblio_LC(bfusion);
-    liberer_biblio_LC(bchargee);
     liberer_biblio_LC(bdouble);
+    liberer_biblio_LC(bchargee);
+    liberer_biblio_LC(bfusion);
 
     return 0;
 }
