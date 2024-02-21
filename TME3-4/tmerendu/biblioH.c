@@ -44,6 +44,7 @@ BiblioH *creer_biblio_H(int m){
         free(new);  
         exit(EXIT_FAILURE);
     }
+    return new;
 }
 
 void liberer_biblio_H(BiblioH *b) {
