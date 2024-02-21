@@ -82,10 +82,7 @@ int fonctionHachage(int cle, int m){
 
 void inserer(BiblioH *b, int num, char *titre, char *auteur){
     int ind=fonctionHachage(fonctionClef(auteur), b->m);
-    LivreH* new = malloc(sizeof(LivreH));
-    new->num=num;
-    new->titre=strdup(titre);
-    new->auteur=strdup(auteur);
+    LivreH* new = creer_livre_H(num, titre, auteur);
     new->suivant = b->T[ind];
     b->T[ind] = new;
     b->nE++; //nb d'éléments+1
