@@ -31,13 +31,11 @@ void choixStructure(){
 
 int main(int argc, char** argv){
 
-    if (argc != 3){
-        printf("Erreur ./main <nomfichier> <un nombre>\n");
-        exit(1);
-    }
+    // if (argc != 3){
+    //     printf("Erreur ./main <nomfichier> <un nombre>\n");
+    //     exit(1);
+    // }
 
-    
-    
     Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",4);
     BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",4,40);
 
@@ -309,7 +307,7 @@ int main(int argc, char** argv){
                     break;
                 }
             case 8:
-                BiblioH * doublonH=RecherchePlusieurs_H(BibH);
+                BiblioH *doublonH=RecherchePlusieurs_H(BibH);
                 if(doublonH->nE!=0){
                     printf("Affichage des livres doublons\n");
                     afficherBiblio_H(doublonH);
