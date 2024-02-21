@@ -11,13 +11,13 @@ int main(){
     printf("\n");
 
     // Recherche de livre par titre (l1) et par numéro (l2)
-    // LivreH *l1 = rechercheLivreTitre_H(b1, "Lotus"), *l2 = rechercheLivreNum_H(b1, 2);
-    // printf("Recherche par titre:\n");
-    // afficherLivre_H(l1);
-    // printf("\n");
-    // printf("Recherche par numéro:\n");
-    // afficherLivre_H(l2);
-    // printf("\n");
+    LivreH *l1 = rechercheLivreTitre_H(b1, "Lotus"), *l2 = rechercheLivreNum_H(b1, 2);
+    printf("Recherche par titre:\n");
+    afficherLivre_H(l1);
+    printf("\n");
+    printf("Recherche par numéro:\n");
+    afficherLivre_H(l2);
+    printf("\n");
 
     BiblioH *b2 = creer_biblio_H(1000); 
     inserer(b2, 3, "Haven", "Omen");
