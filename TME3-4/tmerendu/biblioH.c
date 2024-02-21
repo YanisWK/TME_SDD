@@ -87,7 +87,7 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
     new->titre=strdup(titre);
     new->auteur=strdup(auteur);
     new->suivant = b->T[ind];
-    b->T[ind%b->m] = new;
+    b->T[ind] = new;
     b->nE++; //nb d'éléments+1
 }
 
@@ -198,7 +198,6 @@ void fusion_H(BiblioH *b1,BiblioH *b2){
 
 BiblioH* RecherchePlusieurs_H(BiblioH *b){
     BiblioH* bibliodoublon = creer_biblio_H(b->m);
-
     for (int i=0; i<b->m; i++){
         LivreH* livreActuel = b->T[i];
         while (livreActuel){

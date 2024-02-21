@@ -155,9 +155,9 @@ int main(){
             case 2:
                 int n=1000;
                 FILE * f=fopen("fichier.txt","w");
-                while(n<=50000){
+                while(n<=20000){
                     Biblio * BibLC=charger_n_entrees_LC("GdeBiblio.txt",n);
-                    BiblioH * BibH=charger_n_entrees_H("GdeBiblio.txt",n,100);
+                    BiblioH * BibH=charger_n_entrees_H("GdeBiblio.txt",n,20000);
 
                     clock_t beginLC=clock();
                     RecherchePlusieurs_LC(BibLC);
