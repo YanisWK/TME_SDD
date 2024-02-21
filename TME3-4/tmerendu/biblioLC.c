@@ -129,7 +129,6 @@ void supprimerLivre_LC(Biblio* b, int num, char* titre, char* auteur){
 }
 
 void fusion_LC(Biblio *b1, Biblio *b2){
-    Livre *cour1 = b1->L;
     Livre *cour2 = b2->L;
 
     while (cour2){
