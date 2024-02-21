@@ -87,7 +87,7 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
     new->titre=strdup(titre);
     new->auteur=strdup(auteur);
     new->suivant = b->T[ind];
-    b->T[ind] = new;
+    b->T[ind%b->m] = new;
     b->nE++; //nb d'éléments+1
 }
 
@@ -180,7 +180,7 @@ void supprimerLivre_H(BiblioH *b, int num, char *titre, char *auteur){
     }
 }
 
-BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
+void fusion_H(BiblioH *b1,BiblioH *b2){
     if (b2->m == 0){
         liberer_biblio_H(b2);
         return b1;
@@ -205,7 +205,7 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
         LivreH* livreActuel = b->T[i];
         while (livreActuel){
             for (int j=0; j<bibliodoublon->m; j++){
-                LivreH* livreCompare = bibliodoublon->T[j];
+                LivreH* livreCompare = b->T[j];
                 while (livreCompare){
                     if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){                        
                          inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);

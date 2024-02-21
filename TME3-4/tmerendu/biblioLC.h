@@ -26,5 +26,5 @@ Livre* rechercheLivreNum_LC(Biblio *b,int num);
 Livre* rechercheLivreTitre_LC(Biblio *b,char* titre);
 Biblio* LivresAuteurs_LC(Biblio*b,char* auteur);
 void supprimerLivre_LC(Biblio* b, int num, char* titre, char* auteur);
-Biblio* fusion_LC(Biblio* b1,Biblio* b2);
+void fusion_LC(Biblio* b1,Biblio* b2);
 Biblio* RecherchePlusieurs_LC(Biblio *b);

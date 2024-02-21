@@ -36,10 +36,15 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",4);
-    BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",4,40);
+    Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",6);
+    BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",6,40);
 
-    afficherBiblio_H(ClassiqueH);
+    Biblio *BibLC = charger_n_entrees_LC(argv[1],atoi(argv[2]));
+    BiblioH *BibH=charger_n_entrees_H(argv[1],atoi(argv[2]),100);
+
+    int done=0;
+
+    //afficherBiblio_H(ClassiqueH);
 
     char *entree;
     int rep;
@@ -51,7 +56,7 @@ int main(int argc, char** argv){
 
     if(choix==1){
         do{
-            Biblio *BibLC = charger_n_entrees_LC(argv[1],atoi(argv[2]));
+            
             menu();
             entree=fgets(buffer,BUFFERSIZE,stdin);
             rep=atoi(entree);
@@ -163,19 +168,27 @@ int main(int argc, char** argv){
                 supprimerLivre_LC(BibLC,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
             case 7:
-                if(ClassiqueLC){
-                    BibLC=fusion_LC(BibLC,ClassiqueLC);
+                if(done==0){
+                    fusion_LC(BibLC,ClassiqueLC);
                     printf("Fusion realiser !\n");
+                    afficherBiblio_LC(BibLC);
+                    done=1;
+                    break;
+                    
                 }else{
                     printf("Fusion impossible bibliotheque inexistante.\n");
+                    break;
+                    
                 }
             case 8:
                 Biblio *doublonLC=RecherchePlusieurs_LC(BibLC);
                 if(doublonLC->L){
                     printf("Affichage des livres doublons\n");
                     afficherBiblio_LC(doublonLC);
+                    break;
                 }else{
                     printf("Il n'y a pas de doublon dans la bibliotheque.\n");
+                    break;
                 }
 
                 
@@ -191,7 +204,7 @@ int main(int argc, char** argv){
             int num;
             char titre[256];
             char auteur[256];
-            BiblioH *BibH=charger_n_entrees_H(argv[1],atoi(argv[2]),100);
+
         switch (rep)
         {
 
@@ -298,20 +311,24 @@ int main(int argc, char** argv){
                 supprimerLivre_H(BibH,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
             case 7:
-                if(ClassiqueH){
-                    BibH=fusion_H(BibH,ClassiqueH);
+                if(done==0){
+                    fusion_H(BibH,ClassiqueH);
                     printf("Fusion realiser !\n");
+                    afficherBiblio_H(BibH);
+                    done=1;
                     break;
+                    
                 }else{
                     printf("Fusion impossible bibliotheque inexistante.\n");
                     break;
+                    
                 }
             case 8:
                 BiblioH *doublonH=RecherchePlusieurs_H(BibH);
                 if(doublonH->nE!=0){
                     printf("Affichage des livres doublons\n");
                     afficherBiblio_H(doublonH);
-                    break;
+                    
                 }else{
                     printf("Il n'y a pas de doublon dans la bibliotheque.\n");
                     break;
@@ -321,7 +338,10 @@ int main(int argc, char** argv){
         }while (rep!=0);
     }else{
         printf("Erreur format\n");
+
         return 0;
     }
+
+
     return 0;
 }
