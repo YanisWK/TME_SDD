@@ -204,7 +204,7 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
             int ind=fonctionHachage(fonctionClef(livreActuel->auteur), b->m);
             LivreH* livreCompare = b->T[ind];
             while (livreCompare){
-                if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->titre, livreCompare->titre) == 0){                        
+                if (livreActuel->num != livreCompare->num && strcmp(livreActuel->auteur, livreCompare->auteur) == 0 && strcmp(livreActuel->titre, livreCompare->titre) == 0){                        
                     inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
                     break;
                 }

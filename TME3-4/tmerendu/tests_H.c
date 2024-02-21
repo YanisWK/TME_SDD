@@ -41,8 +41,7 @@ int main(){
     inserer(bchargee, 5, "Lotus", "Raze");
     inserer(bchargee, 6, "Breeze", "Yoru");
 
-    
-    afficherBiblio_H(bchargee);
+
     enregistrer_biblio_H(bchargee, "saved.txt");
 
 
