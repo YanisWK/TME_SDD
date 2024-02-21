@@ -31,10 +31,10 @@ void choixStructure(){
 
 int main(int argc, char** argv){
 
-    // if (argc != 3){
-    //     printf("Erreur ./main <nomfichier> <un nombre>\n");
-    //     exit(1);
-    // }
+    if (argc != 3){
+        printf("Erreur ./main <nomfichier> <un nombre>\n");
+        exit(1);
+    }
 
     Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",4);
     BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",4,40);
