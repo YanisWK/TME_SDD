@@ -73,7 +73,6 @@ void liberer_biblio_H(BiblioH *b){
     }
 }
 
-
 int fonctionHachage(int cle, int m){ 
     //cle est un appel à la fonction fonctionClef de l'auteur recherché
     //renvoie l'indice de la clé dans la table de hachage, où un élément avec cette clé doit être stocké
