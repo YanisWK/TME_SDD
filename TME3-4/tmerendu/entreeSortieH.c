@@ -19,7 +19,7 @@ BiblioH* charger_n_entrees_H(char *nomfic, int n, int m){
     while(i<n){
         fgets(buffer,256,f);
         sscanf(buffer,"%d %s %s", &num, titre, auteur);
-        inserer(b,num,strdup(titre),strdup(auteur));
+        inserer(b,num,titre,auteur);
         i++;
     }
     fclose(f);

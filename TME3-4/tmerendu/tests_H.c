@@ -5,8 +5,8 @@ int main(){
 
     // Création d'une bibliothèque biblio_LC
     BiblioH *b1 = creer_biblio_H(1000);
-    inserer(b1, 1, "Ascent", "Phoenix");
-    inserer(b1, 2, "Lotus", "Raze");
+    inserer(b1, 10000, "Ascent", "Phoenix");
+    inserer(b1, 10001, "Lotus", "Raze");
     // afficherBiblio_H(b1);
     printf("\n");
 
@@ -20,8 +20,8 @@ int main(){
     printf("\n");
 
     BiblioH *b2 = creer_biblio_H(1000); 
-    inserer(b2, 3, "Haven", "Omen");
-    inserer(b2, 4, "Breeze", "Yoru");
+    inserer(b2, 10002, "Haven", "Omen");
+    inserer(b2, 10003, "Breeze", "Yoru");
     printf("\n");
 
     // Fusion de b1 et b2
@@ -30,19 +30,19 @@ int main(){
     afficherBiblio_H(b1);
     printf("\n");
 
-    // Enregistrement et chargement de la bibliothèque bfusion dans un fichier saved.txt
-    enregistrer_biblio_H(b1, "saved.txt");
-    BiblioH *bchargee = charger_n_entrees_H("saved.txt", 4, 5); 
+    // Enregistrement et chargement de la bibliothèque bfusion dans un fichier chargeH.txt
+    enregistrer_biblio_H(b1, "chargeH.txt");
+    BiblioH *bchargee = charger_n_entrees_H("chargeH.txt", 4, 5); 
     printf("Chargement de n entrées:\n");
     afficherBiblio_H(bchargee);
     printf("\n");
 
     
-    inserer(bchargee, 5, "Lotus", "Raze");
-    inserer(bchargee, 6, "Breeze", "Yoru");
+    inserer(bchargee, 10004, "Lotus", "Raze");
+    inserer(bchargee, 10005, "Breeze", "Yoru");
 
 
-    enregistrer_biblio_H(bchargee, "saved.txt");
+    enregistrer_biblio_H(bchargee, "chargeH.txt");
 
 
     // Recherche d'exemplaires dans la bibliothèque bchargee
@@ -52,7 +52,7 @@ int main(){
     
 
     // Suppression d'un livre
-    supprimerLivre_H(bchargee, 4, "Breeze", "Yoru");
+    supprimerLivre_H(bchargee, 10003, "Breeze", "Yoru");
     printf("Suppression d'un livre de la bibliothèque bchargee:\n");
     afficherBiblio_H(bchargee);
     printf("\n");

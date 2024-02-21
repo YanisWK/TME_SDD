@@ -14,7 +14,7 @@ Biblio* charger_n_entrees_LC(char* nomfic, int n){
     while(i<n){
         fgets(buffer,256,f);
         sscanf(buffer,"%d %s %s", &num, titre, auteur);
-        inserer_en_tete_LC(b,num,strdup(titre),strdup(auteur));
+        inserer_en_tete_LC(b,num,titre,auteur);
         i++;
     }
     fclose(f);
