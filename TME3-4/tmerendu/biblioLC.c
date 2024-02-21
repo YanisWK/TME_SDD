@@ -27,6 +27,9 @@ Biblio* creer_biblio_LC(){
 }
 
 void liberer_biblio_LC(Biblio* b){
+    if(b==NULL){
+        return;
+    }
     Livre *cour = b->L;
     while(cour){
         Livre *tmp=cour;
