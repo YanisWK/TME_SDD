@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "entreeSortieLC.h"
+#include "entreeSortieH.h"
 
 #define BUFFERSIZE 256
 
@@ -13,7 +14,7 @@ void menu(){
     printf("4 - Rechercher ouvrage par titre\n");
     printf("5 - Rechercher tous les livres d'un même auteur\n");
     printf("6 - Supprimer  ouvrage\n");
-    printf("7 - Fusion_fusion_LCner deux bibliothèques\n");
+    printf("7 - Fusioner votre bibliotheque avec la bibliotheque des classiques !\n");
     printf("8 - Rechercher tous les exemplaires de chaque ouvrage d'une bibliothèque\n"); // Nouvelle option
 
     /*Peut etre ajout de la fusion_LC et on doit ajouter le cas recherche tout les ouvrages avec plusieurs exemplaire*/
@@ -37,7 +38,10 @@ int main(int argc, char** argv){
 
     
     
-    // enregistrer_biblio(b, "saved.txt");
+    Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",4);
+    BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",4,40);
+
+    afficherBiblio_H(ClassiqueH);
 
     char *entree;
     int rep;
@@ -60,7 +64,7 @@ int main(int argc, char** argv){
         switch(rep){
             case 1:
                 printf("Affichage :\n");
-                afficherBiblio_LC(B);
+                afficherBiblio_LC(BibLC);
                 break;
             case 2:
                 /*Pour le numero faire le cas où le numero est déjà present dans la biblio*/            
@@ -84,7 +88,7 @@ int main(int argc, char** argv){
                     break;
                 }
                 strcpy(auteur,entree);
-                inserer_en_tete_LC(B,num,titre,auteur);
+                inserer_en_tete_LC(BibLC,num,titre,auteur);
                 printf("Insertion realisé ! \n");
                 break;
 
@@ -96,7 +100,7 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                Livre *book=rechercheLivreNum_LC(B,num);
+                Livre *book=rechercheLivreNum_LC(BibLC,num);
                 if (book){
                     printf("Oeuvre trouvé !\n");
                     afficherLivre_LC(book);
@@ -112,7 +116,7 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                book=rechercheLivreTitre_LC(B,entree);
+                book=rechercheLivreTitre_LC(BibLC,entree);
                 if (book){
                     printf("Oeuvre trouvé !\n");
                     afficherLivre_LC(book);
@@ -127,7 +131,7 @@ int main(int argc, char** argv){
                     printf("Erreur format\n");
                     break;
                 }
-                Biblio *Bibauteur=LivresAuteurs_LC(B,entree);
+                Biblio *Bibauteur=LivresAuteurs_LC(BibLC,entree);
                 if(Bibauteur->L){
                     printf("Livres de l'auteur trouvé !\n");
                     afficherBiblio_LC(Bibauteur);
@@ -158,12 +162,28 @@ int main(int argc, char** argv){
                 }
                 strcpy(auteur,entree);
                 printf("Supression en cours du livre de numero %d de nom %s d'auteur %s \n",num,titre,auteur);
-                supprimerLivre_LC(B,num,titre,auteur);
+                supprimerLivre_LC(BibLC,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
+            case 7:
+                if(ClassiqueLC){
+                    BibLC=fusion_LC(BibLC,ClassiqueLC);
+                    printf("Fusion realiser !\n");
+                }else{
+                    printf("Fusion impossible bibliotheque inexistante.\n");
+                }
+            case 8:
+                Biblio *doublonLC=RecherchePlusieurs_LC(BibLC);
+                if(doublonLC->L){
+                    printf("Affichage des livres doublons\n");
+                    afficherBiblio_LC(doublonLC);
+                }else{
+                    printf("Il n'y a pas de doublon dans la bibliotheque.\n");
+                }
+
+                
 
         }
     }while(rep!=0);
-<<<<<<< HEAD
     }else if(choix==2){
         do
         {
@@ -173,151 +193,137 @@ int main(int argc, char** argv){
             int num;
             char titre[256];
             char auteur[256];
-
+            BiblioH *BibH=charger_n_entrees_H(argv[1],atoi(argv[2]),100);
         switch (rep)
         {
 
-        
             case 1:
                 printf("Affichage :\n");
-                afficherBiblio_LC(B);
+                afficherBiblio_H(BibH);
                 break;
             case 2:
                 /*Pour le numero faire le cas où le numero est déjà present dans la biblio*/            
                 printf("Veuillez ecrire le numero le titre et enfin l'auteur de l'ouvrage.\n");
                 entree=fgets(buffer,BUFFERSIZE,stdin);
-=======
 
-    // }else if(choix==2){
-    //     do
-    //     {switch(rep){
-    //         menu();
-    //         entree=fgets(buffer,BUFFERSIZE,stdin);
-    //         rep=atoi(entree);
-    //         int num;
-    //         char titre[256];
-    //         char auteur[256];
-    //         case 1:
-    //             printf("Affichage :\n");
-    //             afficherBiblio_LC(B);
-    //             break;
-    //         case 2:
-    //             /*Pour le numero faire le cas où le numero est déjà present dans la biblio*/            
-    //             printf("Veuillez ecrire le numero le titre et enfin l'auteur de l'ouvrage.\n");
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
->>>>>>> 3af89223317b596e105e923e8012163d6058de35
+                num=atoi(entree);
+                if(entree[0]=='\n'|| num==0){
+                    printf("Erreur format\n");
+                    break;
+                }
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }              
+                strcpy(titre,entree);
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                strcpy(auteur,entree);
+                inserer(BibH,num,titre,auteur);
+                printf("Insertion realisé ! \n");
+                break;
 
-    //             num=atoi(entree);
-    //             if(entree[0]=='\n'|| num==0){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }              
-    //             strcpy(titre,entree);
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             strcpy(auteur,entree);
-    //             inserer_en_tete_LC(B,num,titre,auteur);
-    //             printf("Insertion realisé ! \n");
-    //             break;
-
-    //         case 3:
-    //             printf("Veuillez entree le numero de l'oeuvre que vous voulez trouver\n");
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             num=atoi(entree);
-    //             if(num==0 || entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             Livre *book=rechercheLivreNum_LC(B,num);
-    //             if (book){
-    //                 printf("Oeuvre trouvé !\n");
-    //                 afficherLivre_LC(book);
-    //                 break;
-    //             }
-    //             printf("L'oeuvre numero %d n'existe pas.\n",num);
-    //             break;
+            case 3:
+                printf("Veuillez entree le numero de l'oeuvre que vous voulez trouver\n");
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                num=atoi(entree);
+                if(num==0 || entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                LivreH *book=rechercheLivreNum_H(BibH,num);
+                if (book){
+                    printf("Oeuvre trouvé !\n");
+                    afficherLivre_H(book);
+                    break;
+                }
+                printf("L'oeuvre numero %d n'existe pas.\n",num);
+                break;
                 
-    //         case 4:
-    //             printf("Veuillez entree le titre de l'oeuvre que vous voulez trouver\n");
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             book=rechercheLivreTitre_LC(B,entree);
-    //             if (book){
-    //                 printf("Oeuvre trouvé !\n");
-    //                 afficherLivre_LC(book);
-    //                 break;
-    //             }
-    //             printf("L'oeuvre %s n'existe pas.\n",entree);
-    //             break;
-    //         case 5:
-    //             printf("Veuillez entree le nom de l'auteur.\n");
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             Biblio *Bibauteur=LivresAuteurs_LC(B,entree);
-    //             if(Bibauteur->L){
-    //                 printf("Livres de l'auteur trouvé !\n");
-    //                 afficherBiblio_LC(Bibauteur);
+            case 4:
+                printf("Veuillez entree le titre de l'oeuvre que vous voulez trouver\n");
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                book=rechercheLivreTitre_H(BibH,entree);
+                if (book){
+                    printf("Oeuvre trouvé !\n");
+                    afficherLivre_H(book);
+                    break;
+                }
+                printf("L'oeuvre %s n'existe pas.\n",entree);
+                break;
+            case 5:
+                printf("Veuillez entree le nom de l'auteur.\n");
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                BiblioH *Bibauteur=LivresAuteurs_H(BibH,entree);
+                if(Bibauteur->nE!=0){
+                    printf("Livres de l'auteur trouvé !\n");
+                    afficherBiblio_H(Bibauteur);
                     
-    //                 break;
-    //             }
-    //             printf("Il n'y a pas de livre écris par cet auteur !\n");
-    //             break;
-    //         case 6:
-    //             printf("Veuillez entree le numero le titre et l'auteur de l'ouvrage a supprimé\n");
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
+                    break;
+                }
+                printf("Il n'y a pas de livre écris par cet auteur !\n");
+                break;
+            case 6:
+                printf("Veuillez entree le numero le titre et l'auteur de l'ouvrage a supprimé\n");
+                entree=fgets(buffer,BUFFERSIZE,stdin);
 
-    //             num=atoi(entree);
-    //             if(entree[0]=='\n'|| num==0){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }              
-    //             strcpy(titre,entree);
-    //             entree=fgets(buffer,BUFFERSIZE,stdin);
-    //             if(entree[0]=='\n'){
-    //                 printf("Erreur format\n");
-    //                 break;
-    //             }
-    //             strcpy(auteur,entree);
-    //             printf("Supression en cours du livre de numero %d de nom %s d'auteur %s \n",num,titre,auteur);
-    //             supprimerLivre_LC(B,num,titre,auteur);
-    //             //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
+                num=atoi(entree);
+                if(entree[0]=='\n'|| num==0){
+                    printf("Erreur format\n");
+                    break;
+                }
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }              
+                strcpy(titre,entree);
+                entree=fgets(buffer,BUFFERSIZE,stdin);
+                if(entree[0]=='\n'){
+                    printf("Erreur format\n");
+                    break;
+                }
+                strcpy(auteur,entree);
+                printf("Supression en cours du livre de numero %d de nom %s d'auteur %s \n",num,titre,auteur);
+                supprimerLivre_H(BibH,num,titre,auteur);
+                //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
+            case 7:
+                if(ClassiqueH){
+                    BibH=fusion_H(BibH,ClassiqueH);
+                    printf("Fusion realiser !\n");
+                    break;
+                }else{
+                    printf("Fusion impossible bibliotheque inexistante.\n");
+                    break;
+                }
+            case 8:
+                BiblioH * doublonH=RecherchePlusieurs_H(BibH);
+                if(doublonH->nE!=0){
+                    printf("Affichage des livres doublons\n");
+                    afficherBiblio_H(doublonH);
+                    break;
+                }else{
+                    printf("Il n'y a pas de doublon dans la bibliotheque.\n");
+                    break;
+                }
             
-<<<<<<< HEAD
             }
         }while (rep!=0);
     }else{
         printf("Erreur format\n");
         return 0;
     }
-=======
-    //     }} while (rep!=0);
-        
-    // }else{
-    //     printf("Erreur format\n");
-    //     return 0;
-    // }
-    
-    }
-    
->>>>>>> 3af89223317b596e105e923e8012163d6058de35
     return 0;
 }
