@@ -181,18 +181,28 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH* livreActuel = b->T[i];
         while (livreActuel){
+            int trouve = 0;
+
             for (int j=0; j<bibliodoublon->m; j++){
                 LivreH* livreCompare = bibliodoublon->T[j];
                 while (livreCompare){
-                    if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){
+                    if (livreActuel->num == livreCompare->num && strcmp(livreActuel->auteur, livreCompare->auteur) == 0 && strcmp(livreActuel->titre, livreCompare->titre) == 0){
+                        trouve = 1;
                         break;
                     }
-                    inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
                     livreCompare = livreCompare->suivant;
                 }
+                if (trouve) {
+                    break;
+                }
+            }
+
+            if (!trouve) {
+                inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
             }
             livreActuel = livreActuel->suivant;
         }
     }
+
     return bibliodoublon;
 }
