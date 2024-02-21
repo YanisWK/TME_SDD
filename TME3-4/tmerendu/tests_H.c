@@ -7,19 +7,19 @@ int main(){
     BiblioH *b1 = creer_biblio_H(50);
     inserer(b1, 1, "Ascent", "Phoenix");
     inserer(b1, 2, "Lotus", "Raze");
-    afficherBiblio_H(b1);
+    // afficherBiblio_H(b1);
     printf("\n");
 
     // Recherche de livre par titre (l1) et par numéro (l2)
-    LivreH *l1 = rechercheLivreTitre_H(b1, "Lotus"), *l2 = rechercheLivreNum_H(b1, 2);
-    printf("Recherche par titre:\n");
-    afficherLivre_H(l1);
-    printf("\n");
-    printf("Recherche par numéro:\n");
-    afficherLivre_H(l2);
-    printf("\n");
+    // LivreH *l1 = rechercheLivreTitre_H(b1, "Lotus"), *l2 = rechercheLivreNum_H(b1, 2);
+    // printf("Recherche par titre:\n");
+    // afficherLivre_H(l1);
+    // printf("\n");
+    // printf("Recherche par numéro:\n");
+    // afficherLivre_H(l2);
+    // printf("\n");
 
-    BiblioH *b2 = creer_biblio_H(5); 
+    BiblioH *b2 = creer_biblio_H(50); 
     inserer(b2, 3, "Haven", "Omen");
     inserer(b2, 4, "Breeze", "Yoru");
     printf("\n");
@@ -41,22 +41,25 @@ int main(){
     inserer(bchargee, 5, "Lotus", "Raze");
     inserer(bchargee, 6, "Breeze", "Yoru");
 
+    afficherBiblio_H(bchargee);
+
+
     // Recherche d'exemplaires dans la bibliothèque bchargee
     BiblioH *bdouble = RecherchePlusieurs_H(bchargee);
     printf("Bibliothèque des livres à plusieurs exemplaires:\n");
     afficherBiblio_H(bdouble);
 
-    // Suppression d'un livre
-    supprimerLivre_H(bchargee, 4, "Breeze", "Yoru");
-    printf("Suppression d'un livre de la bibliothèque bchargee:\n");
-    afficherBiblio_H(bchargee);
-    printf("\n");
+    // // Suppression d'un livre
+    // supprimerLivre_H(bchargee, 4, "Breeze", "Yoru");
+    // printf("Suppression d'un livre de la bibliothèque bchargee:\n");
+    // afficherBiblio_H(bchargee);
+    // printf("\n");
 
-    // Libération de la mémoire
-    liberer_biblio_H(b1);
-    liberer_biblio_H(bfusion);
-    liberer_biblio_H(bchargee);
-    liberer_biblio_H(bdouble);
+    // // Libération de la mémoire
+    // liberer_biblio_H(b1);
+    // liberer_biblio_H(bfusion);
+    // liberer_biblio_H(bchargee);
+    // liberer_biblio_H(bdouble);
 
     return 0;
 }

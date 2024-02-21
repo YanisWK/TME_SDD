@@ -1,5 +1,5 @@
 #CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter
-CFLAGS = -g -Wno-unused-parameter 
+CFLAGS = -ggdb -Wno-unused-parameter 
 CC = gcc
 
 PROGRAMS =   Biblio compare tests_LC tests_H
