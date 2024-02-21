@@ -10,7 +10,7 @@ typedef struct livre {
 } Livre ;
 
 typedef struct{ /* Tete fictive */
-    Livre * L ; /* Premier element */
+    Livre * L; /* Premier element */
 } Biblio ;
 
 Livre* creer_livre_LC(int num,char* titre,char* auteur);

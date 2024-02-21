@@ -15,12 +15,14 @@ int fonctionClef(char *auteur){
 
 LivreH *creer_livre_H(int num, char *titre, char *auteur){
     LivreH *new = malloc(sizeof(LivreH));
+    if (!new) {
+        return NULL;
+    }
     new->clef = fonctionClef(auteur);
     new->num = num;
     new->titre = strdup(titre); 
     new->auteur = strdup(auteur);
     new->suivant = NULL;
-
     return new;
 }
 
@@ -42,7 +44,6 @@ BiblioH *creer_biblio_H(int m){
 
     new->T = (LivreH**)malloc(m * sizeof(LivreH*));
     if (new->T == NULL){
-        free(new->T); 
         free(new);
         return NULL;
     }
@@ -67,6 +68,8 @@ void liberer_biblio_H(BiblioH *b){
                 liberer_livre_H(tmp);
             }
         }
+        free(b->T); 
+        free(b);
     }
 }
 
@@ -79,7 +82,10 @@ int fonctionHachage(int cle, int m){
 
 void inserer(BiblioH *b, int num, char *titre, char *auteur){
     int ind=fonctionHachage(fonctionClef(auteur), b->m);
-    LivreH* new = creer_livre_H(num, titre, auteur);
+    LivreH* new = malloc(sizeof(LivreH));
+    new->num=num;
+    new->titre=titre;
+    new->auteur=auteur;
     new->suivant = b->T[ind];
     b->T[ind] = new;
     b->nE++; //nb d'éléments+1
@@ -186,6 +192,9 @@ BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
             LivreH* tmp=cour; // on supprime un par un les livres de b2
             cour = cour->suivant;            
             inserer(b1, tmp->num, tmp->titre, tmp->auteur);
+            free(tmp->titre); 
+            free(tmp->auteur); 
+            free(tmp);
         }
     }
     liberer_biblio_H(b2);
