@@ -37,6 +37,8 @@ int main(){
     afficherBiblio_LC(bchargee);
     printf("\n");
 
+    inserer_en_tete_LC(bchargee, 5, "Lotus", "Raze");
+    inserer_en_tete_LC(bchargee, 6, "Breeze", "Yoru");
     // Recherche d'exemplaires dans la bibliothèque bchargee
     Biblio *bdouble = RecherchePlusieurs_LC(bchargee);
     printf("Bibliothèque des livres à plusieurs exemplaires:\n");

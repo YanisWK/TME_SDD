@@ -185,12 +185,13 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
                 LivreH* livreCompare = bibliodoublon->T[j];
                 while (livreCompare){
                     if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){
-                        inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
                         break;
                     }
+                    inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
                     livreCompare = livreCompare->suivant;
                 }
-            }livreActuel = livreActuel->suivant;
+            }
+            livreActuel = livreActuel->suivant;
         }
     }
     return bibliodoublon;

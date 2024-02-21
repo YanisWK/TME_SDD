@@ -37,8 +37,12 @@ int main(){
     afficherBiblio_H(bchargee);
     printf("\n");
 
+    
+    inserer(bchargee, 5, "Lotus", "Raze");
+    inserer(bchargee, 6, "Breeze", "Yoru");
+
     // Recherche d'exemplaires dans la bibliothèque bchargee
-    BiblioH *bdouble = RecherchePlusieurs_H(bdouble);
+    BiblioH *bdouble = RecherchePlusieurs_H(bchargee);
     printf("Bibliothèque des livres à plusieurs exemplaires:\n");
     afficherBiblio_H(bdouble);
 
