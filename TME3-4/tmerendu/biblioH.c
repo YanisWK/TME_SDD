@@ -202,7 +202,7 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH* livreActuel = b->T[i];
         while (livreActuel){
-            for (int j=0; j<bibliodoublon->m; j++){
+            for (int j=0; j<b->m; j++){
                 LivreH* livreCompare = b->T[j];
                 while (livreCompare){
                     if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){                        
