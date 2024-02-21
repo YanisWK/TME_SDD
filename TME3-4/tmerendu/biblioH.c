@@ -84,8 +84,8 @@ void inserer(BiblioH *b, int num, char *titre, char *auteur){
     int ind=fonctionHachage(fonctionClef(auteur), b->m);
     LivreH* new = malloc(sizeof(LivreH));
     new->num=num;
-    new->titre=titre;
-    new->auteur=auteur;
+    new->titre=strdup(titre);
+    new->auteur=strdup(auteur);
     new->suivant = b->T[ind];
     b->T[ind] = new;
     b->nE++; //nb d'éléments+1
@@ -192,9 +192,6 @@ BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
             LivreH* tmp=cour; // on supprime un par un les livres de b2
             cour = cour->suivant;            
             inserer(b1, tmp->num, tmp->titre, tmp->auteur);
-            free(tmp->titre); 
-            free(tmp->auteur); 
-            free(tmp);
         }
     }
     liberer_biblio_H(b2);
@@ -207,24 +204,15 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
     for (int i=0; i<b->m; i++){
         LivreH* livreActuel = b->T[i];
         while (livreActuel){
-            int trouve = 0;
-
             for (int j=0; j<bibliodoublon->m; j++){
                 LivreH* livreCompare = bibliodoublon->T[j];
                 while (livreCompare){
-                    if (livreActuel->num == livreCompare->num && strcmp(livreActuel->auteur, livreCompare->auteur) == 0 && strcmp(livreActuel->titre, livreCompare->titre) == 0){
-                        trouve = 1;
-                        break;
+                    if (livreActuel->num != livreCompare->num &&strcmp(livreActuel->auteur, livreCompare->auteur) == 0 &&strcmp(livreActuel->titre, livreCompare->titre) == 0){                        
+                         inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
+                         break;
                     }
                     livreCompare = livreCompare->suivant;
                 }
-                if (trouve) {
-                    break;
-                }
-            }
-
-            if (!trouve) {
-                inserer(bibliodoublon, livreActuel->num, livreActuel->titre, livreActuel->auteur);
             }
             livreActuel = livreActuel->suivant;
         }
@@ -232,3 +220,6 @@ BiblioH* RecherchePlusieurs_H(BiblioH *b){
 
     return bibliodoublon;
 }
+
+
+
