@@ -35,21 +35,31 @@ void liberer_livre_H(LivreH *l){
 
 BiblioH *creer_biblio_H(int m){
     BiblioH *new = malloc(sizeof(BiblioH));
-    if (new == NULL){
-        exit(EXIT_FAILURE);
+    if (!new){
+        free(new); 
+        return NULL;
     }
 
     new->T = (LivreH**)malloc(m * sizeof(LivreH*));
     if (new->T == NULL){
-        free(new);  
-        exit(EXIT_FAILURE);
+        free(new->T); 
+        free(new);
+        return NULL;
     }
+
+    new->m = m;
+    new->nE = 0;
+
+    for (int i=0; i<m; i++){
+        new->T[i] = NULL;
+    }
+
     return new;
 }
 
-void liberer_biblio_H(BiblioH *b) {
+void liberer_biblio_H(BiblioH *b){
     if (b){
-        for (int i = 0; i < b->m; i++){
+        for (int i = 0; i<b->m; i++){
             LivreH *cour = b->T[i];
             while (cour){
                 LivreH* tmp = cour;
