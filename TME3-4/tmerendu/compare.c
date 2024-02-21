@@ -7,6 +7,7 @@
 
 #define TAILLE 10
 #define BUFFERSIZE 256
+#define THACHAGE 80000
 
 
 void menu(){
@@ -137,27 +138,23 @@ int main(){
                 printf("Pire temps de recherche par auteur en LC : %.12fs\n", LCautworst);
 
 
-                liberer_livre_H(rec1);
-                liberer_livre_H(rec2);
-                liberer_livre_LC(rec3);
-                liberer_livre_LC(rec4);
-                liberer_livre_H(rec5);
-                liberer_livre_H(rec6);
-                liberer_livre_LC(rec7);
-                liberer_livre_LC(rec8);
                 liberer_biblio_H(rec9);
                 liberer_biblio_H(rec10);
                 liberer_biblio_LC(rec11);
                 liberer_biblio_LC(rec12);
+                liberer_biblio_H(H);
+                liberer_biblio_LC(LC);
 
                 break;
 
             case 2:
                 int n=1000;
-                FILE * f=fopen("fichier.txt","w");
-                while(n<=20000){
-                    Biblio * BibLC=charger_n_entrees_LC("GdeBiblio.txt",n);
-                    BiblioH * BibH=charger_n_entrees_H("GdeBiblio.txt",n,20000);
+                FILE * f=fopen("comparaison.txt","w");
+                Biblio * BibLC=creer_biblio_LC();
+                BiblioH * BibH=creer_biblio_H(THACHAGE);
+                while(n<=50000){
+                    BibLC=charger_n_entrees_LC("GdeBiblio.txt",n);
+                    BibH=charger_n_entrees_H("GdeBiblio.txt",n,THACHAGE);
 
                     clock_t beginLC=clock();
                     RecherchePlusieurs_LC(BibLC);
@@ -172,12 +169,12 @@ int main(){
                     double timeH=(double)(endH-beginH)/CLOCKS_PER_SEC;
                     
                     fprintf(f,"%d %.5f %.5f\n",n,timeH,timeLC);
-                    n+=1000;
+                    n+=100;
                 }
+                liberer_biblio_H(BibH);
+                liberer_biblio_LC(BibLC);
                 break;
         }
-    
-    
 }while(rep!=0);
 
     return 0;

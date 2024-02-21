@@ -36,13 +36,13 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    Biblio * ClassiqueLC =charger_n_entrees_LC("saved.txt",6);
-    BiblioH * ClassiqueH=charger_n_entrees_H("saved.txt",6,40);
+    Biblio * ClassiqueLC =charger_n_entrees_LC("chargeLC.txt",6);
+    BiblioH * ClassiqueH=charger_n_entrees_H("chargeH.txt",6,40);
 
     Biblio *BibLC = charger_n_entrees_LC(argv[1],atoi(argv[2]));
     BiblioH *BibH=charger_n_entrees_H(argv[1],atoi(argv[2]),100);
 
-    int done=0;
+    int FusionIsdone=0;
 
     //afficherBiblio_H(ClassiqueH);
 
@@ -168,11 +168,11 @@ int main(int argc, char** argv){
                 supprimerLivre_LC(BibLC,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
             case 7:
-                if(done==0){
+                if(FusionIsdone==0){
                     fusion_LC(BibLC,ClassiqueLC);
                     printf("Fusion realiser !\n");
                     afficherBiblio_LC(BibLC);
-                    done=1;
+                    FusionIsdone=1;
                     break;
                     
                 }else{
@@ -311,11 +311,11 @@ int main(int argc, char** argv){
                 supprimerLivre_H(BibH,num,titre,auteur);
                 //printf("Si le livre etait bien dans la bibliotheque et bien il n'y est plu\n");
             case 7:
-                if(done==0){
+                if(FusionIsdone==0){
                     fusion_H(BibH,ClassiqueH);
                     printf("Fusion realiser !\n");
                     afficherBiblio_H(BibH);
-                    done=1;
+                    FusionIsdone=1;
                     break;
                     
                 }else{
@@ -338,10 +338,20 @@ int main(int argc, char** argv){
         }while (rep!=0);
     }else{
         printf("Erreur format\n");
-
-        return 0;
     }
 
+    liberer_biblio_H(BibH);
+    liberer_biblio_LC(BibLC);
+    if(FusionIsdone==1){
+        if (choix==1){
+            liberer_biblio_H(ClassiqueH);
+        }else{
+            liberer_biblio_LC(ClassiqueLC);
+        }
+    }else{
+        liberer_biblio_H(ClassiqueH);
+        liberer_biblio_LC(ClassiqueLC);
+    }
 
     return 0;
 }
