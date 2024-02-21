@@ -4,7 +4,7 @@
 int main(){
 
     // Création d'une bibliothèque biblio_LC
-    BiblioH *b1 = creer_biblio_H(5);
+    BiblioH *b1 = creer_biblio_H(50);
     inserer(b1, 1, "Ascent", "Phoenix");
     inserer(b1, 2, "Lotus", "Raze");
     afficherBiblio_H(b1);
@@ -54,7 +54,6 @@ int main(){
 
     // Libération de la mémoire
     liberer_biblio_H(b1);
-    liberer_biblio_H(b2);
     liberer_biblio_H(bfusion);
     liberer_biblio_H(bchargee);
     liberer_biblio_H(bdouble);

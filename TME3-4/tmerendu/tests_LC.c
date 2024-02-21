@@ -53,9 +53,9 @@ int main(){
     // Libération de la mémoire
     liberer_biblio_LC(b1);
     liberer_biblio_LC(b2);
-    liberer_biblio_LC(bfusion);
-    liberer_biblio_LC(bchargee);
     liberer_biblio_LC(bdouble);
+    liberer_biblio_LC(bchargee);
+    liberer_biblio_LC(bfusion);
 
     return 0;
 }

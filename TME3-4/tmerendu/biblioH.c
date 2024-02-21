@@ -35,27 +35,30 @@ void liberer_livre_H(LivreH *l){
 
 BiblioH *creer_biblio_H(int m){
     BiblioH *new = malloc(sizeof(BiblioH));
-    new->nE = 0;
-    new->m = m;
-    new->T = (LivreH**)malloc(m*sizeof(LivreH*));
-    for (int i=0; i<m; i++){
-        new->T[i] = NULL;
+    if (new == NULL){
+        exit(EXIT_FAILURE);
     }
-    return new;
+
+    new->T = (LivreH**)malloc(m * sizeof(LivreH*));
+    if (new->T == NULL){
+        free(new);  
+        exit(EXIT_FAILURE);
+    }
 }
 
-void liberer_biblio_H(BiblioH *b){
-    for (int i=0; i<b->m; i++){
-        LivreH *cour = b->T[i];
-        while (cour){
-            LivreH* tmp = cour;
-            cour = cour->suivant;
-            liberer_livre_H(tmp);
+void liberer_biblio_H(BiblioH *b) {
+    if (b){
+        for (int i = 0; i < b->m; i++){
+            LivreH *cour = b->T[i];
+            while (cour){
+                LivreH* tmp = cour;
+                cour = cour->suivant;
+                liberer_livre_H(tmp);
+            }
         }
     }
-    free(b->T);
-    free(b);
 }
+
 
 int fonctionHachage(int cle, int m){ 
     //cle est un appel à la fonction fonctionClef de l'auteur recherché
@@ -161,17 +164,20 @@ void supprimerLivre_H(BiblioH *b, int num, char *titre, char *auteur){
 }
 
 BiblioH* fusion_H(BiblioH *b1,BiblioH *b2){
+    if (b2->m == 0){
+        liberer_biblio_H(b2);
+        return b1;
+    }
+
     for (int i=0; i<b2->m; i++){
-        LivreH* l = b2->T[i];
-        while (l){
-            inserer(b1, l->num, l->titre, l->auteur);
-            LivreH* tmp=l; //supprime un par un les livres de b2
-            l = l->suivant;
-            liberer_livre_H(tmp);
+        LivreH* cour = b2->T[i];
+        while (cour){
+            LivreH* tmp=cour; // on supprime un par un les livres de b2
+            cour = cour->suivant;            
+            inserer(b1, tmp->num, tmp->titre, tmp->auteur);
         }
     }
-    free(b2->T);
-    free(b2);
+    liberer_biblio_H(b2);
     return b1;
 }
 
