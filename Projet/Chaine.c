@@ -56,7 +56,6 @@ void inserer_finCC(CellChaine *Lchaine,int num,CellPoint *points){
 }
 
 
-
 Chaines* lectureChaines(FILE *f){
     if(f==NULL){
         return NULL;
@@ -83,26 +82,44 @@ Chaines* lectureChaines(FILE *f){
         CellChaine* cc =malloc(sizeof(CellChaine));
         cc->numero = numero;
         cc->points = NULL;
+        
+        double x, y;
+        sscanf(buffer,"%*d %*d %lf %lf", &x, &y);
 
         for (int j=0; j<nbPoints; j++){
-            double x, y;
-            sscanf(buffer,"%.2f %.2f", x, y);
 
             CellPoint* cp =malloc(sizeof(CellPoint));
             cp->x = x;
             cp->y = y;
             cp->suiv = NULL;
 
-            CellPoint *cc_points = cc->points;
-            cc_points =cp;
-            cc_points=cc_points->suiv;
+            CellPoint* cc_points = cc->points;
 
+            //mettre le point en fin de la liste de CellPoints 
+            if (!cc_points){
+                cc->points =cp;
+            }else{
+                CellPoint* tmp = cc->points;
+                while (tmp->suiv){
+                    tmp = tmp->suiv;
+                }
+                tmp->suiv = cp;
+            }
+
+            sscanf(buffer, "%*f %*f %lf %lf", &x, &y);
         }
-
-        c->chaines = cc;
-
+        
+        //mettre la chaine en fin de la liste de Chaines
+        if (!c->chaines){
+                c->chaines =cc;
+        }else{
+                CellChaine* tmp = c->chaines;
+                while (tmp->suiv){
+                    tmp = tmp->suiv;
+                }
+                tmp->suiv = cc;
+        }
     }
-
-
+    
     return c;
 }
