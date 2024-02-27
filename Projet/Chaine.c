@@ -1,4 +1,6 @@
 #include "Chaine.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define BUFFERSIZE 256
 
@@ -67,4 +69,12 @@ Chaines * lectureChaines(FILE *f){
     fgets(buffer,BUFFERSIZE,f);
     sscanf(buffer,"Gamma: %d",&Gamma);
 
+    Chaines* c =malloc(sizeof(Chaines));
+    c->gamma = Gamma;
+    c->nbChaines = nbChain;
+    c->chaines = NULL;  
+
+
+
+    return c;
 }

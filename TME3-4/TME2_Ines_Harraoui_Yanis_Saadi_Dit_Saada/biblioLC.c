@@ -239,10 +239,11 @@ Biblio* RecherchePlusieurs_LC(Biblio* b){
     Paramètre:
     b: bibliothèque d'origine
     */
+
     Biblio* Bibliodoublon = creer_biblio_LC();
     Livre* Livreactuel = b->L;
 
-    while (Livreactuel) {
+    while (Livreactuel){
         Livre* Livrecompare = b->L;
         while (Livrecompare){
             if (Livreactuel->num != Livrecompare->num && strcmp(Livreactuel->auteur, Livrecompare->auteur) == 0 &&

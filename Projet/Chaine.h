@@ -23,9 +23,9 @@ typedef struct {
 } Chaines;
 
 Chaines* lectureChaines(FILE *f);
-void ecrireChaines(Chaines *C, FILE *f);
-void afficheChainesSVG(Chaines *C, char* nomInstance);
-double longueurTotale(Chaines *C);
-int comptePointsTotal(Chaines *C);
+// void ecrireChaines(Chaines *C, FILE *f);
+// void afficheChainesSVG(Chaines *C, char* nomInstance);
+// double longueurTotale(Chaines *C);
+// int comptePointsTotal(Chaines *C);
 
 #endif	
