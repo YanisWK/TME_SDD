@@ -9,18 +9,7 @@ int main() {
 
     CellChaine *cr = c->chaines;
 
-    while (cr){
-        printf("\nChaine %d:\n", cr->numero);
+    
 
-        CellPoint *cp = cr->points;
-
-        while (cp){
-            printf("Point (%.2f, %.2f)\n", cp->x, cp->y);
-            cp = cp->suiv;
-        }
-        cr = cr->suiv;
-    }
-
-    fclose(f);
     return 0;
 }
