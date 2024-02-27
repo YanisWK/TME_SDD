@@ -24,9 +24,10 @@ Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
     new->gamma=gamma;
     new->nbChaines=nbChaines;
     new->chaines=chaines;
+    return new;
     }
 
-void *inserer_fin(CellPoint *points,double x,double y){
+void *inserer_finCP(CellPoint *points,double x,double y){
     CellPoint * point=creer_CellPoint(x,y);
     CellPoint * tmp=points;
     if(!tmp){
@@ -38,6 +39,21 @@ void *inserer_fin(CellPoint *points,double x,double y){
     }
     tmp->suiv=point;
 }
+
+void *inserer_finCC(CellChaine *Lchaine,int num,CellPoint *points){
+    CellChaine *chaine=creer_CellChaine(num,points);
+    CellChaine *tmp=Lchaine;
+    if(!tmp){
+        Lchaine=chaine;
+        return;
+    }
+    while(tmp->suiv){
+        tmp=tmp->suiv;
+    }
+    tmp->suiv=chaine;
+}
+
+
 
 Chaines * lectureChaines(FILE *f){
     if(f==NULL){
