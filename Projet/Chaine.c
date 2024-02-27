@@ -71,9 +71,9 @@ Chaines* lectureChaines(FILE *f){
 
 
     Chaines* c =malloc(sizeof(Chaines));
-    c->gamma = Gamma;
-    c->nbChaines = nbChain;
-    c->chaines = NULL; 
+    c->gamma =Gamma;
+    c->nbChaines =nbChain;
+    c->chaines =NULL; 
 
     for (int i=0; i<nbChain; i++){
         fgets(buffer, BUFFERSIZE, f);
@@ -86,9 +86,21 @@ Chaines* lectureChaines(FILE *f){
 
         for (int j=0; j<nbPoints; j++){
             double x, y;
-            sscanf(buffer, "%.2f %.2f");
+            sscanf(buffer,"%.2f %.2f", x, y);
+
+            CellPoint* cp =malloc(sizeof(CellPoint));
+            cp->x = x;
+            cp->y = y;
+            cp->suiv = NULL;
+
+            CellPoint *cc_points = cc->points;
+            cc_points =cp;
+            cc_points=cc_points->suiv;
 
         }
+
+        c->chaines = cc;
+
     }
 
 

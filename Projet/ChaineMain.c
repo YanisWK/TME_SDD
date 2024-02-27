@@ -7,9 +7,9 @@ int main() {
 
     printf("Nombre de chaines : %d\nGamma : %d\n", c->nbChaines, c->gamma);
 
-    CellChaine *cr = c->chaines;
+    CellChaine *cc = c->chaines;
 
     
 
-    return 0;
+    fclose(f);
 }
