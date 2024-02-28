@@ -57,6 +57,16 @@ CellChaine * inserer_finCC(CellChaine *Lchaine,int num,CellPoint *points){
     return Lchaine;
 }
 
+int nbPoints(CellPoint * points){
+    int nb=0;
+    CellPoint* tmp =points;
+    while (tmp){
+        nb+=1;
+        tmp=tmp->suiv; 
+    }
+    return nb;
+}
+
 
 Chaines* lectureChaines(FILE *f){
     if(f==NULL){
@@ -89,3 +99,25 @@ Chaines* lectureChaines(FILE *f){
     
     return c;
 }
+
+void ecrireChaines(Chaines *C, FILE *f){
+    if(!f){
+        printf("Fichier inexistant.");
+        return;
+    }
+    CellChaine * chainesC = C->chaines;
+    int Gamma = C->gamma;
+    int nbChaines=C->nbChaines;
+    int num;
+    int nbPoints;
+    fscanf(f,"NbChain: %d\n",nbChaines);
+    fscanf(f,"Gamma: %d\n",Gamma);
+    while(chainesC){
+        num=chainesC->numero;
+        nbPoints=chainesC->
+        fscanf("%d %d")
+    }
+
+
+}
+
