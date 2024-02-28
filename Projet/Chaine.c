@@ -109,15 +109,19 @@ void ecrireChaines(Chaines *C, FILE *f){
     int Gamma = C->gamma;
     int nbChaines=C->nbChaines;
     int num;
-    int nbPoints;
+    int nbPc;
     fscanf(f,"NbChain: %d\n",nbChaines);
     fscanf(f,"Gamma: %d\n",Gamma);
     while(chainesC){
         num=chainesC->numero;
-        nbPoints=chainesC->
-        fscanf("%d %d")
+        CellPoint * points=chainesC->points;
+        nbPc=nbPoints(points);
+        fscanf("%d %d ",num,nbPc);
+        while(points){
+            fscanf("%lf %lf ",points->x,points->y);
+            points=points->suiv;
+        }
+        fscanf("\n");
     }
-
-
 }
 
