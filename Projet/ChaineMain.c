@@ -1,5 +1,4 @@
 #include "Chaine.h"
-#include "Chaine.c"
 
 int main() {
     FILE *f = fopen("00014_burma.cha", "r");
@@ -8,6 +7,9 @@ int main() {
 
     printf("Nb de chaines : %d\nGamma : %d\n", c->nbChaines, c->gamma);
     CellChaine* cc = c->chaines;
+    if(!cc){
+        printf("Chaine vide");
+    }
     while(cc){
         printf("Chaine %d:\n", cc->numero);
         CellPoint *cp = cc->points;
@@ -18,7 +20,7 @@ int main() {
         printf("\n");
         cc = cc->suiv;
     }
-        
+    
 
     fclose(f);
 }
