@@ -116,12 +116,12 @@ void ecrireChaines(Chaines *C, FILE *f){
         num=chainesC->numero;
         CellPoint * points=chainesC->points;
         nbPc=nbPoints(points);
-        fscanf("%d %d ",num,nbPc);
+        fscanf(f,"%d %d ",num,nbPc);
         while(points){
-            fscanf("%lf %lf ",points->x,points->y);
+            fscanf(f,"%lf %lf ",points->x,points->y);
             points=points->suiv;
         }
-        fscanf("\n");
+        fscanf(f,"\n");
     }
 }
 
