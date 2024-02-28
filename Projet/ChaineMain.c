@@ -8,7 +8,7 @@ int main() {
     printf("Nb de chaines : %d\nGamma : %d\n", c->nbChaines, c->gamma);
     CellChaine* cc = c->chaines;
     if(!cc){
-        printf("Chaine vide");
+        printf("Chaine vide\n");
     }
     while(cc){
         printf("Chaine %d:\n", cc->numero);
