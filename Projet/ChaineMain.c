@@ -1,5 +1,4 @@
-#include "Chaine.c"
-#include "SVGwriter.c"
+#include "Chaine.h"
 
 int main() {
     FILE *f = fopen("00014_burma.cha", "r");

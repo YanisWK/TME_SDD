@@ -31,32 +31,18 @@ Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
     return new;
     }
 
-CellPoint * inserer_finCP(CellPoint *points,double x,double y){
+
+
+CellPoint * inserer_teteCP(CellPoint *points,double x,double y){
     CellPoint * point=creer_CellPoint(x,y);
-    CellPoint * tmp=points;
-    if(!tmp){
-        points=creer_CellPoint(x,y);
-        return points;
-    }
-    while(tmp->suiv){
-        tmp=tmp->suiv;
-    }
-    tmp->suiv=point;
-    return points;
+    point->suiv=points;
+    return point;
 }
 
-CellChaine * inserer_finCC(CellChaine *Lchaine,int num,CellPoint *points){
+CellChaine * inserer_teteCC(CellChaine *Lchaine,int num,CellPoint *points){
     CellChaine *chaine=creer_CellChaine(num,points);
-    CellChaine *tmp=Lchaine;
-    if(tmp==NULL){
-        Lchaine=creer_CellChaine(num,points);
-        return Lchaine;
-    }
-    while(tmp->suiv){
-        tmp=tmp->suiv;
-    }
-    tmp->suiv=chaine;
-    return Lchaine;
+    chaine->suiv=Lchaine;
+    return chaine;
 }
 
 int nbPoints(CellPoint * points){
@@ -92,10 +78,10 @@ Chaines* lectureChaines(FILE *f){
             double x, y;
             sscanf(buffer,"%lf %lf %[^\n]", &x, &y,buffer);
             //mettre le point en fin de la liste de CellPoints 
-            points=inserer_finCP(points,x,y);
+            points=inserer_teteCP(points,x,y);
         }
         //mettre la chaine en fin de la liste de Chaines
-        chaines=inserer_finCC(chaines,numero,points);
+        chaines=inserer_teteCC(chaines,numero,points);
     }
     Chaines *c=creer_Chaine(Gamma,nbChain,chaines);
     
