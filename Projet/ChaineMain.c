@@ -23,6 +23,7 @@ int main() {
 
 
     afficheChainesSVG(c, "00014_burma.cha");
+    printf("nombre occurences : %d\n", comptePointsTotal(c));
 
     fclose(f);
 }
