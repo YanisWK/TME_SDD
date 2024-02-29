@@ -152,6 +152,32 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
     SVGfinalize(&svg);
 }
 
+double longueurChaine(CellChaine *c){
+    double distance;
+    CellPoint * points=c->points;
+    while(points->suiv){
+        double xA=points->x;
+        double yA=points->y;
+        double xB=points->suiv->x;
+        double yB=points->suiv->y;
+        distance+=sqrt(pow(xB-xA,2)+pow(yB-yA,2));
+        points=points->suiv;
+    }
+    return distance;
+}
+
+
+double longueurTotale(Chaines *C){
+    double distanceTot;
+    CellChaine * chaines=C->chaines;
+    while(chaines){
+        distanceTot+=longueurChaine(chaines);
+        chaines=chaines->suiv;
+    }
+    return distanceTot;
+}
+
+
 int comptePointsTotal(Chaines *C){
     int oc=0;
     if (C){
