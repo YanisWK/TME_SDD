@@ -2,6 +2,7 @@
 #include "SVGwriter.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define BUFFERSIZE 256
 
@@ -127,7 +128,6 @@ void ecrireChaines(Chaines *C, FILE *f){
 }
 
 void afficheChainesSVG(Chaines *C, char* nomInstance){
-    int i;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
     CellChaine *ccour;
     CellPoint *pcour;
@@ -164,4 +164,23 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
         ccour=ccour->suiv;
     }
     SVGfinalize(&svg);
+}
+
+int comptePointsTotal(Chaines *C){
+    int oc=0;
+    if (C){
+        while (C->chaines){
+            while (C->chaines->points){
+                CellPoint *actuel = C->chaines->points;
+                while (actuel->suiv){
+                    CellPoint *compare = actuel->suiv;
+                    if (actuel->x == compare->x && actuel->y == compare->y){
+                        oc+=1;
+                    }
+                    compare=compare->suiv;
+                }
+            }
+        }
+    }
+    return oc;
 }
