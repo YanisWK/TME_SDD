@@ -12,13 +12,6 @@ all: $(PROGRAMS)
 ChaineMain: Chaine.o ChaineMain.o SVGwriter.o
 	$(CC) -o $@ $(CFLAGS) $^ -lm
 
-<<<<<<< HEAD
-Chaine.o: Chaine.c
-	gcc $(CFLAGS) -c Chaine.c -lm
-
-SVGwriter.o: SVGwriter.c
-	$(CC) $(CFLAGS) -c compare.c
-=======
 ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h
 	gcc $(CFLAGS) -c ChaineMain.c 
 
@@ -27,7 +20,6 @@ Chaine.o: Chaine.c Chaine.h
 
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	$(CC) $(CFLAGS) -c SVGwriter.c
->>>>>>> 78fb38b0f3daaa5401837fc898928868e811fcd6
 
 clean:
 	rm -f *.o *~ $(PROGRAMS) 
