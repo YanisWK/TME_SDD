@@ -167,7 +167,7 @@ int comptePointsTotal(Chaines *C){
                 }
                 actuel = actuel->suiv;
             }
-            C->chaines=(C->chaines->suiv;
+            C->chaines=C->chaines->suiv;
         }
     }
     return oc;
