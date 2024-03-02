@@ -1,5 +1,5 @@
 #CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter
-CFLAGS = -ggdb -Wno-unused-parameter 
+CFLAGS = -ggdb -Wall -Wno-unused-parameter 
 CC = gcc
 
 PROGRAMS =   ChaineMain
