@@ -9,17 +9,20 @@ PROGRAMS =   ChaineMain
 all: $(PROGRAMS)
 
 
-ChaineMain: Chaine.o ChaineMain.o SVGwriter.o
+ChaineMain: Chaine.o ChaineMain.o SVGwriter.o reseau.o
 	$(CC) -o $@ $(CFLAGS) $^ -lm
 
-ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h
-	gcc $(CFLAGS) -c ChaineMain.c 
+ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h reseau.h
+	gcc $(CFLAGS) -c ChaineMain.c  -lm
 
 Chaine.o: Chaine.c Chaine.h
 	gcc $(CFLAGS) -c Chaine.c -lm
 
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	$(CC) $(CFLAGS) -c SVGwriter.c
+
+reseau.o: reseau.c reseau.h
+	$(CC) $(CFLAGS) -c reseau.c
 
 clean:
 	rm -f *.o *~ $(PROGRAMS) 

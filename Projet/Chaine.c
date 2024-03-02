@@ -180,20 +180,34 @@ double longueurTotale(Chaines *C){
 
 int comptePointsTotal(Chaines *C){
     int oc=0;
+    CellChaine *chaines = C->chaines;
+    
     if (C){
-        while (C->chaines){
-            while (C->chaines->points){
-                CellPoint *actuel = C->chaines->points;
-                while (actuel->suiv){
-                    CellPoint *compare = actuel->suiv;
-                    if (actuel->x == compare->x && actuel->y == compare->y){
-                        oc+=1;
+        //parcourt toutes les chaines 
+        while (chaines){
+            CellPoint *pointactuel = chaines->points;
+            //parcourt tous les points de la chaine courante
+            while (pointactuel){
+                CellChaine *chainecour = C->chaines;
+                //parcourt toutes les chaines à comparer
+                while (chainecour){
+                    if (chainecour->numero != chaines->numero){
+                        CellPoint *pointcompare = chainecour->points;
+                        //parcourt tous les points de la chaine à comparer
+                        while (pointcompare){
+                            if (pointactuel->x == pointcompare->x && pointactuel->y == pointcompare->y){
+                                    oc+=1;
+                                    break;
+                            }     
+                            pointcompare=pointcompare->suiv;
+                        }
                     }
-                    compare=compare->suiv;
+                    chainecour=chainecour->suiv;
+                    
                 }
-                actuel = actuel->suiv;
-            }
-            C->chaines=C->chaines->suiv;
+                pointactuel = pointactuel->suiv;
+            } 
+            chaines=chaines->suiv;
         }
     }
     return oc;

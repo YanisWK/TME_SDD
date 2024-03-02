@@ -1,6 +1,9 @@
 #include "Chaine.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int main() {
+int main(){
     FILE *f = fopen("00014_burma.cha", "r");
 
     Chaines* c = lectureChaines(f);
@@ -18,14 +21,16 @@ int main() {
             cp = cp->suiv;
         }
         printf("\n");
+        
+        printf("longueur de la chaine %d : %.2lf\n", cc->numero, longueurChaine(cc));
+
         cc = cc->suiv;
     }
 
+    printf("longueur totale : %.2lf\n", longueurTotale(c));
 
     afficheChainesSVG(c, "00014_burma.cha");
-    printf("nombre occurences : %d\n", comptePointsTotal(c));
+    printf("nombre d'occurences : %d\n", comptePointsTotal(c));
 
     fclose(f);
 }
-
-
