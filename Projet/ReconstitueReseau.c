@@ -8,6 +8,27 @@ void main(){
     printf("Quelle structure voulez vous choisir ?\n");
 }
 
-int main(){
-    
+int main(int argc, char *argv[]){
+    if (argc!=3){
+        fprintf(stderr, "Usage: ./ReconstitueReseau fichier structure\n");
+        return 1;
+    }
+
+    FILE *f =fopen(argv[1], "r");
+
+    Chaines *c = lectureChaines(f);
+
+    Reseau *r;
+
+    switch(atoi(argv[2])){
+        case 1:
+            r =reconstitueReseauListe(c);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+    }
+
+    fclose(f);
 }

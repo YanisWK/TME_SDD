@@ -25,27 +25,6 @@ CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num){
     return tete;
 }
 
-Reseau * creerReseau(Chaines *c){
-    Reseau * new=(Reseau *)malloc(sizeof(Reseau));
-    new->nbNoeuds = 0;
-    new->gamma = c->gamma;
-    new->noeuds = NULL;
-    new->commodites = NULL;
-
-    // CellChaine *chaines = c->chaines;
-    // while (chaines){
-    //     CellPoint *points = chaines->points;
-    //     while (points){
-    //         rechercheCreeNoeudListe(new, points->x, points->y);
-    //         points = points->suiv;
-    //     }
-    //     chaines = chaines->suiv;
-    // }
-
-    return new;
-}
-
-
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     CellNoeud *noeudR =R->noeuds;
 
