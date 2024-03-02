@@ -1,7 +1,12 @@
 #include "Reseau.h"
+#include "Chaine.h"
+#include <stdio.h>
+#include <stdlib.h>
 
+#define BUFFERSIZE 256
 
-void main(){
+void menu(){
+    printf("0- Sortir du programme\n");
     printf("1- Liste Chainée\n");
     printf("2- Table de Hachage\n");
     printf("3- Arbre\n");
@@ -9,26 +14,40 @@ void main(){
 }
 
 int main(int argc, char *argv[]){
-    if (argc!=3){
-        fprintf(stderr, "Usage: ./ReconstitueReseau fichier structure\n");
+    
+    if (argc!=2){
+        fprintf(stderr, "Usage: ./ReconstitueReseau fichier\n");
         return 1;
     }
 
     FILE *f =fopen(argv[1], "r");
 
     Chaines *c = lectureChaines(f);
-
-    Reseau *r;
-
-    switch(atoi(argv[2])){
-        case 1:
-            r =reconstitueReseauListe(c);
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-    }
-
     fclose(f);
+
+    char *entree;
+    int rep;
+
+    do{
+        char buffer[BUFFERSIZE];
+        menu();
+        entree=fgets(buffer,BUFFERSIZE,stdin);
+        rep=atoi(entree);
+        switch(rep){
+            case 1:
+                Reseau *r =reconstitueReseauListe(c);
+                printf("noeuds du reseau:\n");
+                CellNoeud *n = r->noeuds;
+                while (n){
+                    printf("noeud %d: %.2lf, %.2lf\n", n->nd->num, n->nd->x, n->nd->y);
+                    n = n->suiv;
+                }
+                break;
+        }
+    }while(rep!=0);
+    if(!rep){
+        return 0;
+    }
+    fclose(f);
+    return 0;
 }

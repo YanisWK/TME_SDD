@@ -45,12 +45,12 @@ int main(){
         n = n->suiv;
     }
 
-    printf("commodites du reseau:\n");
-    CellCommodite *com = R->commodites;
-    while (com){
-        printf("commodite noeud %d - noeud %d\n", com->extrA->num, com->extrB->num);
-        com = com->suiv;
-    }
+    // printf("commodites du reseau:\n");
+    // CellCommodite *com = R->commodites;
+    // while (com){
+    //     printf("commodite noeud %d - noeud %d\n", com->extrA->num, com->extrB->num);
+    //     com = com->suiv;
+    // }
 
     fclose(f);
 }
