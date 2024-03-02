@@ -36,11 +36,22 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
         if(nX==x && nY==y){
             return noeudR->nd;;
         }
+    }
     ajout_teteCellNoeud(noeudR,x,y,R->nbNoeuds+1);
     R->nbNoeuds=R->nbNoeuds+1;
     return(noeudR);
 }
 
 Reseau* reconstitueReseauListe(Chaines *C){
-    
+    Reseau * reseau=NULL;
+    Noeud * V=NULL;
+    CellChaine * chaines=C->chaines;
+    while(chaines){
+        CellPoint *points=chaines->points;
+        while(points){
+
+        }
+    }
+
+    return reseau;
 }
