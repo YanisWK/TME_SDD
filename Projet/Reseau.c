@@ -66,15 +66,17 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
-    //Noeud * V=NULL; //noeud precedent
+    Noeud * V=NULL; //noeud precedent
     CellChaine * chaines=C->chaines;
     while(chaines){
         CellPoint *points=chaines->points;
 
-        Noeud *V = NULL;
+        //Noeud *V = NULL;
         while(points){
+            //recherche ou crée le noeud correspondant au point
             Noeud *cour = rechercheCreeNoeudListe(reseau, points->x, points->y);
-
+            
+            //s'il y a un noeud precedent
             if (V){
                 CellNoeud *voisins = creerCellNoeud(cour);
                 voisins->suiv = V->voisins; 
@@ -82,7 +84,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
                 V->voisins = voisins;
             }
 
-            V = cour;
+            V = cour; //noeud courant devient noeud precedent
 
             points = points->suiv;
         }
