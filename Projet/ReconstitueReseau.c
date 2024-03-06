@@ -51,9 +51,6 @@ int main(int argc, char *argv[]){
                 CellNoeud *nn = r->noeuds;
                 while (nn){                
                     CellNoeud *v = nn->nd->voisins;
-                    if(!v){
-                        nn=nn->suiv;
-                    }
                     printf("k ");
                     while (v){
                         printf("%d ", v->nd->num);
