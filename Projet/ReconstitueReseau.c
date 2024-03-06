@@ -42,6 +42,12 @@ int main(int argc, char *argv[]){
                     printf("noeud %d: %.2lf, %.2lf\n", n->nd->num, n->nd->x, n->nd->y);
                     n = n->suiv;
                 }
+                printf("commodites du reseau:\n");
+                CellCommodite *com = r->commodites;
+                while (com){
+                    printf("commodite entre noeud %d et noeud %d\n", com->extrA->num, com->extrB->num);
+                    com = com->suiv;
+                }
                 break;
         }
     }while(rep!=0);

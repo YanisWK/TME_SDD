@@ -80,12 +80,20 @@ Reseau* reconstitueReseauListe(Chaines *C){
                 voisins->suiv = V->voisins; 
                 //ajoute le noeud courant aux voisins du noeud precedent
                 V->voisins = voisins;
+
+                //ajoute pcom à la liste des commodités
+                CellCommodite *pcom = malloc(sizeof(CellCommodite));
+                pcom->extrA = V;
+                pcom->extrB = cour;
+                pcom->suiv = reseau->commodites;
+                reseau->commodites = pcom;
             }
 
             V = cour; //noeud courant devient noeud precedent
 
             points = points->suiv;
         }
+
         chaines = chaines->suiv;
     }
     return reseau;
