@@ -45,6 +45,8 @@ Reseau * creerReseau(Chaines *c){
     return new;
 }
 
+CellCommodite * 
+
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     CellNoeud *noeudR =R->noeuds;
 
@@ -63,12 +65,18 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     return nr;
 }
 
+
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
+
     Noeud * V=NULL; //noeud precedent
     CellChaine * chaines=C->chaines;
     while(chaines){
         CellPoint *points=chaines->points;
+
+        pcom->extrA = rechercheCreeNoeudListe(reseau,points->x,points->y);
+        
+
 
         while(points){
             //recherche ou crée le noeud correspondant au point
@@ -82,19 +90,77 @@ Reseau* reconstitueReseauListe(Chaines *C){
                 V->voisins = voisins;
 
                 //ajoute pcom à la liste des commodités
-                CellCommodite *pcom = malloc(sizeof(CellCommodite));
-                pcom->extrA = V;
-                pcom->extrB = cour;
-                pcom->suiv = reseau->commodites;
-                reseau->commodites = pcom;
+                
             }
 
             V = cour; //noeud courant devient noeud precedent
 
             points = points->suiv;
-        }
 
+        }
+        
         chaines = chaines->suiv;
+
     }
+
     return reseau;
+}
+
+int nbLiaisons(Reseau *R){
+    int cpt=0;
+    CellNoeud *noeud=R->noeuds;
+    while(noeud){
+        CellNoeud *voisins=noeud->nd->voisins;
+        while(voisins){
+            cpt++;
+            voisins=voisins->suiv;
+        }
+        noeud=noeud->suiv;
+    }
+    return cpt/2;
+}
+
+int nbCommodites(Reseau *R){
+    int cpt=0;
+    CellCommodite *com=R->commodites;
+    while(com){
+        cpt++;
+        com=com->suiv;
+    }
+    return cpt;
+}
+
+void ecrireReseau(Reseau *R, FILE *f){
+    if(f == NULL){
+        printf("Erreur d'ouverture du fichier\n");
+        exit(1);
+    }
+
+    fprintf(f,"NbNoeuds: %d\n", R->nbNoeuds);
+    fprintf(f,"NbLiaisons: %d\n", nbLiaisons(R));
+    fprintf(f,"NbCommodites: %d\n", nbCommodites(R));
+    fprintf(f,"Gamma: %d\n", R->gamma);
+
+    printf("\n");
+    CellNoeud *noeud = R->noeuds;
+    while(noeud){
+        fprintf(f,"v %d %.6lf %.6lf\n", noeud->nd->num, noeud->nd->x, noeud->nd->y);
+        noeud = noeud->suiv;
+    }
+    printf("\n");
+    CellNoeud *liaison = R->noeuds;
+    while(liaison){
+        CellNoeud *voisin = liaison->nd->voisins;
+        while(voisin){
+            fprintf(f,"v %d %d\n", noeud->nd->num, voisin->nd->num);
+            voisin=voisin->suiv;
+        }
+        liaison = liaison->suiv;
+    }
+    printf("\n");
+    CellCommodite *com = R->commodites;
+    while(com){
+        fprintf(f,"v %d %d\n", com->extrA->num, com->extrB->num);
+        com = com->suiv;
+    }
 }
