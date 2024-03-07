@@ -32,17 +32,6 @@ Reseau * creerReseau(Chaines *c){
     new->gamma = c->gamma;
     new->noeuds = NULL;
     new->commodites = NULL;
-
-    // CellChaine *chaines = c->chaines;
-    // while (chaines){
-    //     CellPoint *points = chaines->points;
-    //     while (points){
-    //         rechercheCreeNoeudListe(new, points->x, points->y);
-    //         points = points->suiv;
-    //     }
-    //     chaines = chaines->suiv;
-    // }
-
     return new;
 }
 
@@ -92,7 +81,6 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
-    Reseau * reseauCom=creerReseau(C);
     CellCommodite * commodites=NULL;
     Noeud * V=NULL; //noeud precedent
     CellChaine * chaines=C->chaines;
@@ -176,6 +164,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         fprintf(f,"v %d %.6lf %.6lf\n", noeud->nd->num, noeud->nd->x, noeud->nd->y);
         noeud = noeud->suiv;
     }
+    
     CellNoeud *liaison = R->noeuds;
     while(liaison){
         CellNoeud *voisin = liaison->nd->voisins;
