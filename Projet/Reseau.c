@@ -45,11 +45,34 @@ Reseau * creerReseau(Chaines *c){
     return new;
 }
 
-CellCommodite * 
+CellCommodite * creeCommodite(Noeud * extrA,Noeud * extrB){
+    CellCommodite * new=(CellCommodite *)malloc(sizeof(CellCommodite));
+    new->extrA=extrA;
+    new->extrB=extrB;
+    new->suiv=NULL;
+    return new;
+}
+CellCommodite * ajout_teteCellCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
+    CellCommodite * tete=creeCommodite(extrA,extrB);
+    tete->suiv=commodites;
+    return tete;
+}
+
+CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
+    CellCommodite * cour=commodites;
+    while(cour){
+        if(cour->extrA==extrA && cour->extrB==extrB){
+            return cour;
+        }
+        cour=cour->suiv;
+    }
+    return NULL;
+}
+
+
 
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     CellNoeud *noeudR =R->noeuds;
-
     /*Parcourir le reseau et chercher le noeud correspondant sinon le crée*/
     while (noeudR){
         double nX=noeudR->nd->x;
@@ -68,16 +91,15 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
-
+    Reseau * reseauCom=creerReseau(C);
+    CellCommodite * commodites=NULL;
     Noeud * V=NULL; //noeud precedent
     CellChaine * chaines=C->chaines;
+    Noeud *extrA=NULL;
+    Noeud *extrB=NULL;
     while(chaines){
         CellPoint *points=chaines->points;
-
-        pcom->extrA = rechercheCreeNoeudListe(reseau,points->x,points->y);
-        
-
-
+        extrA=rechercheCreeNoeudListe(reseau,points->x,points->y);
         while(points){
             //recherche ou crée le noeud correspondant au point
             Noeud *cour = rechercheCreeNoeudListe(reseau, points->x, points->y);
@@ -94,15 +116,17 @@ Reseau* reconstitueReseauListe(Chaines *C){
             }
 
             V = cour; //noeud courant devient noeud precedent
-
+            if(!points->suiv){
+                extrB=rechercheCreeNoeudListe(reseau,points->x,points->y);
+            }
             points = points->suiv;
-
         }
-        
+        if(!rechercheCommodite(commodites,extrA,extrB)){
+            commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
+        }
         chaines = chaines->suiv;
-
     }
-
+    reseau->commodites=commodites;
     return reseau;
 }
 
