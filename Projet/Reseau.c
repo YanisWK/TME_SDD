@@ -73,6 +73,11 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
         noeudR = noeudR->suiv;
     }
     Noeud *nr = creerNoeud(R->nbNoeuds+1,x,y,NULL);
+
+    // CellNoeud *voisins = creerCellNoeud(nr);
+    // voisins->suiv = R->noeuds->nd->voisins;
+    // R->noeuds->nd->voisins = voisins;
+
     R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
     R->nbNoeuds+=1;
     return nr;
@@ -129,12 +134,14 @@ int nbLiaisons(Reseau *R){
     while(noeud){
         CellNoeud *voisins=noeud->nd->voisins;
         while(voisins){
-            cpt++;
+            if (noeud->nd->num < voisins->nd->num){
+                cpt++;
+            }
             voisins=voisins->suiv;
         }
         noeud=noeud->suiv;
     }
-    return cpt/2;
+    return cpt;
 }
 
 int nbCommodites(Reseau *R){
