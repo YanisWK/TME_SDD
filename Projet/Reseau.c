@@ -63,16 +63,26 @@ CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeu
 
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     CellNoeud *noeudR =R->noeuds;
-    /*Parcourir le reseau et chercher le noeud correspondant sinon le crée*/
+    Noeud *nr = creerNoeud(R->nbNoeuds+1,x,y,NULL);
+    
     while (noeudR){
         double nX=noeudR->nd->x;
         double nY=noeudR->nd->y;
         if(nX==x && nY==y){
+            free(nr);
             return noeudR->nd;;
+        }    
+        CellNoeud *voisins = R->noeuds->nd->voisins;
+        while (voisins){
+            if (voisins->nd == nr){
+                free(nr);
+                return voisins->nd;
+            }
+            voisins = voisins->suiv;
         }
         noeudR = noeudR->suiv;
     }
-    Noeud *nr = creerNoeud(R->nbNoeuds+1,x,y,NULL);
+
     R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
     R->nbNoeuds+=1;
     return nr;
@@ -128,13 +138,15 @@ int nbLiaisons(Reseau *R){
     CellNoeud *noeud=R->noeuds;
     while(noeud){
         CellNoeud *voisins=noeud->nd->voisins;
-        while(voisins){
-            cpt++;
+        while(voisins){        
+            if(noeud->nd->num<voisins->nd->num){
+                cpt++;
+            }
             voisins=voisins->suiv;
         }
         noeud=noeud->suiv;
     }
-    return cpt/2;
+    return cpt;
 }
 
 int nbCommodites(Reseau *R){
@@ -169,7 +181,9 @@ void ecrireReseau(Reseau *R, FILE *f){
     while(liaison){
         CellNoeud *voisin = liaison->nd->voisins;
         while(voisin){
-            fprintf(f,"l %d %d\n", liaison->nd->num, voisin->nd->num);
+            if(liaison->nd->num<=voisin->nd->num){
+                fprintf(f,"l %d %d\n", liaison->nd->num, voisin->nd->num);
+            }
             voisin=voisin->suiv;
         }
         liaison = liaison->suiv;
@@ -180,6 +194,33 @@ void ecrireReseau(Reseau *R, FILE *f){
         com = com->suiv;
     }
     fclose(f);
+}
+
+void libererCellNoeud(CellNoeud *cn){
+    while (cn){
+        CellNoeud *tmp = cn;
+        cn = cn->suiv;
+        free(tmp->nd);
+        free(tmp);
+    }
+}
+
+void libererNoeud(Noeud *nd){
+    free(nd);
+}
+
+void libererCellCommodite(CellCommodite *com){
+    while (com){
+        CellCommodite *tmp = com;
+        com = com->suiv;
+        free(tmp);
+    }
+}
+
+void libererReseau(Reseau *R){
+    libererCellNoeud(R->noeuds);
+    libererCellCommodite(R->commodites);
+    free(R);
 }
 
 // void afficheReseauSVG(Reseau *R, char* nomInstance){

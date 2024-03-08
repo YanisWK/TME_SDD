@@ -212,3 +212,19 @@ int comptePointsTotal(Chaines *C){
     }
     return oc;
 }
+
+void libererChaines(Chaines *c){
+    CellChaine *chaine = c->chaines;
+    while (chaine){
+        CellPoint *point = chaine->points;
+        while (point){
+            CellPoint *tmp = point;
+            point = point->suiv;
+            free(tmp);
+        }
+        CellChaine *tmpchaine = chaine;
+        chaine = chaine->suiv;
+        free(tmpchaine);
+    }
+    free(c);
+}

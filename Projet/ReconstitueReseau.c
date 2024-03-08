@@ -54,10 +54,11 @@ int main(int argc, char *argv[]){
     //             }
     //             printf("commodites du reseau:\n");
     //             CellCommodite *com = r->commodites;
-    //             while (com) {
+    //             while (com){
     //                 printf("k %d %d\n", com->extrA->num, com->extrB->num);
     //                 com = com->suiv;
     //             }
+    //             libererReseau(r);
     //             break;
     //     }
     // }while(rep!=0);
@@ -70,7 +71,8 @@ int main(int argc, char *argv[]){
     Reseau *reseau = reconstitueReseauListe(c);
     FILE *fic = fopen("burrrrma.txt", "w");
     ecrireReseau(reseau, fic); 
-    //fclose(fic);
     //afficheReseauSVG(reseau, "burrrrma.svg");
-
+    libererChaines(c);
+    libererReseau(reseau);
+    return 0;
 }
