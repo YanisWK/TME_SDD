@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
     Reseau *reseau = reconstitueReseauListe(c);
     FILE *fic = fopen("burrrrma.txt", "w");
     ecrireReseau(reseau, fic); 
-    //afficheReseauSVG(reseau, "burrrrma.svg");
+    afficheReseauSVG(reseau, "burrrrma.svg");
     libererChaines(c);
     libererReseau(reseau);
     return 0;
