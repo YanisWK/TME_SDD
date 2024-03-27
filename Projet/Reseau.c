@@ -23,7 +23,8 @@ CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num){
     Noeud * node=creerNoeud(num,x,y,NULL);
     CellNoeud * tete=creerCellNoeud(node);
     tete->suiv=cn;
-    return tete;
+    cn=tete;
+    return cn;
 }
 
 Reseau * creerReseau(Chaines *c){
@@ -79,6 +80,17 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     return R->noeuds->nd;
 }
 
+void insererVoisins(Noeud *n1, Noeud *n2){
+    CellNoeud *p1= n1->voisins;
+    while (p1){
+        if(p1->nd==n2){
+            return;
+        }
+        p1=p1->suiv;
+    }
+    n1->voisins=ajout_teteCellNoeud(n1->voisins,n2->x,n2->y, n2->num);
+    n2->voisins=ajout_teteCellNoeud(n2->voisins,n1->x,n1->y, n1->num);
+}
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
@@ -96,10 +108,14 @@ Reseau* reconstitueReseauListe(Chaines *C){
             
             //s'il y a un noeud precedent
             if (V){
-                CellNoeud *voisins = creerCellNoeud(cour);
-                voisins->suiv = V->voisins; 
-                //ajoute le noeud courant aux voisins du noeud precedent
-                V->voisins = voisins;
+                insererVoisins(V,cour);
+                insererVoisins(cour,V);
+
+                // CellNoeud * pv=V->voisins;
+                // while(pv){
+                //     printf("noeud : %d est voisin de %d\n",V->num, pv->nd->num);
+                //     pv=pv->suiv;
+                // }
 
                 //ajoute pcom à la liste des commodités
                 CellCommodite *pcom = malloc(sizeof(CellCommodite));
@@ -170,13 +186,14 @@ void ecrireReseau(Reseau *R, FILE *f){
     while(liaison){
         CellNoeud *voisin = liaison->nd->voisins;
         while(voisin){
-            if(liaison->nd->num<=voisin->nd->num){
+            if(liaison->nd->num < voisin->nd->num){
                 fprintf(f,"l %d %d\n", liaison->nd->num, voisin->nd->num);
             }
             voisin=voisin->suiv;
         }
         liaison = liaison->suiv;
     }
+
     CellCommodite *com = R->commodites;
     while(com){
         fprintf(f,"k %d %d\n", com->extrA->num, com->extrB->num);
