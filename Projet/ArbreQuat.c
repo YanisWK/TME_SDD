@@ -41,13 +41,31 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     return abr;
 }
 
+
+
 void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
-    
-    if(*a==NULL){
-        double xmax;
-        double xmin;
-        double ymax;
-        double ymin;
-        ArbreQuat * abr=creerArbreQuat()
+    double pX=n->x;
+    double pY=n->y;
+    double centreX=(*parent)->xc;
+    double centreY=(*parent)->yc;
+    if((*a)==NULL){
+        if(pX<centreX && pY<centreY){ //Sud ouest
+            (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+        }
+        if(pX>=centreX && pY<centreY){//Sud Est
+            (*parent)->se=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+        }
+        if(pX<centreX && pY>=centreY){//Nord Ouest
+            (*parent)->no=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+        }
+        if(pX>=centreX && pY>=centreY){//Nord Est
+            (*parent)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+        }
+    }
+    if((*a)->noeud!=NULL){
+
+    }
+    if(((*a != NULL) && ((*a)->noeud == NULL))){
+        
     }
 }
