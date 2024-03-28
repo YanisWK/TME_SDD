@@ -41,3 +41,13 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     return abr;
 }
 
+void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
+    
+    if(*a==NULL){
+        double xmax;
+        double xmin;
+        double ymax;
+        double ymin;
+        ArbreQuat * abr=creerArbreQuat()
+    }
+}
