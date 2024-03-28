@@ -14,14 +14,13 @@ CellPoint *creer_CellPoint(double x,double y){
     return new;
 }
 
-CellChaine *creer_CellChaine(int num,CellPoint *points){
-
+Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
     CellChaine *new=(CellChaine *)malloc(sizeof(CellChaine));
     new->numero=num;
     new->points=points;
     new->suiv=NULL;
     return new;
-    }
+}
 
 Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
     Chaines *new=(Chaines*)malloc(sizeof(Chaines));

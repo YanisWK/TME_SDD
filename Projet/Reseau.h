@@ -31,6 +31,10 @@ typedef struct {
     CellCommodite *commodites;      /* Liste des commodites a relier */
 } Reseau;
 
+
+CellNoeud * creerCellNoeud(Noeud *nd);
+Noeud * creerNoeud(int num,double x,double y,CellNoeud *voisins);
+CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num);
 Reseau * creerReseau(Chaines *c);
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
 Reseau* reconstitueReseauListe(Chaines *C);

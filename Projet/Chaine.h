@@ -23,6 +23,12 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
+CellPoint *creer_CellPoint(double x,double y);
+CellChaine *creer_CellChaine(int num,CellPoint *points);
+CellChaine *creer_CellChaine(int num,CellPoint *points);
+Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines);
+
+
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
 void afficheChainesSVG(Chaines *C, char* nomInstance);
