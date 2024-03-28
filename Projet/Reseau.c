@@ -63,18 +63,17 @@ CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeu
 
 
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
-    CellNoeud *noeudR =R->noeuds;
-    Noeud *nr = creerNoeud(R->nbNoeuds+1,x,y,NULL);
+    CellNoeud *noeudR = R->noeuds;
     
     while (noeudR){
         double nX=noeudR->nd->x;
         double nY=noeudR->nd->y;
         if(nX==x && nY==y){
-            free(nr);
             return noeudR->nd;;
         }    
         noeudR = noeudR->suiv;
-    }
+    }    
+
     R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
     R->nbNoeuds+=1;
     return R->noeuds->nd;
@@ -88,19 +87,22 @@ void insererVoisins(Noeud *n1, Noeud *n2){
         }
         p1=p1->suiv;
     }
-    n1->voisins=ajout_teteCellNoeud(n1->voisins,n2->x,n2->y, n2->num);
-    n2->voisins=ajout_teteCellNoeud(n2->voisins,n1->x,n1->y, n1->num);
+    CellNoeud *new=malloc(sizeof(CellNoeud));
+    new->nd=n2;
+    new->suiv= n1->voisins;
+    n1->voisins=new;
 }
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * reseau=creerReseau(C);
     CellCommodite * commodites=NULL;
-    Noeud * V=NULL; //noeud precedent
     CellChaine * chaines=C->chaines;
     Noeud *extrA=NULL;
     Noeud *extrB=NULL;
     while(chaines){
-        CellPoint *points=chaines->points;
+        CellPoint *points=chaines->points;    
+        Noeud * V=NULL; //noeud precedent
+
         extrA=rechercheCreeNoeudListe(reseau,points->x,points->y);
         while(points){
             //recherche ou crée le noeud correspondant au point
@@ -109,22 +111,16 @@ Reseau* reconstitueReseauListe(Chaines *C){
             //s'il y a un noeud precedent
             if (V){
                 insererVoisins(V,cour);
-
-                // CellNoeud * pv=V->voisins;
-                // while(pv){
-                //     printf("noeud : %d est voisin de %d\n",V->num, pv->nd->num);
-                //     pv=pv->suiv;
-                // }
+                insererVoisins(cour,V);
 
                 //ajoute pcom à la liste des commodités
-                CellCommodite *pcom = malloc(sizeof(CellCommodite));
-                pcom->extrA = V;
-                pcom->extrB = cour;
-                pcom->suiv = reseau->commodites;
-                reseau->commodites = pcom;
+                // CellCommodite *pcom = creeCommodite(V,cour);
+                // pcom->suiv = reseau->commodites;
+                // reseau->commodites = pcom;
             }
 
             V = cour; //noeud courant devient noeud precedent
+            
             if(!points->suiv){
                 extrB=rechercheCreeNoeudListe(reseau,points->x,points->y);
             }
@@ -180,6 +176,8 @@ void ecrireReseau(Reseau *R, FILE *f){
         fprintf(f,"v %d %.6lf %.6lf\n", noeud->nd->num, noeud->nd->x, noeud->nd->y);
         noeud = noeud->suiv;
     }
+
+    fprintf(f,"\n");
     
     CellNoeud *liaison = R->noeuds;
     while(liaison){
@@ -193,12 +191,13 @@ void ecrireReseau(Reseau *R, FILE *f){
         liaison = liaison->suiv;
     }
 
+    fprintf(f,"\n");
+
     CellCommodite *com = R->commodites;
     while(com){
         fprintf(f,"k %d %d\n", com->extrA->num, com->extrB->num);
         com = com->suiv;
     }
-    fclose(f);
 }
 
 void libererCellNoeud(CellNoeud *cn){

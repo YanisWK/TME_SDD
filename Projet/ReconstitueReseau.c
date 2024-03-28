@@ -74,5 +74,6 @@ int main(int argc, char *argv[]){
     afficheReseauSVG(reseau, "burrrrma.svg");
     libererChaines(c);
     libererReseau(reseau);
+    fclose(fic);
     return 0;
 }

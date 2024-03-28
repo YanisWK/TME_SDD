@@ -9,8 +9,8 @@ typedef struct TH{
 } TableHachage ;
 
 
-
+TableHachage * CreeTableHachage(int tailleMax);
 int f(int x, int y);
 int h(int k,int M);
-
+Noeud* rechercheCreeNoeudHachage(Reseau* R,TableHachage *H,double x,double y);
 Reseau * reconstitueReseauHachage(Chaines *C,int M);
