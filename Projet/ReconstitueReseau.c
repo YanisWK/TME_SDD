@@ -1,5 +1,6 @@
 #include "Reseau.h"
 #include "Chaine.h"
+#include "Hachage.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,8 +23,8 @@ int main(int argc, char *argv[]){
 
     FILE *f =fopen(argv[1], "r");
     Chaines *c = lectureChaines(f);
-    Reseau *reseau =reconstitueReseauListe(c);
     FILE *fic = fopen("burrrrma.txt", "w");
+    Reseau *reseau = reconstitueReseauListe(c);
     char *entree;
     int rep;
 
@@ -38,8 +39,11 @@ int main(int argc, char *argv[]){
                 afficheReseauSVG(reseau, "burrrrma.svg");             
                 break;
             case 2: //TABLE DE HACHAGE
+                // reseau = reconstitueReseauHachage(c,100);
+                // ecrireReseau(reseau, fic); 
+                // afficheReseauSVG(reseau, "burrrrma.svg");  
                 break;
-            case 3: //ARBREQUATERNAIRE
+            case 3: //ARBRE QUATERNAIRE
                 break;          
         }
     }while(rep!=0);

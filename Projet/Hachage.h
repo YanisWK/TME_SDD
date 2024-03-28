@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <Reseau.h>
+#include "Reseau.h"
 
 typedef struct TH{
   int nbElement; //pas necessaire ici
