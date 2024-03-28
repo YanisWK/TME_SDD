@@ -109,7 +109,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
             //s'il y a un noeud precedent
             if (V){
                 insererVoisins(V,cour);
-                insererVoisins(cour,V);
 
                 // CellNoeud * pv=V->voisins;
                 // while(pv){

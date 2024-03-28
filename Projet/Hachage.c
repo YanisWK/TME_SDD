@@ -44,5 +44,39 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R,TableHachage *H,double x,double y){
 }
 
 Reseau * reconstitueReseauHachage(Chaines *C,int M){
-    
+    Reseau * R=creerReseau(C);
+    TableHachage *H=CreeTableHachage(M);
+    CellCommodite * commodites=NULL;
+    Noeud * V=NULL;
+    CellChaine * chaines=C->chaines;
+    Noeud *ExtrA=NULL;
+    Noeud *ExtrB=NULL;
+
+    while(chaines){
+        CellPoint *points=chaines->points;
+        ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+        while(points){
+            Noeud *cour=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+            if(V){
+                insererVoisins(V,cour);
+                CellCommodite *pcom = malloc(sizeof(CellCommodite));
+                pcom->extrA = V;
+                pcom->extrB = cour;
+                pcom->suiv = reseau->commodites;
+                reseau->commodites = pcom;
+            }
+            V=cour;
+            if(!points->suiv){
+                ExtrB=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+            }
+            points = points->suiv;
+        }
+        if(!rechercheCommodite(commodites,ExtrA,ExtrB)){
+            commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
+        }
+        chaines = chaines->suiv;
+        }
+        R->commodites=commodites;
+        return R;
 }
+

@@ -25,7 +25,6 @@ typedef struct {
 
 CellPoint *creer_CellPoint(double x,double y);
 CellChaine *creer_CellChaine(int num,CellPoint *points);
-CellChaine *creer_CellChaine(int num,CellPoint *points);
 Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines);
 
 

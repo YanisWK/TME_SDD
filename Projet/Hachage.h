@@ -11,3 +11,6 @@ typedef struct TH{
 
 
 int f(int x, int y);
+int h(int k,int M);
+
+Reseau * reconstitueReseauHachage(Chaines *C,int M);

@@ -38,6 +38,10 @@ CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num);
 Reseau * creerReseau(Chaines *c);
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
 Reseau* reconstitueReseauListe(Chaines *C);
+
+CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB);
+void insererVoisins(Noeud *n1, Noeud *n2);
+
 void ecrireReseau(Reseau *R, FILE *f);
 int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
