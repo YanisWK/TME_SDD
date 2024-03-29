@@ -43,6 +43,7 @@ CellCommodite * creeCommodite(Noeud * extrA,Noeud * extrB){
     new->suiv=NULL;
     return new;
 }
+
 CellCommodite * ajout_teteCellCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
     CellCommodite * tete=creeCommodite(extrA,extrB);
     tete->suiv=commodites;
@@ -112,11 +113,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
             if (V){
                 insererVoisins(V,cour);
                 insererVoisins(cour,V);
-
-                //ajoute pcom à la liste des commodités
-                // CellCommodite *pcom = creeCommodite(V,cour);
-                // pcom->suiv = reseau->commodites;
-                // reseau->commodites = pcom;
             }
 
             V = cour; //noeud courant devient noeud precedent

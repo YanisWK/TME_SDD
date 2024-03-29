@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "ArbreQuat.h"
 
-
-
 void chaineCoordMinMax(Chaines* C,double* xmin,double* ymin,double *xmax,double *ymax){
     CellChaine *courant=C->chaines;
     while(courant){

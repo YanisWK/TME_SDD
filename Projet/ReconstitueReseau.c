@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
     FILE *f =fopen(argv[1], "r");
     Chaines *c = lectureChaines(f);
     FILE *fic = fopen("burrrrma.txt", "w");
-    Reseau *reseau = reconstitueReseauListe(c);
+    Reseau *reseau = NULL;
     char *entree;
     int rep;
 
@@ -33,15 +33,20 @@ int main(int argc, char *argv[]){
         menu();
         entree=fgets(buffer,BUFFERSIZE,stdin);
         rep=atoi(entree);
+         if (sscanf(entree, "%d", &rep) != 1) {
+            printf("Entrée invalide. Usage : <un entier>\n");
+        }
         switch(rep){
             case 1: //LISTE CHAINEE
+                reseau = reconstitueReseauListe(c);
                 ecrireReseau(reseau, fic); 
                 afficheReseauSVG(reseau, "burrrrma.svg");             
                 break;
             case 2: //TABLE DE HACHAGE
-                // reseau = reconstitueReseauHachage(c,100);
-                // ecrireReseau(reseau, fic); 
-                // afficheReseauSVG(reseau, "burrrrma.svg");  
+                int M = 70;
+                reseau = reconstitueReseauHachage(c, M);
+                ecrireReseau(reseau, fic); 
+                afficheReseauSVG(reseau, "burrrrma.svg");  
                 break;
             case 3: //ARBRE QUATERNAIRE
                 break;          
