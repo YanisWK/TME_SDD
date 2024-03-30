@@ -75,6 +75,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         insererNoeudArbre(n,NULL,&(*a));
         (*a)->noeud=NULL;
     }
+
     if(((*a != NULL) && ((*a)->noeud == NULL))){
                 if(pX<PcentreX && pY<PcentreY){ //Sud ouest
             (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
@@ -93,4 +94,33 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
             (*parent)->ne->noeud=n;
         }
     }
+}
+
+Reseau* reconstitueReseauArbre(Chaines* C){
+    Reseau *reseau = creerReseau();
+    ArbreQuat *a = NULL;
+    CellChaine *chaines = C->chaines;
+
+    while(chaines){
+        CellPoint *points = chaines->points;
+        while (points){
+            Noeud *n = creerNoeud(points->x, points->y);
+            insererNoeudArbre(n,&a,NULL);
+            points = points->suiv;
+        }
+        chaines = chaines->suiv;
+    }
+    return reseau;
+}
+
+void libererArbre(ArbreQuat *a){
+    if (!a) return;
+    libererArbre(a->so);
+    libererArbre(a->se);
+    libererArbre(a->no);
+    libererArbre(a->ne);
+    if (a->noeud){
+        free(a->noeud);
+    }
+    free(a);
 }
