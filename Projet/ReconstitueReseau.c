@@ -1,6 +1,7 @@
 #include "Reseau.h"
 #include "Chaine.h"
 #include "Hachage.h"
+#include "ArbreQuat.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -23,8 +24,15 @@ int main(int argc, char *argv[]){
 
     FILE *f =fopen(argv[1], "r");
     Chaines *c = lectureChaines(f);
-    FILE *fic = fopen("burrrrma.txt", "w");
+    FILE *fic1 = fopen("burmaliste.txt", "w");
+    FILE *fic2 = fopen("burmahachage.txt", "w");
+    FILE *fic3 = fopen("burmaarbre.txt", "w");
+
     Reseau *reseau = NULL;
+
+    ArbreQuat *a = NULL; 
+    double xmin, ymin, xmax, ymax;
+
     char *entree;
     int rep;
 
@@ -39,16 +47,22 @@ int main(int argc, char *argv[]){
         switch(rep){
             case 1: //LISTE CHAINEE
                 reseau = reconstitueReseauListe(c);
-                ecrireReseau(reseau, fic); 
-                afficheReseauSVG(reseau, "burrrrma.svg");             
+                ecrireReseau(reseau, fic1); 
+                afficheReseauSVG(reseau, "burmaliste.svg");             
                 break;
             case 2: //TABLE DE HACHAGE
                 int M = 70;
                 reseau = reconstitueReseauHachage(c, M);
-                ecrireReseau(reseau, fic); 
-                afficheReseauSVG(reseau, "burrrrma.svg");  
+                ecrireReseau(reseau, fic2); 
+                afficheReseauSVG(reseau, "burmahachage.svg");  
                 break;
             case 3: //ARBRE QUATERNAIRE
+                chaineCoordMinMax(c, &xmin, &ymin, &xmax, &ymax);
+                a = creerArbreQuat((xmin+xmax)/2, (ymin+ymax)/2, xmax-xmin, ymax-ymin);
+                afficherArbreQuat(a);
+                reseau = reconstitueReseauArbre(c);
+                ecrireReseau(reseau, fic3);
+                afficheReseauSVG(reseau, "burmaarbre.svg");             
                 break;          
         }
     }while(rep!=0);
@@ -58,7 +72,9 @@ int main(int argc, char *argv[]){
 
     libererChaines(c);
     libererReseau(reseau);
-    fclose(fic);   
+    fclose(fic1);   
+    fclose(fic2);   
+    fclose(fic3);   
     fclose(f);
     return 0;
 }
