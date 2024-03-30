@@ -69,12 +69,6 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     double acentreY=(*a)->yc;
     double anoeudX=(*a)->noeud->x;
     double anoeudY=(*a)->noeud->y;
-    if((*a)->noeud!=NULL){
-        /*Nouveau noeud */
-        insererNoeudArbre((*a)->noeud,NULL,&(*a));
-        insererNoeudArbre(n,NULL,&(*a));
-        (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
-    }
 
     if(((*a != NULL) && ((*a)->noeud == NULL))){
         if(pX<acentreX && pY<acentreY){ //Sud ouest
@@ -89,6 +83,12 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         if(pX>=acentreX && pY>=acentreY){//Nord Est
             insererNoeudArbre(n,(*a)->ne,(*a));
         }
+    }
+    if((*a)->noeud!=NULL && ((*a)->noeud!=NULL)){
+        /*Nouveau noeud */
+        insererNoeudArbre((*a)->noeud,NULL,&(*a));
+        insererNoeudArbre(n,NULL,&(*a));
+        (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
     }
 }
 
@@ -115,7 +115,24 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         R->nbNoeuds+=1;
         insererNoeudArbre(R->noeuds->nd,a,&parent);
     }
-    if((*a->noeud != NULL)){
+    if(((*a != NULL) && ((*a)->noeud == NULL))){
+        double acentreX=(*a)->xc;
+        double acentreY=(*a)->yc;
+        if(x<acentreX && y<acentreY){ //Sud ouest
+            rechercheCreeNoeudArbre(R,&(*a)->so,(*a),x,y);
+        }
+        if(x>=acentreX && y<acentreY){//Sud Est
+            rechercheCreeNoeudArbre(R,&(*a)->se,(*a),x,y);
+        }   
+        if(x<acentreX && y>=acentreY){//Nord Ouest
+            rechercheCreeNoeudArbre(R,&(*a)->no,(*a),x,y);
+        }
+        if(x>=acentreX && y>=acentreY){//Nord Est
+            rechercheCreeNoeudArbre(R,&(*a)->ne,(*a),x,y);
+        }
+        
+    }
+    if((*a->noeud != NULL) && ((*a)->noeud!=NULL)){
         if(((*a)->noeud->x=x && (*a)->noeud->y=y)){
             return (*a)->noeud;
         }else{
@@ -124,9 +141,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
             insererNoeudArbre(R->noeuds->nd,a,&parent);
         }
     }
-    if(((*a != NULL) && ((*a)->noeud == NULL))){
-
-     }
 }
 
 
