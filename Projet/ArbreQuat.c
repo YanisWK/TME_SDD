@@ -76,18 +76,21 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         (*a)->noeud=NULL;
     }
     if(((*a != NULL) && ((*a)->noeud == NULL))){
-
-        if(pX<acentreX && pY<acentreY){ //Sud ouest
-            (*a)->so=creerArbreQuat(pX,pY,((*a)->coteX)/2,((*a)->coteY)/2);
+                if(pX<PcentreX && pY<PcentreY){ //Sud ouest
+            (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->so->noeud=n;
         }
-        if(pX>=acentreX && pY<acentreY){//Sud Est
-            (*a)->se=creerArbreQuat(pX,pY,((*a)->coteX)/2,((*a)->coteY)/2);
+        if(pX>=PcentreX && pY<PcentreY){//Sud Est
+            (*parent)->se=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->se->noeud=n;
         }
-        if(pX<acentreX && pY>=acentreY){//Nord Ouest
-            (*a)->no=creerArbreQuat(pX,pY,((*a)->coteX)/2,((*parent)->coteY)/2);
+        if(pX<PcentreX && pY>=PcentreY){//Nord Ouest
+            (*parent)->no=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->no->noeud=n;
         }
-        if(pX>=acentreX && pY>=acentreY){//Nord Est
-            (*a)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+        if(pX>=PcentreX && pY>=PcentreY){//Nord Est
+            (*parent)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->ne->noeud=n;
         }
     }
 }
