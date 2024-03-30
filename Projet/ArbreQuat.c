@@ -71,9 +71,9 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     double anoeudY=(*a)->noeud->y;
     if((*a)->noeud!=NULL){
         /*Nouveau noeud */
-        
-
-
+        insererNoeudArbre((*a)->noeud,NULL,&(*a));
+        insererNoeudArbre(n,NULL,&(*a));
+        (*a)->noeud=NULL;
     }
     if(((*a != NULL) && ((*a)->noeud == NULL))){
 
