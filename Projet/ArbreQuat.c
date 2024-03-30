@@ -109,6 +109,27 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     return reseau;
 }
 
+Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
+    if((*a==NULL)){
+        ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
+        R->nbNoeuds+=1;
+        insererNoeudArbre(R->noeuds->nd,a,&parent);
+    }
+    if((*a->noeud != NULL)){
+        if(((*a)->noeud->x=x && (*a)->noeud->y=y)){
+            return (*a)->noeud;
+        }else{
+            ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
+            R->nbNoeuds+=1;
+            insererNoeudArbre(R->noeuds->nd,a,&parent);
+        }
+    }
+    if(((*a != NULL) && ((*a)->noeud == NULL))){
+
+     }
+}
+
+
 void libererArbre(ArbreQuat *a){
     if (!a) return;
     libererArbre(a->so);
