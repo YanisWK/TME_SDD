@@ -93,7 +93,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
 }
 
 Reseau* reconstitueReseauArbre(Chaines* C){
-    Reseau *reseau = creerReseau();
+    Reseau *reseau = creerReseau(C);
     ArbreQuat *a = NULL;
     CellChaine *chaines = C->chaines;
 
@@ -132,8 +132,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         }
         
     }
-    if((*a->noeud != NULL) && ((*a)->noeud!=NULL)){
-        if(((*a)->noeud->x=x && (*a)->noeud->y=y)){
+    if(((*a)->noeud != NULL) && ((*a)->noeud!=NULL)){
+        if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
             return (*a)->noeud;
         }else{
             ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
