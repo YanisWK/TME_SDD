@@ -46,6 +46,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     double pY=n->y;
     double PcentreX=(*parent)->xc;
     double PcentreY=(*parent)->yc;
+
+    //cas arbre vide
     if((*a)==NULL){
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
             (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
@@ -65,6 +67,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         }
         
     }
+
+    //cas noeud interne
     double acentreX=(*a)->xc;
     double acentreY=(*a)->yc;
 
@@ -82,11 +86,13 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
             insererNoeudArbre(n,&(*a)->ne,&(*a));
         }
     }
+
+    //cas feuille
     if((*a)->noeud!=NULL && ((*a)->noeud!=NULL)){
         /*Nouveau noeud */
         insererNoeudArbre((*a)->noeud,NULL,&(*a));
         insererNoeudArbre(n,NULL,&(*a));
-        (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
+        //(*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
     }
 }
 
