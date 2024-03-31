@@ -67,21 +67,19 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     }
     double acentreX=(*a)->xc;
     double acentreY=(*a)->yc;
-    double anoeudX=(*a)->noeud->x;
-    double anoeudY=(*a)->noeud->y;
 
     if(((*a != NULL) && ((*a)->noeud == NULL))){
         if(pX<acentreX && pY<acentreY){ //Sud ouest
-            insererNoeudArbre(n,(*a)->so,(*a));
+            insererNoeudArbre(n,&(*a)->so,&(*a));
         }
         if(pX>=acentreX && pY<acentreY){//Sud Est
-            insererNoeudArbre(n,(*a)->se,(*a));
+            insererNoeudArbre(n,&(*a)->se,&(*a));
         }
         if(pX<acentreX && pY>=acentreY){//Nord Ouest
-            insererNoeudArbre(n,(*a)->no,(*a));
+            insererNoeudArbre(n,&(*a)->no,&(*a));
         }
         if(pX>=acentreX && pY>=acentreY){//Nord Est
-            insererNoeudArbre(n,(*a)->ne,(*a));
+            insererNoeudArbre(n,&(*a)->ne,&(*a));
         }
     }
     if((*a)->noeud!=NULL && ((*a)->noeud!=NULL)){
@@ -100,7 +98,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     while(chaines){
         CellPoint *points = chaines->points;
         while (points){
-            Noeud *n = creerNoeud(points->x, points->y);
+            Noeud *n = creerNoeud(reseau->nbNoeuds+1,points->x, points->y,NULL);
             insererNoeudArbre(n,&a,NULL);
             points = points->suiv;
         }
@@ -140,7 +138,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
             R->nbNoeuds+=1;
             insererNoeudArbre(R->noeuds->nd,a,&parent);
         }
-    }
+    } 
+    return R->noeuds->nd;
 }
 
 
@@ -154,4 +153,19 @@ void libererArbre(ArbreQuat *a){
         free(a->noeud);
     }
     free(a);
+}
+
+void afficherArbreQuat(ArbreQuat *a){
+    if (a == NULL){
+        return;
+    }
+    printf("Noeud: (%f, %f)\n", a->xc, a->yc);
+    printf("Arbre sud-ouest:\n");
+    afficherArbreQuat(a->so);
+    printf("Arbre sud-est:\n");
+    afficherArbreQuat(a->se);
+    printf("Arbre nord-ouest:\n");
+    afficherArbreQuat(a->no);
+    printf("Arbre nord-est:\n");
+    afficherArbreQuat(a->ne);
 }
