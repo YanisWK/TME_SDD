@@ -48,6 +48,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     double PcentreY=(*parent)->yc;
 
     //cas arbre vide
+
     if((*a)==NULL){
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
             (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
@@ -66,33 +67,36 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
             (*parent)->ne->noeud=n;
         }
         
-    }
+    }else{
+        //cas noeud interne
 
-    //cas noeud interne
-    double acentreX=(*a)->xc;
-    double acentreY=(*a)->yc;
+        double acentreX=(*a)->xc;
+        double acentreY=(*a)->yc;
 
-    if(((*a != NULL) && ((*a)->noeud == NULL))){
-        if(pX<acentreX && pY<acentreY){ //Sud ouest
-            insererNoeudArbre(n,&(*a)->so,&(*a));
-        }
-        if(pX>=acentreX && pY<acentreY){//Sud Est
-            insererNoeudArbre(n,&(*a)->se,&(*a));
-        }
-        if(pX<acentreX && pY>=acentreY){//Nord Ouest
-            insererNoeudArbre(n,&(*a)->no,&(*a));
-        }
-        if(pX>=acentreX && pY>=acentreY){//Nord Est
-            insererNoeudArbre(n,&(*a)->ne,&(*a));
-        }
-    }
+        if((*a)->noeud == NULL){
+            if(pX<acentreX && pY<acentreY){ //Sud ouest
+                insererNoeudArbre(n,&(*a)->so,&(*a));
+            }
+            if(pX>=acentreX && pY<acentreY){//Sud Est
+                insererNoeudArbre(n,&(*a)->se,&(*a));
+            }
+            if(pX<acentreX && pY>=acentreY){//Nord Ouest
+                insererNoeudArbre(n,&(*a)->no,&(*a));
+            }
+            if(pX>=acentreX && pY>=acentreY){//Nord Est
+                insererNoeudArbre(n,&(*a)->ne,&(*a));
+            }
+        }else{
+            //cas feuille
 
-    //cas feuille
-    if((*a)->noeud!=NULL && ((*a)->noeud!=NULL)){
-        /*Nouveau noeud */
-        insererNoeudArbre((*a)->noeud,NULL,&(*a));
-        insererNoeudArbre(n,NULL,&(*a));
-        //(*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
+            /*Nouveau noeud */
+            // insererNoeudArbre((*a)->noeud,NULL,&(*a));
+            // insererNoeudArbre(n,NULL,&(*a));
+            Noeud *ancienNoeud = (*a)->noeud;
+            insererNoeudArbre(ancienNoeud,a,parent); //réinsère le nœud actuel
+            insererNoeudArbre(n,a,parent); //insère le nouveau nœud
+            (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
+        }
     }
 }
 
@@ -105,7 +109,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         CellPoint *points = chaines->points;
         while (points){
             Noeud *n = creerNoeud(reseau->nbNoeuds+1,points->x, points->y,NULL);
-            insererNoeudArbre(n,&a,NULL);
+            insererNoeudArbre(n,&a,&a);
             points = points->suiv;
         }
         chaines = chaines->suiv;
@@ -165,7 +169,7 @@ void afficherArbreQuat(ArbreQuat *a){
     if (a == NULL){
         return;
     }
-    printf("Noeud: (%f, %f)\n", a->xc, a->yc);
+    printf("Noeud: (%lf, %lf)\n", a->xc, a->yc);
     printf("Arbre sud-ouest:\n");
     afficherArbreQuat(a->so);
     printf("Arbre sud-est:\n");

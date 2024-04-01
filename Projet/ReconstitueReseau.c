@@ -54,11 +54,11 @@ int main(int argc, char *argv[]){
                 afficheReseauSVG(reseau, "burmahachage.svg");  
                 break;
             case 3: //ARBRE QUATERNAIRE
-                ArbreQuat *a = NULL; 
-                double xmin, ymin, xmax, ymax;
-                chaineCoordMinMax(c, &xmin, &ymin, &xmax, &ymax);
-                a = creerArbreQuat((xmin+xmax)/2, (ymin+ymax)/2, xmax-xmin, ymax-ymin);
-                afficherArbreQuat(a);
+                //ArbreQuat *a = NULL; 
+                //double xmin, ymin, xmax, ymax;
+                //chaineCoordMinMax(c, &xmin, &ymin, &xmax, &ymax);
+                //a = creerArbreQuat((xmin+xmax)/2, (ymin+ymax)/2, xmax-xmin, ymax-ymin);
+                //afficherArbreQuat(a);
                 reseau = reconstitueReseauArbre(c);
                 ecrireReseau(reseau, fic3);
                 afficheReseauSVG(reseau, "burmaarbre.svg");             
