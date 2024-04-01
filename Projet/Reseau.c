@@ -3,6 +3,11 @@
 #include <stdlib.h>
 
 CellNoeud * creerCellNoeud(Noeud *nd){
+    /*Crée une cellule avec le noeud donné.
+
+    Paramètre :
+    - nd : nœud à ajouter à la cellule.
+    */
     CellNoeud * new=(CellNoeud*)malloc(sizeof(CellNoeud));
     new->nd=nd;
     new->suiv=NULL;
@@ -11,6 +16,13 @@ CellNoeud * creerCellNoeud(Noeud *nd){
 
 
 Noeud * creerNoeud(int num,double x,double y,CellNoeud *voisins){
+    /*Crée un nœud.
+
+    Paramètres :
+    - num : numéro du nœud
+    - x,y : coordonnées du nœud
+    - voisins : liste des voisins du nœud
+    */
     Noeud * new=(Noeud *)malloc(sizeof(Noeud));
     new->num=num;
     new->x=x;
@@ -20,6 +32,14 @@ Noeud * creerNoeud(int num,double x,double y,CellNoeud *voisins){
 }
 
 CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num){
+    /*Ajoute un nœud en tête d'une liste de cellules de nœuds
+
+    Paramètres :
+    - cn : liste de cellules de nœuds
+    - num : numéro du nœud
+    - x,y : coordonnées du nœud
+    - voisins : liste des voisins du nœud
+    */
     Noeud * node=creerNoeud(num,x,y,NULL);
     CellNoeud * tete=creerCellNoeud(node);
     tete->suiv=cn;
@@ -28,6 +48,11 @@ CellNoeud * ajout_teteCellNoeud(CellNoeud * cn,double x,double y,int num){
 }
 
 Reseau * creerReseau(Chaines *c){
+    /*Crée un réseau à partir d'une structure de chaînes donnée
+
+    Paramètre :
+    - c : chaînes 
+    */
     Reseau * new=(Reseau *)malloc(sizeof(Reseau));
     new->nbNoeuds = 0;
     new->gamma = c->gamma;
@@ -37,6 +62,11 @@ Reseau * creerReseau(Chaines *c){
 }
 
 CellCommodite * creeCommodite(Noeud * extrA,Noeud * extrB){
+    /*Crée une commodité à partir de deux nœuds donnés.
+
+    Paramètres :
+    - extrA, extrB : premier et dernier noeuds de la commodité
+   */
     CellCommodite * new=(CellCommodite *)malloc(sizeof(CellCommodite));
     new->extrA=extrA;
     new->extrB=extrB;
@@ -45,12 +75,24 @@ CellCommodite * creeCommodite(Noeud * extrA,Noeud * extrB){
 }
 
 CellCommodite * ajout_teteCellCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
+    /*Ajoute une nouvelle commodité en tête d'une liste de commodités.
+
+    Paramètres :
+    - commodites : liste de commodités
+    - extrA, extrB : premier et dernier noeuds de la commodité
+    */
     CellCommodite * tete=creeCommodite(extrA,extrB);
     tete->suiv=commodites;
     return tete;
 }
 
 CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
+    /*Recherche une commodité dans une liste de commodités à partir de ses deux nœuds.
+
+    Paramètres :   
+    - commodites : liste de commodités
+    - extrA, extrB : premier et dernier noeuds de la commodité 
+    */
     CellCommodite * cour=commodites;
     while(cour){
         if(cour->extrA==extrA && cour->extrB==extrB){
@@ -64,6 +106,12 @@ CellCommodite * rechercheCommodite(CellCommodite * commodites,Noeud * extrA,Noeu
 
 
 Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
+    /*Recherche ou crée un nœud dans un réseau à partir de ses coordonnées.
+
+    Paramètres :
+    - R : réseau dans lequel rechercher ou créer le nœud
+    - x,y : coordonnée x du nœud
+    */
     CellNoeud *noeudR = R->noeuds;
     
     while (noeudR){
@@ -81,6 +129,11 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
 }
 
 void insererVoisins(Noeud *n1, Noeud *n2){
+    /*Insère deux nœuds comme voisins l'un de l'autre.
+
+    Paramètres :
+    - n1, n2 : nœuds voisins
+    */
     CellNoeud *p1= n1->voisins;
     while (p1){
         if(p1->nd==n2){
@@ -95,6 +148,11 @@ void insererVoisins(Noeud *n1, Noeud *n2){
 }
 
 Reseau* reconstitueReseauListe(Chaines *C){
+    /*Reconstitue un réseau à partir d'une structure de chaînes donnée.
+
+    Paramètre :
+    - C : chaînes
+    */
     Reseau * reseau=creerReseau(C);
     CellCommodite * commodites=NULL;
     CellChaine * chaines=C->chaines;
@@ -132,6 +190,11 @@ Reseau* reconstitueReseauListe(Chaines *C){
 }
 
 int nbLiaisons(Reseau *R){
+    /*Compte le nombre de liaisons dans un réseau.
+
+    Paramètre :
+    - R : réseau
+    */
     int cpt=0;
     CellNoeud *noeud=R->noeuds;
     while(noeud){
@@ -146,6 +209,11 @@ int nbLiaisons(Reseau *R){
 }
 
 int nbCommodites(Reseau *R){
+    /*Compte le nombre de commodités dans un réseau.
+
+    Paramètre :
+    - R : réseau
+    */
     int cpt=0;
     CellCommodite *com=R->commodites;
     while(com){
@@ -156,6 +224,12 @@ int nbCommodites(Reseau *R){
 }
 
 void ecrireReseau(Reseau *R, FILE *f){
+    /*Écrit le contenu d'un réseau dans un fichier.
+
+    Paramètres :
+    - R : réseau
+    - f : pointeur vers le fichier
+    */
     if(f == NULL){
         printf("Erreur d'ouverture du fichier\n");
         exit(1);
@@ -197,6 +271,11 @@ void ecrireReseau(Reseau *R, FILE *f){
 }
 
 void libererCellNoeud(CellNoeud *cn){
+    /*Libère la mémoire allouée pour une liste de cellules de nœuds.
+
+    Paramètre :
+    - cn : liste de cellules de nœuds
+    */
     while (cn){
         CellNoeud *tmp = cn;
         cn = cn->suiv;
@@ -205,11 +284,17 @@ void libererCellNoeud(CellNoeud *cn){
     }
 }
 
-void libererNoeud(Noeud *nd){
-    free(nd);
-}
+// void libererNoeud(Noeud *nd){
+
+//     free(nd);
+// }
 
 void libererCellCommodite(CellCommodite *com){
+    /*Libère la mémoire allouée pour une liste de commodités.
+
+    Paramètre :
+    - com : liste de commodités
+    */
     while (com){
         CellCommodite *tmp = com;
         com = com->suiv;
@@ -218,6 +303,11 @@ void libererCellCommodite(CellCommodite *com){
 }
 
 void libererReseau(Reseau *R){
+    /*Libère la mémoire allouée pour un réseau, ses nœuds et ses commodités.
+
+    Paramètre :
+    - R : réseau à libérer.
+    */
     libererCellNoeud(R->noeuds);
     libererCellCommodite(R->commodites);
     free(R);
