@@ -53,18 +53,22 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
             (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->so->noeud=n;
+            (*a)=(*parent);
         }
         if(pX>=PcentreX && pY<PcentreY){//Sud Est
             (*parent)->se=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->se->noeud=n;
+            (*a)=(*parent);
         }
         if(pX<PcentreX && pY>=PcentreY){//Nord Ouest
             (*parent)->no=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->no->noeud=n;
+            (*a)=(*parent);
         }
         if(pX>=PcentreX && pY>=PcentreY){//Nord Est
             (*parent)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->ne->noeud=n;
+            (*a)=(*parent);
         }
         
     }else{
@@ -100,23 +104,6 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     }
 }
 
-Reseau* reconstitueReseauArbre(Chaines* C){
-    Reseau *reseau = creerReseau(C);
-    ArbreQuat *a = NULL;
-    CellChaine *chaines = C->chaines;
-
-    while(chaines){
-        CellPoint *points = chaines->points;
-        while (points){
-            Noeud *n = creerNoeud(reseau->nbNoeuds+1,points->x, points->y,NULL);
-            insererNoeudArbre(n,&a,&a);
-            points = points->suiv;
-        }
-        chaines = chaines->suiv;
-    }
-    return reseau;
-}
-
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
     if((*a==NULL)){
         ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
@@ -150,6 +137,29 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         }
     } 
     return R->noeuds->nd;
+}
+
+Reseau* reconstitueReseauArbre(Chaines* C){
+    Reseau *reseau = creerReseau(C);
+    CellCommodite *commodites =NULL;
+    ArbreQuat *a = NULL;
+    CellChaine *chaines = C->chaines;
+    CellChaine * chaines=C->chaines;
+    Noeud *extrA=NULL;
+    Noeud *extrB=NULL;
+
+    while(chaines){
+        CellPoint *points = chaines->points;
+        Noeud *V=NULL;
+        extrA=rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
+        while (points){
+            Noeud *n = rechercheCreeNoeudArbre(reseau,&a,a);
+            insererNoeudArbre(n,&a,NULL);
+            points = points->suiv;
+        }
+        chaines = chaines->suiv;
+    }
+    return reseau;
 }
 
 
