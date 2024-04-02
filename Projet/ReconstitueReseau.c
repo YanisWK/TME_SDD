@@ -26,12 +26,9 @@ int main(int argc, char *argv[]){
     Chaines *c = lectureChaines(f);
     FILE *fic1 = fopen("burmaliste.txt", "w");
     FILE *fic2 = fopen("burmahachage.txt", "w");
-    //FILE *fic3 = fopen("burmaarbre.txt", "w");
+    FILE *fic3 = fopen("burmaarbre.txt", "w");
 
     Reseau *reseau = NULL;
-
-    // ArbreQuat *a = NULL; 
-    // double xmin, ymin, xmax, ymax;
 
     char *entree;
     int rep;
@@ -57,12 +54,14 @@ int main(int argc, char *argv[]){
                 afficheReseauSVG(reseau, "burmahachage.svg");  
                 break;
             case 3: //ARBRE QUATERNAIRE
-                // chaineCoordMinMax(c, &xmin, &ymin, &xmax, &ymax);
-                // a = creerArbreQuat((xmin+xmax)/2, (ymin+ymax)/2, xmax-xmin, ymax-ymin);
-                // afficherArbreQuat(a);
-                // reseau = reconstitueReseauArbre(c);
-                // ecrireReseau(reseau, fic3);
-                // afficheReseauSVG(reseau, "burmaarbre.svg");             
+                //ArbreQuat *a = NULL; 
+                //double xmin, ymin, xmax, ymax;
+                //chaineCoordMinMax(c, &xmin, &ymin, &xmax, &ymax);
+                //a = creerArbreQuat((xmin+xmax)/2, (ymin+ymax)/2, xmax-xmin, ymax-ymin);
+                //afficherArbreQuat(a);
+                reseau = reconstitueReseauArbre(c);
+                ecrireReseau(reseau, fic3);
+                afficheReseauSVG(reseau, "burmaarbre.svg");             
                 break;          
         }
     }while(rep!=0);
@@ -74,7 +73,7 @@ int main(int argc, char *argv[]){
     libererReseau(reseau);
     fclose(fic1);   
     fclose(fic2);   
-    //fclose(fic3);   
+    fclose(fic3);   
     fclose(f);
     return 0;
 }
