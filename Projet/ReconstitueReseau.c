@@ -19,7 +19,7 @@ void menu(){
 int main(int argc, char *argv[]){
     
     if (argc!=3){
-        fprintf(stderr, "Usage: ./ReconstitueReseau fichier\n");
+        fprintf(stderr, "Usage: ./ReconstitueReseau nom_fichier entier\n");
         return 1;
     }
 
@@ -31,73 +31,39 @@ int main(int argc, char *argv[]){
 
 
     Reseau *reseau = NULL;
-    clock_t deb, fin;
-    double temps;
-
-    char *entree;
-    int rep;
-
-    do{
-        char buffer[BUFFERSIZE];
-        menu();
-        entree=fgets(buffer,BUFFERSIZE,stdin);
-        rep=atoi(entree);
-         if (sscanf(entree, "%d", &rep) != 1){
-            printf("Entrée invalide. Usage : <un entier>\n");
-        }
-        switch(rep){
-            case 1: //LISTE CHAINEE
-                deb = clock();
+    char buffer[BUFFERSIZE];
+    menu();
+    if(argv[2]==0){
+        return 0;
+    }else{
+        if (argv[2]>3 || argv[2]<0 || argv[1]==NULL){
+            printf("Fichier ou entier invalide");
+        }else{
+            if(argv[2]==1){ //LISTE CHAINEE
                 reseau = reconstitueReseauListe(c);
-                fin = clock();
-                temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                 ecrireReseau(reseau, fic1);
-                fprintf(fic4, "Liste chaînée :\n");
-                fprintf(fic4, "\n%lf secondes\n", temps);
-                fprintf(fic4, "\n");
                 afficheReseauSVG(reseau, "burmaliste.svg");             
                 break;
-            case 2: //TABLE DE HACHAGE
-                deb = clock();
+            }else if argv[2]==2){ //TABLE DE HACHAGE
                 int M = 50; 
                 reseau = reconstitueReseauHachage(c, M);
-                fin = clock();
-                temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                ecrireReseau(reseau, fic2);                 
-                fprintf(fic4, "Table de hachage :\n");
-                fprintf(fic4, "\nM = %d : %lf secondes\n", M, temps);
-                for (int i=51; i<=70; i++){
-                    deb = clock();
-                    reseau = reconstitueReseauHachage(c, i);
-                    fin = clock();
-                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                    fprintf(fic4, "M = %d : %lf secondes\n", i, temps);
-                }
-                fprintf(fic4, "\n");
+                ecrireReseau(reseau, fic2);            
                 afficheReseauSVG(reseau, "burmahachage.svg");  
                 break;
-            case 3: //ARBRE QUATERNAIRE
-                deb = clock();
+            }else{ //ARBRE QUATERNAIRE
                 reseau = reconstitueReseauArbre(c);
-                fin = clock();
-                temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                 ecrireReseau(reseau, fic3);
-                fprintf(fic4, "Arbre quaternaire :\n");
-                fprintf(fic4, "\n%lf secondes\n", temps);
                 afficheReseauSVG(reseau, "burmaarbre.svg");             
-                break;          
+                break;  
+            }        
         }
-    }while(rep!=0);
-    if(!rep){
-        return 0;
     }
-
+    
     libererChaines(c);
     libererReseau(reseau);
     fclose(fic1);   
     fclose(fic2);   
     fclose(fic3);   
-    fclose(fic4);   
     fclose(f);
     return 0;
 }
