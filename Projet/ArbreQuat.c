@@ -50,7 +50,10 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     //cas arbre vide
 
     if((*a)==NULL){
+
+        /*Changer les coordonée du centre en faisant l'addition ou la soustraction du quart*/
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
+
             (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->so->noeud=n;
             (*a)=(*parent);
