@@ -28,6 +28,8 @@ int main(int argc, char *argv[]){
     FILE *fic1 = fopen("burmaliste.txt", "w");
     FILE *fic2 = fopen("burmahachage.txt", "w");
     FILE *fic3 = fopen("burmaarbre.txt", "w");
+    FILE *fic4 = fopen("temps_de_calcul.txt", "w");
+
 
     Reseau *reseau = NULL;
     clock_t deb, fin;
@@ -50,8 +52,10 @@ int main(int argc, char *argv[]){
                 reseau = reconstitueReseauListe(c);
                 fin = clock();
                 temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                ecrireReseau(reseau, fic1); 
-                fprintf(fic1, "\n%lf secondes\n", temps);
+                ecrireReseau(reseau, fic1);
+                fprintf(fic4, "Liste chaînée :\n");
+                fprintf(fic4, "\n%lf secondes\n", temps);
+                fprintf(fic4, "\n");
                 afficheReseauSVG(reseau, "burmaliste.svg");             
                 break;
             case 2: //TABLE DE HACHAGE
@@ -60,15 +64,17 @@ int main(int argc, char *argv[]){
                 reseau = reconstitueReseauHachage(c, M);
                 fin = clock();
                 temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                ecrireReseau(reseau, fic2); 
-                fprintf(fic2, "\nM = %d : %lf secondes\n", M, temps);
+                ecrireReseau(reseau, fic2);                 
+                fprintf(fic4, "Table de hachage :\n");
+                fprintf(fic4, "\nM = %d : %lf secondes\n", M, temps);
                 for (int i=51; i<=70; i++){
                     deb = clock();
                     reseau = reconstitueReseauHachage(c, i);
                     fin = clock();
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                    fprintf(fic2, "M = %d : %lf secondes\n", i, temps);
+                    fprintf(fic4, "M = %d : %lf secondes\n", i, temps);
                 }
+                fprintf(fic4, "\n");
                 afficheReseauSVG(reseau, "burmahachage.svg");  
                 break;
             case 3: //ARBRE QUATERNAIRE
@@ -77,7 +83,8 @@ int main(int argc, char *argv[]){
                 fin = clock();
                 temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                 ecrireReseau(reseau, fic3);
-                fprintf(fic3, "\n%lf secondes\n", temps);
+                fprintf(fic4, "Arbre quaternaire :\n");
+                fprintf(fic4, "\n%lf secondes\n", temps);
                 afficheReseauSVG(reseau, "burmaarbre.svg");             
                 break;          
         }
@@ -91,6 +98,7 @@ int main(int argc, char *argv[]){
     fclose(fic1);   
     fclose(fic2);   
     fclose(fic3);   
+    fclose(fic4);   
     fclose(f);
     return 0;
 }

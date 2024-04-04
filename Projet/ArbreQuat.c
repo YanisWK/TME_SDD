@@ -41,66 +41,65 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
 
 
 
-void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
-    double pX=n->x;
-    double pY=n->y;
-    double PcentreX=(*parent)->xc;
-    double PcentreY=(*parent)->yc;
+void insererNoeudArbre(Noeud *n, ArbreQuat **a, ArbreQuat **parent) {
+    double pX = n->x;
+    double pY = n->y;
+    double PcentreX = (*parent)->xc;
+    double PcentreY = (*parent)->yc;
+
+    ArbreQuat *tmpParent = *parent; // Pointeur temporaire pour le parent
+    ArbreQuat **tmpA = a; // Pointeur temporaire pour l'arbre
 
     //cas arbre vide
+    if ((*tmpA) == NULL) {
+        if (pX < PcentreX && pY < PcentreY) { // Sud ouest
+            tmpParent->so = creerArbreQuat(pX, pY, (tmpParent->coteX) / 2, (tmpParent->coteY) / 2);
+            tmpParent->so->noeud = n;
+            (*tmpA) = tmpParent;
+        }
+        if (pX >= PcentreX && pY < PcentreY) { // Sud Est
+            tmpParent->se = creerArbreQuat(pX, pY, (tmpParent->coteX) / 2, (tmpParent->coteY) / 2);
+            tmpParent->se->noeud = n;
+            (*tmpA) = tmpParent;
+        }
+        if (pX < PcentreX && pY >= PcentreY) { // Nord Ouest
+            tmpParent->no = creerArbreQuat(pX, pY, (tmpParent->coteX) / 2, (tmpParent->coteY) / 2);
+            tmpParent->no->noeud = n;
+            (*tmpA) = tmpParent;
+        }
+        if (pX >= PcentreX && pY >= PcentreY) { // Nord Est
+            tmpParent->ne = creerArbreQuat(pX, pY, (tmpParent->coteX) / 2, (tmpParent->coteY) / 2);
+            tmpParent->ne->noeud = n;
+            (*tmpA) = tmpParent;
+        }
+    }
 
-    if((*a)==NULL){
-        if(pX<PcentreX && pY<PcentreY){ //Sud ouest
-            (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
-            (*parent)->so->noeud=n;
-            (*a)=(*parent);
-        }
-        if(pX>=PcentreX && pY<PcentreY){//Sud Est
-            (*parent)->se=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
-            (*parent)->se->noeud=n;
-            (*a)=(*parent);
-        }
-        if(pX<PcentreX && pY>=PcentreY){//Nord Ouest
-            (*parent)->no=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
-            (*parent)->no->noeud=n;
-            (*a)=(*parent);
-        }
-        if(pX>=PcentreX && pY>=PcentreY){//Nord Est
-            (*parent)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
-            (*parent)->ne->noeud=n;
-            (*a)=(*parent);
-        }
-        
-    }else{
-        //cas noeud interne
+    // cas noeud interne
+    double acentreX = (*tmpA)->xc;
+    double acentreY = (*tmpA)->yc;
 
-        double acentreX=(*a)->xc;
-        double acentreY=(*a)->yc;
-
-        if((*a)->noeud == NULL){
-            if(pX<acentreX && pY<acentreY){ //Sud ouest
-                insererNoeudArbre(n,&(*a)->so,&(*a));
-            }
-            if(pX>=acentreX && pY<acentreY){//Sud Est
-                insererNoeudArbre(n,&(*a)->se,&(*a));
-            }
-            if(pX<acentreX && pY>=acentreY){//Nord Ouest
-                insererNoeudArbre(n,&(*a)->no,&(*a));
-            }
-            if(pX>=acentreX && pY>=acentreY){//Nord Est
-                insererNoeudArbre(n,&(*a)->ne,&(*a));
-            }
-        }else{
-            //cas feuille
-
-            /*Nouveau noeud */
-            // insererNoeudArbre((*a)->noeud,NULL,&(*a));
-            // insererNoeudArbre(n,NULL,&(*a));
-            Noeud *ancienNoeud = (*a)->noeud;
-            insererNoeudArbre(ancienNoeud,a,parent); //réinsère le nœud actuel
-            insererNoeudArbre(n,a,parent); //insère le nouveau nœud
-            (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
+    if (((*tmpA) != NULL) && ((*tmpA)->noeud == NULL)) {
+        if (pX < acentreX && pY < acentreY) { // Sud ouest
+            insererNoeudArbre(n, &((*tmpA)->so), tmpA);
         }
+        if (pX >= acentreX && pY < acentreY) { // Sud Est
+            insererNoeudArbre(n, &((*tmpA)->se), tmpA);
+        }
+        if (pX < acentreX && pY >= acentreY) { // Nord Ouest
+            insererNoeudArbre(n, &((*tmpA)->no), tmpA);
+        }
+        if (pX >= acentreX && pY >= acentreY) { // Nord Est
+            insererNoeudArbre(n, &((*tmpA)->ne), tmpA);
+        }
+    }
+
+    // cas feuille
+    if ((*tmpA)->noeud != NULL) {
+        /* Nouveau noeud */
+        Noeud *ancienNoeud = (*tmpA)->noeud;
+        insererNoeudArbre(ancienNoeud, tmpA, parent); // réinsère le nœud actuel
+        insererNoeudArbre(n, tmpA, parent); // insère le nouveau nœud
+        (*tmpA)->noeud = NULL; // PEUT CAUSER UN PROBLEME MEMOIRE
     }
 }
 
@@ -125,7 +124,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         if(x>=acentreX && y>=acentreY){//Nord Est
             rechercheCreeNoeudArbre(R,&(*a)->ne,(*a),x,y);
         }
-        
     }
     if(((*a)->noeud != NULL) && ((*a)->noeud!=NULL)){
         if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
@@ -141,19 +139,12 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
 
 Reseau* reconstitueReseauArbre(Chaines* C){
     Reseau *reseau = creerReseau(C);
-    CellCommodite *commodites =NULL;
     ArbreQuat *a = NULL;
     CellChaine *chaines = C->chaines;
-    CellChaine * chaines=C->chaines;
-    Noeud *extrA=NULL;
-    Noeud *extrB=NULL;
-
     while(chaines){
         CellPoint *points = chaines->points;
-        Noeud *V=NULL;
-        extrA=rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
         while (points){
-            Noeud *n = rechercheCreeNoeudArbre(reseau,&a,a);
+            Noeud *n = rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
             insererNoeudArbre(n,&a,NULL);
             points = points->suiv;
         }
