@@ -344,10 +344,10 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
 }
 
 Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax){
-    Chaines* new = malloc(sizeof(Chaines));
-    new->gamma = rand()%(10)-1;
-    new->nbChaines = nbChaines;
-    new->chaines = NULL;
+    Chaines* chaines = malloc(sizeof(Chaines));
+    chaines->gamma = rand()%(10)-1;
+    chaines->nbChaines = nbChaines;
+    chaines->chaines = NULL;
     srand(time(NULL));
 
     for(int i = 0; i < nbChaines; i++){
@@ -369,5 +369,6 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax)
         new->suiv = chaines->chaines;
         chaines->chaines = new;
     }
+
     return chaines;
 }
