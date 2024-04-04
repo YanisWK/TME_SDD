@@ -97,11 +97,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
             //cas feuille
 
             /*Nouveau noeud */
-            // insererNoeudArbre((*a)->noeud,NULL,&(*a));
-            // insererNoeudArbre(n,NULL,&(*a));
-            Noeud *ancienNoeud = (*a)->noeud;
-            insererNoeudArbre(ancienNoeud,a,parent); //réinsère le nœud actuel
-            insererNoeudArbre(n,a,parent); //insère le nouveau nœud
+            insererNoeudArbre((*a)->noeud,NULL,&(*a));
+            insererNoeudArbre(n,NULL,&(*a));
             (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
         }
     }
