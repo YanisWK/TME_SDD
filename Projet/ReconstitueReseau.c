@@ -18,7 +18,7 @@ void menu(){
 
 int main(int argc, char *argv[]){
     
-    if (argc!=2){
+    if (argc!=3){
         fprintf(stderr, "Usage: ./ReconstitueReseau fichier\n");
         return 1;
     }
@@ -28,7 +28,6 @@ int main(int argc, char *argv[]){
     FILE *fic1 = fopen("burmaliste.txt", "w");
     FILE *fic2 = fopen("burmahachage.txt", "w");
     FILE *fic3 = fopen("burmaarbre.txt", "w");
-    FILE *fic4 = fopen("temps_de_calcul.txt", "w");
 
 
     Reseau *reseau = NULL;
