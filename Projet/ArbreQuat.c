@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ArbreQuat.h"
+#include "math.h"
 
 void chaineCoordMinMax(Chaines* C,double* xmin,double* ymin,double *xmax,double *ymax){
     CellChaine *courant=C->chaines;
@@ -46,7 +47,9 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
     double pY=n->y;
     double PcentreX=(*parent)->xc;
     double PcentreY=(*parent)->yc;
-
+    double PcoteX=(*parent)->coteX;
+    double PcoteY=(*parent)->coteY;
+    
     //cas arbre vide
 
     if((*a)==NULL){
@@ -54,22 +57,22 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat **parent){
         /*Changer les coordonée du centre en faisant l'addition ou la soustraction du quart*/
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
 
-            (*parent)->so=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->so=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY-(PcoteY/4),((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->so->noeud=n;
             (*a)=(*parent);
         }
         if(pX>=PcentreX && pY<PcentreY){//Sud Est
-            (*parent)->se=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->se=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY-(PcoteY/4),((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->se->noeud=n;
             (*a)=(*parent);
         }
         if(pX<PcentreX && pY>=PcentreY){//Nord Ouest
-            (*parent)->no=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->no=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY+(PcoteY/4),((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->no->noeud=n;
             (*a)=(*parent);
         }
         if(pX>=PcentreX && pY>=PcentreY){//Nord Est
-            (*parent)->ne=creerArbreQuat(pX,pY,((*parent)->coteX)/2,((*parent)->coteY)/2);
+            (*parent)->ne=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY+(PcoteY/4),((*parent)->coteX)/2,((*parent)->coteY)/2);
             (*parent)->ne->noeud=n;
             (*a)=(*parent);
         }
@@ -108,7 +111,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
     if((*a==NULL)){
         ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
-        insererNoeudArbre(R->noeuds->nd,a,&parent);
+        insererNoeudArbre(R->noeuds->nd,&a,&parent);
     }
     if(((*a != NULL) && ((*a)->noeud == NULL))){
         double acentreX=(*a)->xc;
@@ -139,11 +142,16 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
     return R->noeuds->nd;
 }
 
+
+
 Reseau* reconstitueReseauArbre(Chaines* C){
     Reseau *reseau = creerReseau(C);
     CellCommodite *commodites =NULL;
     ArbreQuat *a = NULL;
-    CellChaine *chaines = C->chaines;
+    double xmin,xmax,ymin,ymax;
+    chaineCoordMinMax(C,&xmin,&xmax,&ymin,&ymax);
+    
+    ArbreQuat *parent=creerArbreQuat((xmin+xmax)/2,(ymin+ymax)/2,xmax-xmin,ymax-ymin);
     CellChaine * chaines=C->chaines;
     Noeud *extrA=NULL;
     Noeud *extrB=NULL;
@@ -151,14 +159,25 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     while(chaines){
         CellPoint *points = chaines->points;
         Noeud *V=NULL;
-        extrA=rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
+        extrA=rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
         while (points){
-            Noeud *n = rechercheCreeNoeudArbre(reseau,&a,a);
-            insererNoeudArbre(n,&a,NULL);
+            Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
+            if (V){
+                insererVoisins(V,cour);
+                insererVoisins(cour,V);
+            }
+            V=cour;
+            if(!points->suiv){
+                extrB=rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
+            }
             points = points->suiv;
+        }
+        if(!rechercheCommodite(commodites,extrA,extrB)){
+            commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
         }
         chaines = chaines->suiv;
     }
+    reseau->commodites=commodites;
     return reseau;
 }
 
