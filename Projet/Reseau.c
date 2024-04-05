@@ -1,6 +1,8 @@
 #include "Reseau.h"
+#include "Chaine.h"
 #include "SVGwriter.h"
 #include <stdlib.h>
+#include <time.h>
 
 CellNoeud * creerCellNoeud(Noeud *nd){
     /*Crée une cellule avec le noeud donné.
@@ -339,4 +341,34 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
         courN=courN->suiv;
     }
     SVGfinalize(&svg);
+}
+
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax){
+    Chaines* chaines = malloc(sizeof(Chaines));
+    chaines->gamma = rand()%(10)-1;
+    chaines->nbChaines = nbChaines;
+    chaines->chaines = NULL;
+    srand(time(NULL));
+
+    for(int i = 0; i < nbChaines; i++){
+        CellChaine* new = malloc(sizeof(CellChaine));
+        new->numero = i+1;
+        new->points = NULL;
+
+        for (int j = 0; j < nbPointsChaine; j++){
+            double x = rand()%(xmax); 
+            double y = rand()%(ymax);
+
+            CellPoint* point = malloc(sizeof(CellPoint));
+            point->x = x;
+            point->y = y;
+            point->suiv = new->points;
+            new->points = point;
+        }
+
+        new->suiv = chaines->chaines;
+        chaines->chaines = new;
+    }
+
+    return chaines;
 }
