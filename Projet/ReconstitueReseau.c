@@ -23,29 +23,25 @@ int main(int argc, char *argv[]){
 
 
     Reseau *reseau = NULL;
-    char buffer[BUFFERSIZE];
-    if(argv[2]==0){
+    if(atoi(argv[2])==0){
         return 0;
     }else{
-        if (argv[2]>3 || argv[2]<0 || argv[1]==NULL){
+        if (atoi(argv[2])>3 || atoi(argv[2])<0 || argv[1]==NULL){
             printf("Fichier ou entier invalide");
         }else{
-            if(argv[2]==1){ //LISTE CHAINEE
+            if(atoi(argv[2])==1){ //LISTE CHAINEE
                 reseau = reconstitueReseauListe(c);
                 ecrireReseau(reseau, fic1);
                 afficheReseauSVG(reseau, "burmaliste.svg");             
-                break;
-            }else if argv[2]==2){ //TABLE DE HACHAGE
+            }else if (atoi(argv[2])==2){ //TABLE DE HACHAGE
                 int M = 50; 
                 reseau = reconstitueReseauHachage(c, M);
                 ecrireReseau(reseau, fic2);            
                 afficheReseauSVG(reseau, "burmahachage.svg");  
-                break;
             }else{ //ARBRE QUATERNAIRE
                 reseau = reconstitueReseauArbre(c);
                 ecrireReseau(reseau, fic3);
                 afficheReseauSVG(reseau, "burmaarbre.svg");             
-                break;  
             }        
         }
     }

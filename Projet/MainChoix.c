@@ -5,16 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #define BUFFERSIZE 256
-
-void menu(){
-    printf("0- Sortir du programme\n");
-    printf("1- Liste Chainée\n");
-    printf("2- Table de Hachage\n");
-    printf("3- Arbre\n");
-    printf("Quelle structure voulez vous choisir ?\n");
-}
 
 int main(int argc, char *argv[]){
     
@@ -37,8 +30,8 @@ int main(int argc, char *argv[]){
     reseau = reconstitueReseauListe(c);
     fin = clock();
     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-    fprintf(fic4, "Liste chaînée :\n");
-    fprintf(fic4, "\n%lf secondes\n", temps);
+    fprintf(fic4, "Liste chaînée : ");
+    fprintf(fic4, "%lf secondes\n", temps);
     fprintf(fic4, "\n");
     
     //TABLE DE HACHAGE
@@ -56,6 +49,9 @@ int main(int argc, char *argv[]){
         fprintf(fic4, "M = %d : %lf secondes\n", i, temps);
     }
     fprintf(fic4, "\n");
+    sleep(2);
+
+
     //ARBRE QUATERNAIRE
     deb = clock();
     reseau = reconstitueReseauArbre(c);
