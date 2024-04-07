@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     }
 
     FILE *f =fopen(argv[1], "r");
-    Chaines *c = lectureChaines(f);
+    Chaines *c = generationAleatoire(500,10,500,500);
     FILE *fic4 = fopen("temps_de_calcul.txt", "w");
 
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
     fin = clock();
     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
     fprintf(fic4, "Table de hachage :\n");
-    for (int i=M; i<=70; i++){
+    for (int i=M; i<=100; i+=5){
         deb = clock();
         reseau = reconstitueReseauHachage(c, i);
         fin = clock();
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
 
     //ARBRE QUATERNAIRE
     deb = clock();
-    reseau = reconstitueReseauArbre(c);
+    // reseau = reconstitueReseauArbre(c);
     fin = clock();
     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
     fprintf(fic4, "Arbre quaternaire :\n");
