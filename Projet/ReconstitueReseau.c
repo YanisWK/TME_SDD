@@ -8,14 +8,6 @@
 
 #define BUFFERSIZE 256
 
-void menu(){
-    printf("0- Sortir du programme\n");
-    printf("1- Liste Chainée\n");
-    printf("2- Table de Hachage\n");
-    printf("3- Arbre\n");
-    printf("Quelle structure voulez vous choisir ?\n");
-}
-
 int main(int argc, char *argv[]){
     
     if (argc!=3){
@@ -32,7 +24,6 @@ int main(int argc, char *argv[]){
 
     Reseau *reseau = NULL;
     char buffer[BUFFERSIZE];
-    menu();
     if(argv[2]==0){
         return 0;
     }else{

@@ -356,12 +356,9 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax)
         new->points = NULL;
 
         for (int j = 0; j < nbPointsChaine; j++){
-            double x = rand()%(xmax); 
-            double y = rand()%(ymax);
-
             CellPoint* point = malloc(sizeof(CellPoint));
-            point->x = x;
-            point->y = y;
+            point->x = rand()%(xmax);
+            point->y = rand()%(ymax);
             point->suiv = new->points;
             new->points = point;
         }
