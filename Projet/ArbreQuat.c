@@ -49,31 +49,27 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
     double PcentreY=parent->yc;
     double PcoteX=parent->coteX;
     double PcoteY=parent->coteY;
-    
     //cas arbre vide
-    if(a==NULL||(*a)==NULL){
+    if((*a)==NULL || a==NULL){
         /*Changer les coordonée du centre en faisant l'addition ou la soustraction du quart*/
+        ArbreQuat *res;
         if(pX<PcentreX && pY<PcentreY){ //Sud ouest
-            parent->so=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
-            parent->so->noeud=n;
-            (*a)=parent;
+            res=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
+            parent->so=res;
         }
         if(pX>=PcentreX && pY<PcentreY){//Sud Est
-            parent->se=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
-            parent->se->noeud=n;
-            (*a)=parent;
+            res=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
+            parent->se=res;
         }
         if(pX<PcentreX && pY>=PcentreY){//Nord Ouest
-            parent->no=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY+(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
-            parent->no->noeud=n;
-            (*a)=parent;
+            res=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY+(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
+            parent->no=res;
         }
         if(pX>=PcentreX && pY>=PcentreY){//Nord Est
-            parent->ne=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY+(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
-            parent->ne->noeud=n;
-            (*a)=parent;
+            res=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY+(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
+            parent->ne=res;
         }
-        
+        res->noeud=n;
     }else{
         //cas noeud interne
 
@@ -159,7 +155,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         Noeud *V=NULL;
         extrA=rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
         while (points){
-            Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,a,points->x,points->y);
+            Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
             if (V){
                 insererVoisins(V,cour);
                 insererVoisins(cour,V);
