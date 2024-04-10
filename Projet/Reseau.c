@@ -242,7 +242,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     fprintf(f,"NbCommodites: %d\n", nbCommodites(R));
     fprintf(f,"Gamma: %d\n", R->gamma);
 
-    printf("\n");
+    fprintf(f,"\n");
     CellNoeud *noeud = R->noeuds;
     while(noeud){
         fprintf(f,"v %d %.6lf %.6lf\n", noeud->nd->num, noeud->nd->x, noeud->nd->y);
