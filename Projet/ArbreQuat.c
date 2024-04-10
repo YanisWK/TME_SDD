@@ -95,7 +95,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
             /*Nouveau noeud */
             insererNoeudArbre((*a)->noeud,NULL,*a);
             insererNoeudArbre(n,NULL,*a);
-            (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE
+            (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE PAS SUR QUE SA LIBERE LE BON NOEUD
+
         }
     }
 }
@@ -107,7 +108,16 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         insererNoeudArbre(R->noeuds->nd,a,parent);
         return R->noeuds->nd;
     }
-    if(((*a != NULL) && ((*a)->noeud == NULL))){
+    if(((*a)->noeud!=NULL)){
+        if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
+            return (*a)->noeud;
+        }else{
+            R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
+            R->nbNoeuds+=1;
+            insererNoeudArbre(R->noeuds->nd,a,parent);
+        }
+    } 
+    if((*a)->noeud == NULL){
         double acentreX=(*a)->xc;
         double acentreY=(*a)->yc;
         if(x<acentreX && y<acentreY){ //Sud ouest
@@ -124,15 +134,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         }
         
     }
-    if(((*a)->noeud != NULL) && ((*a)->noeud!=NULL)){
-        if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
-            return (*a)->noeud;
-        }else{
-            R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
-            R->nbNoeuds+=1;
-            insererNoeudArbre(R->noeuds->nd,a,parent);
-        }
-    } 
     return R->noeuds->nd;
 }
 
@@ -147,6 +148,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     
     ArbreQuat *parent=creerArbreQuat((xmin+xmax)/2,(ymin+ymax)/2,xmax-xmin,ymax-ymin);
     CellChaine * chaines=C->chaines;
+
     Noeud *extrA=NULL;
     Noeud *extrB=NULL;
 
