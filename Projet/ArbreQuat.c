@@ -78,16 +78,16 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 
         if((*a)->noeud == NULL){
             if(pX<acentreX && pY<acentreY){ //Sud ouest
-                insererNoeudArbre(n,&(*a)->so,*a);
+                insererNoeudArbre(n,&((*a)->so),*a);
             }
             if(pX>=acentreX && pY<acentreY){//Sud Est
-                insererNoeudArbre(n,&(*a)->se,*a);
+                insererNoeudArbre(n,&((*a)->se),*a);
             }
             if(pX<acentreX && pY>=acentreY){//Nord Ouest
-                insererNoeudArbre(n,&(*a)->no,*a);
+                insererNoeudArbre(n,&((*a)->no),*a);
             }
             if(pX>=acentreX && pY>=acentreY){//Nord Est
-                insererNoeudArbre(n,&(*a)->ne,*a);
+                insererNoeudArbre(n,&((*a)->ne),*a);
             }
         }else{
             //cas feuille
@@ -102,6 +102,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
     if((*a==NULL)){
+        printf("Creer\n");
         R->noeuds = ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
         insererNoeudArbre(R->noeuds->nd,a,parent);
@@ -109,6 +110,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
     }
     else if(((*a)->noeud!=NULL)){
         if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
+            printf("Trouvé\n");
             return (*a)->noeud;
         }else{
             double acentreX=(*a)->xc;
@@ -152,11 +154,11 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
 Reseau* reconstitueReseauArbre(Chaines* C){
     Reseau *reseau = creerReseau(C);
     CellCommodite *commodites =NULL;
-    ArbreQuat *a = NULL;
     double xmin=0,xmax=0,ymin=0,ymax=0;
     chaineCoordMinMax(C,&xmin,&xmax,&ymin,&ymax);
     
-    ArbreQuat *parent=creerArbreQuat((xmin+xmax)/2,(ymin+ymax)/2,xmax-xmin,ymax-ymin);
+    ArbreQuat *a=creerArbreQuat((xmin+xmax)/2,(ymin+ymax)/2,xmax-xmin,ymax-ymin);
+    //afficherArbreQuat(parent);
     CellChaine * chaines=C->chaines;
 
     Noeud *extrA=NULL;
@@ -165,16 +167,16 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     while(chaines){
         CellPoint *points = chaines->points;
         Noeud *V=NULL;
-        extrA=rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
+        extrA=rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
         while (points){
-            Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
+            Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
             if (V){
                 insererVoisins(V,cour);
                 insererVoisins(cour,V);
             }
             V=cour;
             if(!points->suiv){
-                extrB=rechercheCreeNoeudArbre(reseau,&a,parent,points->x,points->y);
+                extrB=rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
             }
             points = points->suiv;
         }
@@ -184,7 +186,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         chaines = chaines->suiv;
     }
     reseau->commodites=commodites;
-    afficherArbreQuat(parent);
+    
     return reseau;
 }
 
