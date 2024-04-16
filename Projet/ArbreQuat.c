@@ -4,6 +4,12 @@
 #include "math.h"
 
 void chaineCoordMinMax(Chaines* C,double* xmin,double* ymin,double *xmax,double *ymax){
+    /* Calcule les coordonnées minimales et maximales des points dans les chaînes.
+    
+    Paramètres:
+    - C : chaînes 
+    - xmin, ymin, xmax, ymax : pointeurs vers les coordonnées minimales et maximales
+    */    
     CellChaine *courant=C->chaines;
     while(courant){
         CellPoint *points=courant->points;
@@ -27,6 +33,12 @@ void chaineCoordMinMax(Chaines* C,double* xmin,double* ymin,double *xmax,double 
 }
 
 ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
+    /* Crée un arbre quaternaire.
+
+    Paramètres:
+    - xc, yc : coordonnées du centre de l'arbre
+    - coteX, coteY : longueur et largeur de l'arbre
+    */
     ArbreQuat *abr=(ArbreQuat *)malloc(sizeof(ArbreQuat));
     abr->xc=xc;
     abr->yc=yc;
@@ -43,17 +55,24 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
 
 
 void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
+    /* Insère un nœud dans un arbre.
+    
+    Paramètres :
+    - n : nœud à insérer 
+    - a : pointeur vers l'arbre
+    - parent : nœud parent de l'arbre
+    */
     double pX=n->x;
     double pY=n->y;
     double PcentreX=parent->xc;
     double PcentreY=parent->yc;
     double PcoteX=parent->coteX;
     double PcoteY=parent->coteY;
+
     //cas arbre vide
     if((*a)==NULL || a==NULL){
-        /*Changer les coordonée du centre en faisant l'addition ou la soustraction du quart*/
         ArbreQuat *res;
-        if(pX<PcentreX && pY<PcentreY){ //Sud ouest
+        if(pX<PcentreX && pY<PcentreY){//Sud ouest
             res=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
             parent->so=res;
         }
@@ -77,7 +96,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
         double acentreY=(*a)->yc;
 
         if((*a)->noeud == NULL){
-            if(pX<acentreX && pY<acentreY){ //Sud ouest
+            if(pX<acentreX && pY<acentreY){//Sud ouest
                 insererNoeudArbre(n,&(*a)->so,*a);
             }
             if(pX>=acentreX && pY<acentreY){//Sud Est
@@ -92,16 +111,23 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
         }else{
             //cas feuille
 
-            /*Nouveau noeud */
             insererNoeudArbre((*a)->noeud,NULL,*a);
             insererNoeudArbre(n,NULL,*a);
-            (*a)->noeud=NULL; //PEUT CAUSER UN PROBLEME MEMOIRE PAS SUR QUE SA LIBERE LE BON NOEUD (je pense que sa libere pas le noeud)
+            (*a)->noeud=NULL; 
         }
     }
 }
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
-    if((*a==NULL)){
+    /* Recherche ou crée un nœud dans un arbre.
+    
+    Paramètres:
+    - R : réseau de noeuds
+    - a : pointeur vers l'arbre 
+    - parent : nœud parent de l'arbre 
+    - x, y : coordonnées du noeud à rechercher ou à créer
+    */
+   if((*a==NULL)){
         R->noeuds = ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
         insererNoeudArbre(R->noeuds->nd,a,parent);
@@ -130,7 +156,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
     else{
         double acentreX=(*a)->xc;
         double acentreY=(*a)->yc;
-        if(x<acentreX && y<acentreY){ //Sud ouest
+        if(x<acentreX && y<acentreY){//Sud ouest
             return rechercheCreeNoeudArbre(R,&(*a)->so,(*a),x,y);
         }
         if(x>=acentreX && y<acentreY){//Sud Est
@@ -144,12 +170,17 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
         }
         
     }
-    return R->noeuds->nd; //return NULL revient au même
+    return R->noeuds->nd; 
 }
 
 
 
 Reseau* reconstitueReseauArbre(Chaines* C){
+    /* Reconstitue un réseau à partir des chaînes avec un arbre.
+
+    Paramètre:
+    - C : chaînes
+    */
     Reseau *reseau = creerReseau(C);
     CellCommodite *commodites =NULL;
     ArbreQuat *a = NULL;
@@ -190,6 +221,11 @@ Reseau* reconstitueReseauArbre(Chaines* C){
 
 
 void libererArbre(ArbreQuat *a){
+    /* Libère la mémoire d'un arbre.
+    
+    Paramètre:
+    - a : arbre 
+    */
     if (!a) return;
     libererArbre(a->so);
     libererArbre(a->se);
@@ -202,6 +238,11 @@ void libererArbre(ArbreQuat *a){
 }
 
 void afficherArbreQuat(ArbreQuat *a){
+    /* Affiche les informations d'un arbre.
+
+    Paramètre:
+    - a : arbre
+    */
     if (a == NULL){
         return;
     }
