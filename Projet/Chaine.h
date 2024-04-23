@@ -34,6 +34,7 @@ void afficheChainesSVG(Chaines *C, char* nomInstance);
 double longueurChaine(CellChaine *c);
 double longueurTotale(Chaines *C);
 int comptePointsTotal(Chaines *C);
+int nbPoints(CellPoint * points);
 void libererChaines(Chaines *c);
 
 #endif	

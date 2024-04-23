@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
         return 0;
     }else{
         if (atoi(argv[1])>3 || atoi(argv[1])<0){
-            printf("Fichier ou entier invalide");
+            printf("Entier invalide");
         }else{
             if(atoi(argv[1])==1){ //LISTE CHAINEE
             
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
                     fin = clock();
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                     fprintf(fic4, "Liste chaînée :\n");
-                    fprintf(fic4, "%lf %lf \n", longueurChaine(c->chaines), temps);
+                    fprintf(fic4, "%d %lf \n", comptePointsTotal(c), temps);
                     fprintf(fic4, "\n");
                 }
             }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
                         reseau = reconstitueReseauHachage(c, i);
                         fin = clock();
                         temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                        fprintf(fic4, "%lf %lf\n", longueurChaine(c->chaines), temps);
+                        fprintf(fic4, "%d %lf\n", comptePointsTotal(c), temps);
                     }
                     fprintf(fic4, "\n");
                 }
@@ -70,8 +70,8 @@ int main(int argc, char *argv[]){
                     reseau = reconstitueReseauArbre(c);
                     fin = clock();
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                    fprintf(fic4, "Arbre quaternaire :\n");
-                    fprintf(fic4, "%lf %lf\n", longueurChaine(c->chaines), temps);
+                    fprintf(fic4, "Arbre quwaternaire :\n");
+                    fprintf(fic4, "%d %lf\n", comptePointsTotal(c), temps);
                     fprintf(fic4, "\n");
                 }
             }
