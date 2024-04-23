@@ -41,50 +41,6 @@ int h(int k,int M){
     return((int) (M*((k*A)-(int)(k*A))));
 }
 
-CellCommodite * creeCommoditeHachage(Noeud * extrA,Noeud * extrB){
-    /*Crée une nouvelle commodité entre les deux nœuds aux extremités d'une chaîne.
-
-    Paramètres :
-    - extrA, extrB : premier et dernier nœuds de la commodité
-    */
-    CellCommodite * new=(CellCommodite *)malloc(sizeof(CellCommodite));
-    new->extrA=extrA;
-    new->extrB=extrB;
-    new->suiv=NULL;
-    return new;
-}
-
-CellCommodite * ajout_teteCellCommoditeHachage(CellCommodite * commodites,Noeud * extrA,Noeud * extrB){
-    /*Ajoute une nouvelle commodité en tête de la liste de commodités.
-
-    Paramètres :
-    - commodites : liste de commodités existante
-    - extrA, extrB : premier et dernier nœuds de la commodité
-    */
-    CellCommodite * tete=creeCommoditeHachage(extrA,extrB);
-    tete->suiv=commodites;
-    return tete;
-}
-
-void insererVoisinsHachage(Noeud *n1, Noeud *n2){
-    /*Insère un nœud voisin à la liste des voisins d'un nœud.
-
-    Paramètres :
-    - n1 : nœud auquel ajouter un voisin
-    - n2 : nœud voisin à ajouter
-    */
-    CellNoeud *p1= n1->voisins;
-    while (p1){
-        if(p1->nd==n2){
-            return;
-        }
-        p1=p1->suiv;
-    }
-    CellNoeud *new=malloc(sizeof(CellNoeud));
-    new->nd=n2;
-    new->suiv= n1->voisins;
-    n1->voisins=new;
-}
 
 Noeud* rechercheCreeNoeudHachage(Reseau* R,TableHachage *H,double x,double y){
     /*Recherche un nœud dans la table de hachage et le crée s'il n'existe pas encore.
@@ -146,7 +102,7 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
             points = points->suiv;
         }
         if(ExtrA && ExtrB && ExtrA != ExtrB){
-            commodites=ajout_teteCellCommoditeHachage(commodites,ExtrA,ExtrB);
+            commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
         }
         chaines = chaines->suiv;
     }
