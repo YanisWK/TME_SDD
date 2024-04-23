@@ -96,13 +96,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
         double acentreY=(*a)->yc;
 
         if((*a)->noeud == NULL){
-<<<<<<< HEAD
             if(pX<acentreX && pY<acentreY){ //Sud ouest
                 insererNoeudArbre(n,&((*a)->so),*a);
-=======
-            if(pX<acentreX && pY<acentreY){//Sud ouest
-                insererNoeudArbre(n,&(*a)->so,*a);
->>>>>>> 052878b6eb173ae7467ce56213b63e4d1bcce0c4
             }
             if(pX>=acentreX && pY<acentreY){//Sud Est
                 insererNoeudArbre(n,&((*a)->se),*a);
@@ -124,20 +119,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 }
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
-<<<<<<< HEAD
     if((*a==NULL)){
         printf("Creer\n");
-=======
-    /* Recherche ou crée un nœud dans un arbre.
-    
-    Paramètres:
-    - R : réseau de noeuds
-    - a : pointeur vers l'arbre 
-    - parent : nœud parent de l'arbre 
-    - x, y : coordonnées du noeud à rechercher ou à créer
-    */
-   if((*a==NULL)){
->>>>>>> 052878b6eb173ae7467ce56213b63e4d1bcce0c4
         R->noeuds = ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
         insererNoeudArbre(R->noeuds->nd,a,parent);
