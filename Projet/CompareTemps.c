@@ -26,8 +26,8 @@ int main(){
         reseau = reconstitueReseauListe(c);
         fin = clock();
         temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-        fprintf(fic4, "Liste chaînée : ");
-        fprintf(fic4, "%lf secondes\n", temps);
+        fprintf(fic4, "Liste chaînée :\n");
+        fprintf(fic4, "%lf \n", temps);
         fprintf(fic4, "\n");
         
         //TABLE DE HACHAGE
@@ -42,7 +42,7 @@ int main(){
             reseau = reconstitueReseauHachage(c, i);
             fin = clock();
             temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-            fprintf(fic4, "M = %d : %lf secondes\n", i, temps);
+            fprintf(fic4, "%d %lf\n", i, temps);
         }
         fprintf(fic4, "\n");
         sleep(2);
@@ -54,7 +54,8 @@ int main(){
         fin = clock();
         temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
         fprintf(fic4, "Arbre quaternaire :\n");
-        fprintf(fic4, "\n%lf secondes\n", temps);
+        fprintf(fic4, "\n%lf\n", temps);
+        fprintf(fic4, "\n");
 
     }
 
