@@ -9,58 +9,90 @@
 
 #define BUFFERSIZE 256
 
-int main(){
-    Reseau *reseau = NULL;
+int main(int argc, char *argv[]){
+    
+    if (argc!=2){
+        fprintf(stderr, "Usage: ./CompareTemps entier\n");
+        return 1;
+    }
+
     Chaines *c;
     FILE *fic4 = fopen("temps_de_calcul.txt", "w");
+    Reseau *reseau = NULL;
+    clock_t deb, fin;
+    double temps;
 
-    for (int i=0; i<5000; i+=500){
-        c = generationAleatoire(500,10,5000,5000);
+    char *entree=malloc(sizeof(char));
+    int rep;
 
-        reseau = NULL;
-        clock_t deb, fin;
-        double temps;
-
-        //LISTE CHAINEE
-        deb = clock();
-        reseau = reconstitueReseauListe(c);
-        fin = clock();
-        temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-        fprintf(fic4, "Liste chaînée :\n");
-        fprintf(fic4, "%lf \n", temps);
-        fprintf(fic4, "\n");
-        
-        //TABLE DE HACHAGE
-        deb = clock();
-        int M = 50; 
-        reseau = reconstitueReseauHachage(c, M);
-        fin = clock();
-        temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-        fprintf(fic4, "Table de hachage :\n");
-        for (int i=M; i<=100; i+=5){
-            deb = clock();
-            reseau = reconstitueReseauHachage(c, i);
-            fin = clock();
-            temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-            fprintf(fic4, "%d %lf\n", i, temps);
+    do{    
+        char buffer[BUFFERSIZE];
+        entree=fgets(buffer,BUFFERSIZE,stdin);
+        rep=atoi(entree);
+        if (sscanf(entree, "%d", &rep) != 1){
+            printf("Entrée invalide. Usage : <un entier>\n");
         }
-        fprintf(fic4, "\n");
-        sleep(2);
+        switch(rep){
+            case 1:
+            //LISTE CHAINEE
 
+                for (int i=0; i<50; i+=5){
+                    c = generationAleatoire(i,100,5000,5000);
 
-        //ARBRE QUATERNAIRE
-        deb = clock();
-        reseau = reconstitueReseauArbre(c);
-        fin = clock();
-        temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-        fprintf(fic4, "Arbre quaternaire :\n");
-        fprintf(fic4, "\n%lf\n", temps);
-        fprintf(fic4, "\n");
+                    deb = clock();
+                    reseau = reconstitueReseauListe(c);
+                    fin = clock();
+                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
+                    fprintf(fic4, "Liste chaînée :\n");
+                    fprintf(fic4, "%lf %lf \n", longueurChaine(c->chaines), temps);
+                    fprintf(fic4, "\n");
+                }
+                break;
 
-    }
+            case 2:
+            //TABLE DE HACHAGE
+
+                for (int i=0; i<5000; i+=500){
+                    c = generationAleatoire(i,100,5000,5000);
+
+                    deb = clock();
+                    int M = 50; 
+                    reseau = reconstitueReseauHachage(c, M);
+                    fin = clock();
+                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
+                    fprintf(fic4, "Table de hachage :\n");
+                    for (int i=M; i<=100; i+=5){
+                        deb = clock();
+                        reseau = reconstitueReseauHachage(c, i);
+                        fin = clock();
+                        temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
+                        fprintf(fic4, "%lf %lf\n", longueurChaine(c->chaines), temps);
+                    }
+                    fprintf(fic4, "\n");
+                }
+                break;
+
+            case 3:
+            //ARBRE QUATERNAIRE
+
+                for (int i=0; i<50; i+=5){
+                    c = generationAleatoire(i,100,5000,5000);
+
+                    deb = clock();
+                    reseau = reconstitueReseauArbre(c);
+                    fin = clock();
+                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
+                    fprintf(fic4, "Arbre quaternaire :\n");
+                    fprintf(fic4, "%lf %lf\n", longueurChaine(c->chaines), temps);
+                    fprintf(fic4, "\n");
+                }
+                break;
+        }
+    }while(rep!=0);
 
     libererChaines(c);
     libererReseau(reseau);
     fclose(fic4);   
+    free(entree);
     return 0;
 }
