@@ -22,20 +22,14 @@ int main(int argc, char *argv[]){
     clock_t deb, fin;
     double temps;
 
-    char *entree=malloc(sizeof(char));
-    int rep;
-
-    do{    
-        char buffer[BUFFERSIZE];
-        entree=fgets(buffer,BUFFERSIZE,stdin);
-        rep=atoi(entree);
-        if (sscanf(entree, "%d", &rep) != 1){
-            printf("Entrée invalide. Usage : <un entier>\n");
-        }
-        switch(rep){
-            case 1:
-            //LISTE CHAINEE
-
+    if(atoi(argv[1])==0){
+        return 0;
+    }else{
+        if (atoi(argv[1])>3 || atoi(argv[1])<0){
+            printf("Fichier ou entier invalide");
+        }else{
+            if(atoi(argv[1])==1){ //LISTE CHAINEE
+            
                 for (int i=0; i<50; i+=5){
                     c = generationAleatoire(i,100,5000,5000);
 
@@ -47,10 +41,7 @@ int main(int argc, char *argv[]){
                     fprintf(fic4, "%lf %lf \n", longueurChaine(c->chaines), temps);
                     fprintf(fic4, "\n");
                 }
-                break;
-
-            case 2:
-            //TABLE DE HACHAGE
+            }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
 
                 for (int i=0; i<5000; i+=500){
                     c = generationAleatoire(i,100,5000,5000);
@@ -70,10 +61,7 @@ int main(int argc, char *argv[]){
                     }
                     fprintf(fic4, "\n");
                 }
-                break;
-
-            case 3:
-            //ARBRE QUATERNAIRE
+            }else{ //ARBRE QUATERNAIRE
 
                 for (int i=0; i<50; i+=5){
                     c = generationAleatoire(i,100,5000,5000);
@@ -86,13 +74,12 @@ int main(int argc, char *argv[]){
                     fprintf(fic4, "%lf %lf\n", longueurChaine(c->chaines), temps);
                     fprintf(fic4, "\n");
                 }
-                break;
+            }
         }
-    }while(rep!=0);
+    }
 
     libererChaines(c);
     libererReseau(reseau);
     fclose(fic4);   
-    free(entree);
     return 0;
 }
