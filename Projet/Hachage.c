@@ -101,7 +101,7 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
             }
             points = points->suiv;
         }
-        if(ExtrA && ExtrB && ExtrA != ExtrB){
+        if(!rechercheCommodite(commodites,ExtrA,ExtrB)){
             commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
         }
         chaines = chaines->suiv;

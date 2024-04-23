@@ -120,7 +120,6 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
     if((*a==NULL)){
-        printf("Creer\n");
         R->noeuds = ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
         insererNoeudArbre(R->noeuds->nd,a,parent);
@@ -128,7 +127,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
     }
     else if(((*a)->noeud!=NULL)){
         if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
-            printf("Trouvé\n");
             return (*a)->noeud;
         }else{
             double acentreX=(*a)->xc;
