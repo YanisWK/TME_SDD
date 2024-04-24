@@ -47,25 +47,23 @@ int main(int argc, char *argv[]){
                 }
             }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
 
-                for (int i=500; i<5000; i+=500){
+                for (int i=500; i<50000; i+=500){
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
-                    int M = 50; 
+                    int M = 10000; 
                     reseau = reconstitueReseauHachage(c, M);
                     fin = clock();
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                    for (int i=M; i<=100; i+=5){
-                        deb = clock();
-                        reseau = reconstitueReseauHachage(c, i);
-                        fin = clock();
-                        temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                        while(c->chaines){
-                            nbpoints+=nbPoints(c->chaines->points);
-                            c->chaines=c->chaines->suiv;
-                        }
-                        fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    deb = clock();
+                    reseau = reconstitueReseauHachage(c, i);
+                    fin = clock();
+                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
+                    while(c->chaines){
+                        nbpoints+=nbPoints(c->chaines->points);
+                        c->chaines=c->chaines->suiv;
                     }
+                    fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
                 }
             }else{ //ARBRE QUATERNAIRE
 
@@ -73,8 +71,10 @@ int main(int argc, char *argv[]){
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
+                    printf("debut \n");
                     reseau = reconstitueReseauArbre(c);
                     fin = clock();
+                    printf("fin\n");
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                     while(c->chaines){
                         nbpoints+=nbPoints(c->chaines->points);
