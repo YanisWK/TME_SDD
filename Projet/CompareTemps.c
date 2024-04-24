@@ -47,13 +47,15 @@ int main(int argc, char *argv[]){
                 }
             }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
 
-                for (int i=500; i<50000; i+=500){
+                for (int i=500; i<1000; i+=500){
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
-                    int M = 10000; 
+                    printf("Debut\n");
+                    int M = 1000; 
                     reseau = reconstitueReseauHachage(c, M);
                     fin = clock();
+                    printf("fin\n");
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                     deb = clock();
                     reseau = reconstitueReseauHachage(c, i);
