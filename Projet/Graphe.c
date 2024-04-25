@@ -133,11 +133,13 @@ int plusCourtChemin(Sommet* u, Sommet* v){
     Cellule_arete *pr = u->L_voisin;
     while(pr){
         if(pr->v==v){
-            break;
+            return 1;
         }
         pr=pr->suiv;
     }
-    if(!pr) return;
+    if(!pr){
+        
+    }
 
     int nbarete=0;
 }
