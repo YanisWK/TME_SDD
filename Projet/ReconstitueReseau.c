@@ -41,7 +41,8 @@ int main(int argc, char *argv[]){
             }else{ //ARBRE QUATERNAIRE
                 reseau = reconstitueReseauArbre(c);
                 ecrireReseau(reseau, fic3);
-                afficheReseauSVG(reseau, "burmaarbre.svg");            
+                afficheReseauSVG(reseau, "burmaarbre.svg"); 
+                     
             }        
         }
     }

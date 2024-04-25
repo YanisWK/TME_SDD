@@ -2,7 +2,7 @@
 #define __GRAPHE_H__
 #include <stdlib.h>
 #include <stdio.h>
-#include "Chaine.h"
+#include "Reseau.h"
 
 typedef struct{
     int u,v; /* Numeros des sommets extremite */
