@@ -33,13 +33,21 @@ Commod *creer_commod(int e1, int e2){
     return new;
 }
 
-void *ajout_tetecommod(int e1, int e2, Graphe *g){
+Cellule_arete * ajout_teteCellule_arete(Cellule_arete * ca,int u,int v){
+    Noeud * Arete=creer_arete(u,v);
+    Cellule_arete * tete=creer_Cellulearete(Arete);
+    tete->suiv=ca;
+    ca=tete;
+    return ca;
+}
+
+void *ajout_commod(int e1, int e2, Graphe *g){
     Commod * new = creer_commod(e1, e2);
     g->T_commod[nbcommod] = new;  
     g->nbcommod ++;
 }
 
-void *ajout_tetesommet(int x, int y, int num, Graphe *g){
+void *ajout_sommet(int x, int y, int num, Graphe *g){
     Commod * new = creer_sommer(num, x, y);
     g->T_som[num] = new;  
     g->nbsom ++;
@@ -110,11 +118,12 @@ void liberer_sommet(Sommet *s){
 }
 
 void liberer_graphe(Graphe *g){
+    if(!g) return;
     Sommet **T_som = g->T_som;
     for(int i=0; i<g->nbsom;i++){
         liberer_sommet(T_som[i]);
     }
-    for(int j=0; j<nbcommod; j++){
+    for(int j=0; j<g->nbcommod; j++){
         free(T_commod[j]);
     }
     free(g);

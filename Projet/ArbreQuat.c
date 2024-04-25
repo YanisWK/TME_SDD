@@ -40,8 +40,11 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     - coteX, coteY : longueur et largeur de l'arbre
     */
     ArbreQuat *abr=(ArbreQuat *)malloc(sizeof(ArbreQuat));
+    // printf("param xc = %lf\n",xc);
+
     abr->xc=xc;
     abr->yc=yc;
+    // printf("xc = %lf ; yc = %lf\n",abr->xc,abr->yc);
     abr->coteX=coteX;
     abr->coteY=coteY;
     abr->noeud=NULL;
@@ -50,13 +53,6 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     abr->se=NULL;
     abr->so=NULL;
     return abr;
-}
-
-ArbreQuat *chercherPositionInsertion(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
-    double pX=n->x;
-    double pY=n->y;
-    double PcentreX=parent->xc;
-    double PcentreY=parent->yc;
 }
 
 void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
@@ -172,6 +168,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
 
 
 
+
 Reseau* reconstitueReseauArbre(Chaines* C){
     /* Reconstitue un réseau à partir des chaînes avec un arbre.
 
@@ -181,9 +178,9 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     Reseau *reseau = creerReseau(C);
     CellCommodite *commodites =NULL;
     double xmin=0,xmax=0,ymin=0,ymax=0;
-    chaineCoordMinMax(C,&xmin,&xmax,&ymin,&ymax);
-    
-    ArbreQuat *a=creerArbreQuat((xmin+xmax)/2,(ymin+ymax)/2,xmax-xmin,ymax-ymin);
+    chaineCoordMinMax(C,&xmin,&ymin,&xmax,&ymax);
+    // printf("param arbre : %lf\n",xmin+(xmin+xmax)/2);
+    ArbreQuat *a=creerArbreQuat(xmin+(xmin+xmax)/2,ymin+(ymin+ymax)/2,xmax-xmin,ymax-ymin);
     //afficherArbreQuat(parent);
     CellChaine * chaines=C->chaines;
 
@@ -212,7 +209,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         chaines = chaines->suiv;
     }
     reseau->commodites=commodites;
-    
+    //afficherArbreQuat(a);
     return reseau;
 }
 
@@ -244,12 +241,12 @@ void afficherArbreQuat(ArbreQuat *a){
         return;
     }
     printf("Noeud: (%lf, %lf)\n", a->xc, a->yc);
-    printf("Arbre sud-ouest:\n");
+    printf("Arbre sud-ouest:");
     afficherArbreQuat(a->so);
-    printf("Arbre sud-est:\n");
+    printf("Arbre sud-est:");
     afficherArbreQuat(a->se);
-    printf("Arbre nord-ouest:\n");
+    printf("Arbre nord-ouest:");
     afficherArbreQuat(a->no);
-    printf("Arbre nord-est:\n");
+    printf("Arbre nord-est:");
     afficherArbreQuat(a->ne);
 }
