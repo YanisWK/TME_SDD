@@ -53,7 +53,7 @@ void *ajout_sommet(int x, int y, int num, Graphe *g){
     g->nbsom ++;
 }
 
-void insererVoisinsArete(Sommet u, Sommet v){
+void insererVoisinsArete(Sommet *u, Sommet *v){
     Cellule_arete *p1= u->L_voisins;
     while (p1){
         if(p1->a->v==v){
@@ -127,4 +127,17 @@ void liberer_graphe(Graphe *g){
         free(T_commod[j]);
     }
     free(g);
+}
+
+int plusCourtChemin(Sommet* u, Sommet* v){
+    Cellule_arete *pr = u->L_voisin;
+    while(pr){
+        if(pr->v==v){
+            break;
+        }
+        pr=pr->suiv;
+    }
+    if(!pr) return;
+
+    int nbarete=0;
 }
