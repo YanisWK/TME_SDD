@@ -39,10 +39,11 @@ Commod *creer_commod(int e1, int e2);
 Cellule_arete * ajout_teteCellule_arete(Cellule_arete * ca,int u,int v);
 void *ajout_commod(int e1, int e2, Graphe *g);
 void *ajout_sommet(int x, int y, int num, Graphe *g);
-void insererVoisinsArete(Sommet u, Sommet v);
+void insererVoisinsArete(Sommet *u, Sommet *v);
 Graphe* creerGraphe(Reseau* r);
 void liberer_cellarete(Cellule_arete *ar);
 void liberer_sommet(Sommet *s);
 void liberer_graphe(Graphe *g);
+int plusCourtChemin(Sommet* u, Sommet* v);
 
 #endif
