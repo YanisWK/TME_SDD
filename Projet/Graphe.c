@@ -27,7 +27,7 @@ Sommet *creer_sommet(int num, int x, int y){
 }
 
 Commod *creer_commod(int e1, int e2){
-    Commod *new = malloc(sizeof(commod));
+    Commod *new = malloc(sizeof(Commod));
     new->e1 = e1;
     new->e2 = e2;
     return new;
@@ -43,7 +43,7 @@ Cellule_arete * ajout_teteCellule_arete(Cellule_arete * ca,int u,int v){
 
 void *ajout_commod(int e1, int e2, Graphe *g){
     Commod * new = creer_commod(e1, e2);
-    g->T_commod[nbcommod] = new;  
+    g->T_commod[g->nbcommod]=*new;  
     g->nbcommod ++;
 }
 
@@ -54,7 +54,7 @@ void *ajout_sommet(int x, int y, int num, Graphe *g){
 }
 
 void insererVoisinsArete(Sommet *u, Sommet *v){
-    Cellule_arete *p1= u->L_voisins;
+    Cellule_arete *p1= u->L_voisin;
     while (p1){
         if(p1->a->v==v){
             return;
@@ -63,8 +63,8 @@ void insererVoisinsArete(Sommet *u, Sommet *v){
     }
     Arete *new_arete = creer_arete(u,v);
     Cellule_arete *new = creer_cellarete(new_arete);
-    new->suiv= p1->L_voisins;
-    p1->L_voisins=new;
+    new->suiv= p1;
+    p1=new;
 }
 
 Graphe* creerGraphe(Reseau* r){
@@ -104,7 +104,7 @@ Graphe* creerGraphe(Reseau* r){
 
 void liberer_cellarete(Cellule_arete *ar){
     free(ar->a);
-    free(a);
+    free(ar);
 }
 
 void liberer_sommet(Sommet *s){
@@ -123,16 +123,15 @@ void liberer_graphe(Graphe *g){
     for(int i=0; i<g->nbsom;i++){
         liberer_sommet(T_som[i]);
     }
-    for(int j=0; j<g->nbcommod; j++){
-        free(T_commod[j]);
-    }
+    free(g->T_commod);
+    
     free(g);
 }
 
 int plusCourtChemin(Sommet* u, Sommet* v){
     Cellule_arete *pr = u->L_voisin;
     while(pr){
-        if(pr->v==v){
+        if(pr->a->v==v){
             break;
         }
         pr=pr->suiv;
