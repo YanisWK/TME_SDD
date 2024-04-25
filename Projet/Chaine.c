@@ -93,23 +93,18 @@ void ecrireChaines(Chaines *C, FILE *f){
         printf("Fichier inexistant.");
         return;
     }
+    fprintf(f, "NbChain: %d\n", C->nbChaines);
+    fprintf(f, "Gamma: %d\n", C->gamma);
     CellChaine * chainesC = C->chaines;
-    int Gamma = C->gamma;
-    int nbChaines=C->nbChaines;
-    int num;
-    int nbPc;
-    fscanf(f,"NbChain: %d\n",&nbChaines);
-    fscanf(f,"Gamma: %d\n",&Gamma);
     while(chainesC){
-        num=chainesC->numero;
+        fprintf(f, "%d %d", chainesC->numero, nbPoints(chainesC->points));
         CellPoint *points=chainesC->points;
-        nbPc=nbPoints(points);
-        fscanf(f,"%d %d ",&num,&nbPc);
         while(points){
-            fscanf(f,"%lf %lf ",&points->x,&points->y);
+            fprintf(f, " %.2f %.2f", points->x, points->y);
             points=points->suiv;
         }
-        fscanf(f,"\n");
+        fprintf(f, "\n");
+        chainesC=chainesC->suiv;
     }
 }
 
