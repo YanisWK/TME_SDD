@@ -31,12 +31,14 @@ int main(int argc, char *argv[]){
         }else{
             if(atoi(argv[1])==1){ //LISTE CHAINEE
 
-                for (int i=500; i<5000; i+=500){
+                for (int i=500; i<=5000; i+=500){
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
+                    printf("Debut\n");
                     reseau = reconstitueReseauListe(c);
                     fin = clock();
+                    printf("fin\n");
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                     //printf("nb points chaine 1 : %d\n",nbPoints(c->chaines->points));
                     while(c->chaines){
@@ -44,11 +46,12 @@ int main(int argc, char *argv[]){
                         c->chaines=c->chaines->suiv;
                     }
                     fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    nbpoints=0;
                     srand(time(NULL));
                 }
             }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
 
-                for (int i=500; i<5000; i+=500){
+                for (int i=500; i<=5000; i+=500){
                     srand(time(NULL));
                     c = generationAleatoire(i,100,5000,5000);
 
@@ -64,11 +67,12 @@ int main(int argc, char *argv[]){
                         c->chaines=c->chaines->suiv;
                     }
                     fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    nbpoints=0;
                     
                 }
             }else{ //ARBRE QUATERNAIRE
 
-                for (int i=500; i<5000; i+=500){
+                for (int i=500; i<=5000; i+=500){
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
@@ -82,6 +86,7 @@ int main(int argc, char *argv[]){
                         c->chaines=c->chaines->suiv;
                     }
                     fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    nbpoints=0;
                 }
             }
         }
