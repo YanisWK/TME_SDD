@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
     clock_t deb, fin;
     double temps;
     int nbpoints=0;
-
+    
     if(atoi(argv[1])==0){
         return 0;
     }else{
@@ -44,10 +44,12 @@ int main(int argc, char *argv[]){
                         c->chaines=c->chaines->suiv;
                     }
                     fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    srand(time(NULL));
                 }
             }else if (atoi(argv[1])==2){ //TABLE DE HACHAGE
 
-                for (int i=500; i<1000; i+=500){
+                for (int i=500; i<5000; i+=500){
+                    srand(time(NULL));
                     c = generationAleatoire(i,100,5000,5000);
 
                     deb = clock();
@@ -57,15 +59,12 @@ int main(int argc, char *argv[]){
                     fin = clock();
                     printf("fin\n");
                     temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
-                    deb = clock();
-                    reseau = reconstitueReseauHachage(c, i);
-                    fin = clock();
-                    temps = ((double)(fin - deb))/CLOCKS_PER_SEC;
                     while(c->chaines){
                         nbpoints+=nbPoints(c->chaines->points);
                         c->chaines=c->chaines->suiv;
                     }
                     fprintf(fic4, "%d %.7lf \n", nbpoints, temps);
+                    
                 }
             }else{ //ARBRE QUATERNAIRE
 

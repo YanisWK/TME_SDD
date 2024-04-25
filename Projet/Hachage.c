@@ -27,7 +27,7 @@ int f(int x, int y){
     Paramètres :
     - x,y : coordonnées du point
     */
-    return y + (x + y)*(x + y + 1)/2;
+    return y + ((x + y)*(x + y + 1)/2);
 }
 
 int h(int k,int M){
@@ -42,34 +42,29 @@ int h(int k,int M){
 }
 
 
-Noeud* rechercheCreeNoeudHachage(Reseau* R,TableHachage *H,double x,double y){
-    /*Recherche un nœud dans la table de hachage et le crée s'il n'existe pas encore.
-
-    Paramètres :
-    - R : réseau dans lequel ajouter le nœud
-    - H : table de hachage du noeud à rechercher
-    - x, y : coordonnées du nœud
-    */
-    int k=f(x,y);
-    int pos=h(k,H->tailleMax);
-    CellNoeud *cour = H->T[pos];
-    while (cour != NULL) {
-        if (cour->nd->x == x && cour->nd->y == y) {
-            return cour->nd; 
+Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y){
+    int cles = f((int) x, (int) y);
+    int pos = h(cles, H->tailleMax);
+    CellNoeud* cour = H->T[pos];
+    while (cour != NULL){
+        if ((cour->nd->x == x) && (cour->nd->y == y)){
+            return cour->nd;
         }
         cour = cour->suiv;
     }
-
-    Noeud * nd=creerNoeud(H->nbElement+1,x,y,NULL);
-    CellNoeud *cn =creerCellNoeud(nd);
-    cn->suiv = H->T[pos];
-    H->T[pos] = cn;
-    H->nbElement += 1;
-    cn->suiv = R->noeuds;
-    R->noeuds = cn;
-    R->nbNoeuds = R->nbNoeuds + 1;
+    Noeud *nd =(creerNoeud(R->nbNoeuds+1,x,y,NULL));
+    
+    CellNoeud *pos_Hachage = creerCellNoeud(nd);
+    pos_Hachage->suiv = H->T[pos];
+    H->T[pos] = pos_Hachage;
+    
+    CellNoeud *pos_Reseau = creerCellNoeud(nd);
+    pos_Reseau->suiv =  R->noeuds;
+    R->noeuds = pos_Reseau;
+    R->nbNoeuds += 1;
     return nd;
 }
+
 
 Reseau * reconstitueReseauHachage(Chaines *C,int M){
     /*Reconstitue un réseau en utilisant une table de hachage pour accélérer le processus.
@@ -86,6 +81,7 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
     Noeud *ExtrB=NULL;
 
     while(chaines){
+        //printf("Chaine du réseau créer\n");
         CellPoint *points=chaines->points;
         Noeud * V=NULL;
         ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);
@@ -105,6 +101,7 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
             commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
         }
         chaines = chaines->suiv;
+        //printf("Fin de la chaine du reseau\n");
     }
     R->commodites=commodites;
     return R;

@@ -52,7 +52,12 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     return abr;
 }
 
-
+ArbreQuat *chercherPositionInsertion(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
+    double pX=n->x;
+    double pY=n->y;
+    double PcentreX=parent->xc;
+    double PcentreY=parent->yc;
+}
 
 void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
     /* Insère un nœud dans un arbre.
