@@ -2,7 +2,7 @@
 CFLAGS = -ggdb -Wall -Wno-unused-parameter 
 CC = gcc
 
-PROGRAMS =   ChaineMain ReconstitueReseau CompareTemps
+PROGRAMS =   ChaineMain ReconstitueReseau CompareTemps maingraphe
 
 .PHONY:	all clean
 
@@ -18,6 +18,9 @@ ReconstitueReseau: ReconstitueReseau.o Chaine.o SVGwriter.o reseau.o Hachage.o A
 
 CompareTemps: CompareTemps.o Chaine.o SVGwriter.o reseau.o Hachage.o ArbreQuat.o
 	$(CC) -o $@ $(CFLAGS) $^ -lm
+	
+maingraphe: maingraphe.o Chaine.o SVGwriter.o reseau.o Graphe.o
+	$(CC) -o $@ $(CFLAGS) $^ -lm
 
 ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h reseau.h
 	gcc $(CFLAGS) -c ChaineMain.c  -lm
@@ -27,6 +30,9 @@ ReconstitueReseau.o: ReconstitueReseau.c Chaine.h SVGwriter.h reseau.h Hachage.h
 
 CompareTemps.o: CompareTemps.c Chaine.h SVGwriter.h reseau.h Hachage.h ArbreQuat.h
 	$(CC) $(CFLAGS) -c CompareTemps.c -lm
+
+maingraphe.o: maingraphe.c Chaine.h SVGwriter.h reseau.h Graphe.h
+	$(CC) $(CFLAGS) -c maingraphe.c -lm
 
 Chaine.o: Chaine.c Chaine.h
 	gcc $(CFLAGS) -c Chaine.c -lm
@@ -42,6 +48,9 @@ Hachage.o: Hachage.c Hachage.h
 
 ArbreQuat.o: ArbreQuat.c ArbreQuat.h
 	$(CC) $(CFLAGS) -c ArbreQuat.c
+
+Graphe.o: Graphe.c Graphe.h
+	$(CC) $(CFLAGS) -c Graphe.c
 
 clean:
 	rm -f *.o *~ $(PROGRAMS) 
