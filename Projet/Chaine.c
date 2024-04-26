@@ -7,6 +7,11 @@
 #define BUFFERSIZE 256
 
 CellPoint *creer_CellPoint(double x,double y){
+    /*Crée une cellule de point de coordonnées x et y.
+    
+    Paramètres :
+    - x,y : coordonnées 
+    */
     CellPoint *new=(CellPoint *)malloc(sizeof(CellPoint));
     new->x=x;
     new->y=y;
@@ -15,7 +20,12 @@ CellPoint *creer_CellPoint(double x,double y){
 }
 
 CellChaine *creer_CellChaine(int num,CellPoint *points){
+    /*Crée une cellule de chaîne.
 
+    Paramètres :
+    - num : numéro de la chaîne
+    - points : pointeur vers une liste de points
+    */
     CellChaine *new=(CellChaine *)malloc(sizeof(CellChaine));
     new->numero=num;
     new->points=points;
@@ -24,6 +34,13 @@ CellChaine *creer_CellChaine(int num,CellPoint *points){
     }
 
 Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
+    /*Insère un point en tête d'une liste de points.
+    
+    Paramètres :
+    - gamma : nombre maximal de fibres par cable
+    - nbChaines : nombre de chaines
+    - chaines : liste de chaines
+    */
     Chaines *new=(Chaines*)malloc(sizeof(Chaines));
     new->gamma=gamma;
     new->nbChaines=nbChaines;
@@ -34,18 +51,34 @@ Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines){
 
 
 CellPoint * inserer_teteCP(CellPoint *points,double x,double y){
+    /*Insère un  point en tête d'une liste de points.
+    Paramètres :
+    - points : liste de points
+    - x,y : coordonnées du point
+    */
     CellPoint * point=creer_CellPoint(x,y);
     point->suiv=points;
     return point;
 }
 
 CellChaine * inserer_teteCC(CellChaine *Lchaine,int num,CellPoint *points){
+    /*Insère une  chaîne en tête d'une liste de chaînes.
+    paramètres :
+    - Lchaine : liste de chaines
+    - num : numéro de la chaine
+    - points : liste de points de la chaine
+    */
     CellChaine *chaine=creer_CellChaine(num,points);
     chaine->suiv=Lchaine;
     return chaine;
 }
 
 int nbPoints(CellPoint * points){
+    /*Calcule le nombre de points dans une liste de points.
+    
+    Paramètre :
+    - points : liste de points
+    */
     int nb=0;
     CellPoint* tmp =points;
     while (tmp){
@@ -57,6 +90,7 @@ int nbPoints(CellPoint * points){
 
 
 Chaines* lectureChaines(FILE *f){
+    /*Lit les chaînes d'un fichier et les stocke dans une structure Chaines.*/
     if(f==NULL){
         return NULL;
     }
@@ -89,6 +123,7 @@ Chaines* lectureChaines(FILE *f){
 }
 
 void ecrireChaines(Chaines *C, FILE *f){
+    /*Écrit les données d'une structure de chaînes dans un fichier.*/
     if(!f){
         printf("Fichier inexistant.");
         return;
@@ -148,6 +183,7 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
 }
 
 double longueurChaine(CellChaine *c){
+    /*Calcule la longueur d'une chaîne.*/
     double distance;
     CellPoint * points=c->points;
     while(points->suiv){
@@ -163,6 +199,7 @@ double longueurChaine(CellChaine *c){
 
 
 double longueurTotale(Chaines *C){
+    /*Calcule la longueur totale de toutes les chaînes.*/
     double distanceTot;
     CellChaine * chaines=C->chaines;
     while(chaines){
@@ -174,6 +211,7 @@ double longueurTotale(Chaines *C){
 
 
 int comptePointsTotal(Chaines *C){
+    /*Compte le nombre total d'occurences de points d'une structure de chaines.*/
     int oc=0;
     CellChaine *chaines = C->chaines;
     
@@ -209,6 +247,7 @@ int comptePointsTotal(Chaines *C){
 }
 
 void libererChaines(Chaines *c){
+    /* Libère la mémoire d'une structure de chaines.*/
     CellChaine *chaine = c->chaines;
     while (chaine){
         CellPoint *point = chaine->points;
