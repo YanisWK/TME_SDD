@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 Arete *creer_arete(int u, int v){
     Arete *new = malloc(sizeof(Arete));
     new->u = u;
@@ -33,38 +34,41 @@ Commod *creer_commod(int e1, int e2){
     return new;
 }
 
-Cellule_arete * ajout_teteCellule_arete(Cellule_arete * ca,int u,int v){
-    Noeud * Arete=creer_arete(u,v);
-    Cellule_arete * tete=creer_Cellulearete(Arete);
-    tete->suiv=ca;
-    ca=tete;
-    return ca;
+Cellule_arete *ajout_teteCellule_arete(Cellule_arete *ca, Sommet *u, Sommet *v){
+    Arete *a = creer_arete(u->num, v->num);
+    if (!a) return ca;
+    Cellule_arete *tete = creer_cellarete(a);
+    tete->suiv = ca;
+    return tete;
 }
 
-void *ajout_commod(int e1, int e2, Graphe *g){
+
+void ajout_commod(int e1, int e2, Graphe *g){
     Commod * new = creer_commod(e1, e2);
     g->T_commod[g->nbcommod]=*new;  
     g->nbcommod ++;
 }
 
-void *ajout_sommet(int x, int y, int num, Graphe *g){
-    Commod * new = creer_sommer(num, x, y);
-    g->T_som[num] = new;  
+void ajout_sommet(int x, int y, int num, Graphe *g){
+    Sommet * new = creer_sommet(num, x, y);
+    g->T_som[num] = &(*new);  
     g->nbsom ++;
 }
 
-void insererVoisinsArete(Sommet *u, Sommet *v){
-    Cellule_arete *p1= u->L_voisin;
-    while (p1){
-        if(p1->a->v==v){
-            return;
-        }
-        p1=p1->suiv;
+void insererVoisinsArete(Sommet* u, Sommet* v){
+    Arete *a = creer_arete(u->num, v->num);
+    if (!a) return;
+    Cellule_arete *new = creer_cellarete(a); 
+    if (!new){
+        free(a); 
+        return;
     }
-    Arete *new_arete = creer_arete(u,v);
-    Cellule_arete *new = creer_cellarete(new_arete);
-    new->suiv= p1;
-    p1=new;
+    if (!u->L_voisin){
+        u->L_voisin = new;
+    }else{
+        new->suiv = u->L_voisin; 
+        u->L_voisin = new; 
+    }
 }
 
 Graphe* creerGraphe(Reseau* r){
@@ -72,12 +76,14 @@ Graphe* creerGraphe(Reseau* r){
     CellNoeud *pr = r->noeuds;
     while(pr){
         nbnoeuds++;
+        pr = pr->suiv;
     }
     Sommet **T_som = malloc(sizeof(Sommet*)*nbnoeuds);
-
+    int nbCommod = nbCommodites(r);
+    
     pr = r->noeuds;
     while(pr){
-        T_som[pr->nd->num] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
+        T_som[pr->nd->num-1] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
         pr = pr->suiv;
     }
 
@@ -85,9 +91,9 @@ Graphe* creerGraphe(Reseau* r){
     while (pr){
         CellNoeud *v = pr->nd->voisins; //voisins de pr
         while (v){
-            Sommet *voisin = T_som[v->nd->num]; 
-            insererVoisinsArete(T_som[pr->nd->num], voisin);
-            insererVoisinsArete(voisin, T_som[pr->nd->num]);
+            Sommet *voisin = T_som[v->nd->num-1]; 
+            insererVoisinsArete(T_som[pr->nd->num-1], voisin);
+            //insererVoisinsArete(voisin, T_som[pr->nd->num-1]);
             v = v->suiv;
         }
         pr = pr->suiv;
@@ -95,7 +101,7 @@ Graphe* creerGraphe(Reseau* r){
 
     Graphe *g = malloc(sizeof(Graphe));
     g->T_som = T_som;
-    g->T_commod = NULL; 
+    g->T_commod = malloc(sizeof(Commod)*nbCommod); 
     g->nbsom = nbnoeuds;
     g->nbcommod = 0; 
 
@@ -108,35 +114,36 @@ void liberer_cellarete(Cellule_arete *ar){
 }
 
 void liberer_sommet(Sommet *s){
-    while(s->L_voisin){
-        Cellule_arete *tmp = s->L_voisin;
-        s->L_voisin = s->L_voisin->suiv;
+    Cellule_arete *p = s->L_voisin;
+    while (p){
+        Cellule_arete *tmp = p; 
+        p = p->suiv;
         liberer_cellarete(tmp);
     }
-    free(s->L_voisin);
     free(s);
 }
 
 void liberer_graphe(Graphe *g){
     if(!g) return;
-    Sommet **T_som = g->T_som;
-    for(int i=0; i<g->nbsom;i++){
-        liberer_sommet(T_som[i]);
+    for(int i=0; i< g->nbsom; i++){
+        if(g->T_som[i]){
+            liberer_sommet(g->T_som[i]);
+        }
     }
     free(g->T_commod);
-    
     free(g);
 }
 
-int plusCourtChemin(Sommet* u, Sommet* v){
-    Cellule_arete *pr = u->L_voisin;
-    while(pr){
-        if(pr->a->v==v){
-            break;
+void afficherGraphe(Graphe *g){
+    for (int i = 0; i<g->nbsom; i++){
+        Sommet *sommet = g->T_som[i];
+        printf("Sommet %d : x = %f, y = %f\n", sommet->num, sommet->x, sommet->y);
+        printf("Voisins : ");
+        Cellule_arete *voisin = sommet->L_voisin;
+        while (voisin){
+            printf("%d ", voisin->a->v);
+            voisin = voisin->suiv;
         }
-        pr=pr->suiv;
+        printf("\n");
     }
-    if(!pr) return;
-
-    int nbarete=0;
 }
