@@ -118,6 +118,8 @@ int tailleFile(S_file *f){
 }
 
 int plusCourtChemin(Graphe *g, int u, int v){
+    //pb la fonction calcule pas le plus court chemin
+    //+possiblement une boucle infinie si le graphe contient un cycle
     if (u == v) return 0;
 
     S_file file; 
@@ -127,13 +129,12 @@ int plusCourtChemin(Graphe *g, int u, int v){
     int nbaretes = 0;
 
     while (!estFileVide(&file)){
-        for (int i = 0; i<tailleFile(&file); i++){
+        for (int i=0;i<tailleFile(&file); i++){
             int cour = defile(&file); 
             Cellule_arete *voisin = g->T_som[cour]->L_voisin;
-            while (voisin){
-                int numv = voisin->a->v; 
-                if (numv == v) return nbaretes+1; 
-                enfile(&file, numv); 
+            while (voisin){  
+                if (voisin->a->v == v) return nbaretes+1; 
+                enfile(&file, voisin->a->v); 
                 voisin = voisin->suiv;
             }
         }
