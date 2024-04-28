@@ -19,7 +19,7 @@ ReconstitueReseau: ReconstitueReseau.o Chaine.o SVGwriter.o reseau.o Hachage.o A
 CompareTemps: CompareTemps.o Chaine.o SVGwriter.o reseau.o Hachage.o ArbreQuat.o
 	$(CC) -o $@ $(CFLAGS) $^ -lm
 	
-maingraphe: maingraphe.o Chaine.o SVGwriter.o reseau.o Graphe.o
+maingraphe: maingraphe.o Chaine.o SVGwriter.o reseau.o Graphe.o Struct_File.o
 	$(CC) -o $@ $(CFLAGS) $^ -lm
 
 ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h reseau.h
@@ -31,7 +31,7 @@ ReconstitueReseau.o: ReconstitueReseau.c Chaine.h SVGwriter.h reseau.h Hachage.h
 CompareTemps.o: CompareTemps.c Chaine.h SVGwriter.h reseau.h Hachage.h ArbreQuat.h
 	$(CC) $(CFLAGS) -c CompareTemps.c -lm
 
-maingraphe.o: maingraphe.c Chaine.h SVGwriter.h reseau.h Graphe.h
+maingraphe.o: maingraphe.c Chaine.h SVGwriter.h reseau.h Graphe.h Struct_File.h
 	$(CC) $(CFLAGS) -c maingraphe.c -lm
 
 Chaine.o: Chaine.c Chaine.h
@@ -51,6 +51,9 @@ ArbreQuat.o: ArbreQuat.c ArbreQuat.h
 
 Graphe.o: Graphe.c Graphe.h
 	$(CC) $(CFLAGS) -c Graphe.c
+
+Struct_File.o: Struct_File.c Struct_File.h
+	$(CC) $(CFLAGS) -c Struct_File.c
 
 clean:
 	rm -f *.o *~ $(PROGRAMS) 

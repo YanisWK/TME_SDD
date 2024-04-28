@@ -118,7 +118,7 @@ int tailleFile(S_file *f){
 }
 
 int plusCourtChemin(Graphe *g, int u, int v){
-    if (u==v) return 0;
+    if (u == v) return 0;
 
     S_file file; 
     Init_file(&file); 
@@ -126,21 +126,22 @@ int plusCourtChemin(Graphe *g, int u, int v){
     enfile(&file, u); 
     int nbaretes = 0;
 
-    while (!estFileVide(&file)){ //si file pas vide
-        nbaretes++; 
-        for (int i = 0;i<tailleFile(&file);i++){
+    while (!estFileVide(&file)){
+        for (int i = 0; i<tailleFile(&file); i++){
             int cour = defile(&file); 
-            Cellule_arete *voisin = g->T_som[cour]->L_voisin; //voisins du sommet courant
-            while(voisin){
+            Cellule_arete *voisin = g->T_som[cour]->L_voisin;
+            while (voisin){
                 int numv = voisin->a->v; 
-                if (numv == v) return nbaretes;
+                if (numv == v) return nbaretes+1; 
+                enfile(&file, numv); 
                 voisin = voisin->suiv;
             }
-            free(voisin);
         }
+        nbaretes++; 
     }
-    return -1;
+    return -1; 
 }
+
 
 void liberer_sommet(Sommet *s){
     Cellule_arete *p = s->L_voisin;
