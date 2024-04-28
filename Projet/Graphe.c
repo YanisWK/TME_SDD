@@ -1,5 +1,4 @@
 #include "Graphe.h"
-#include "Reseau.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -107,6 +106,42 @@ Graphe* creerGraphe(Reseau* r){
 
     return g;
 }
+
+int tailleFile(S_file *f){
+    int taille = 0;
+    Cellule_file *cour = f->tete;
+    while (cour){
+        taille++;
+        cour = cour->suiv;
+    }
+    return taille;
+}
+
+int plusCourtChemin(Graphe *g, int u, int v){
+    if (u==v) return 0;
+
+    S_file file; 
+    Init_file(&file); 
+
+    enfile(&file, u); 
+    int nbaretes = 0;
+
+    while (!estFileVide(&file)){ //si file pas vide
+        nbaretes++; 
+        for (int i = 0;i<tailleFile(&file);i++){
+            int cour = defile(&file); 
+            Cellule_arete *voisin = g->T_som[cour]->L_voisin; //voisins du sommet courant
+            while(voisin){
+                int numv = voisin->a->v; 
+                if (numv == v) return nbaretes;
+                voisin = voisin->suiv;
+            }
+            free(voisin);
+        }
+    }
+    return -1;
+}
+
 
 void liberer_cellarete(Cellule_arete *ar){
     free(ar->a);

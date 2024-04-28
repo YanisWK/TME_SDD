@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "Chaine.h"
 #include "Reseau.h"
+#include "Struct_File.h"
+
 
 typedef struct{
     int u,v; /* Numeros des sommets extremite */
@@ -44,6 +46,7 @@ Graphe* creerGraphe(Reseau* r);
 void liberer_cellarete(Cellule_arete *ar);
 void liberer_sommet(Sommet *s);
 void liberer_graphe(Graphe *g);
+int tailleFile(S_file *f);
 int plusCourtChemin(Graphe *g, int u, int v);
 void afficherGraphe(Graphe *g);
 #endif
