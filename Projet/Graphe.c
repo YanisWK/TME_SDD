@@ -142,18 +142,12 @@ int plusCourtChemin(Graphe *g, int u, int v){
     return -1;
 }
 
-
-void liberer_cellarete(Cellule_arete *ar){
-    free(ar->a);
-    free(ar);
-}
-
 void liberer_sommet(Sommet *s){
     Cellule_arete *p = s->L_voisin;
     while (p){
         Cellule_arete *tmp = p; 
         p = p->suiv;
-        liberer_cellarete(tmp);
+        free(tmp);
     }
     free(s);
 }

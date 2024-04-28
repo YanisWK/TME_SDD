@@ -43,7 +43,6 @@ void ajout_commod(int e1, int e2, Graphe *g);
 void ajout_sommet(int x, int y, int num, Graphe *g);
 void insererVoisinsArete(Sommet* u, Sommet* v);
 Graphe* creerGraphe(Reseau* r);
-void liberer_cellarete(Cellule_arete *ar);
 void liberer_sommet(Sommet *s);
 void liberer_graphe(Graphe *g);
 int tailleFile(S_file *f);
