@@ -203,6 +203,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         chaines = chaines->suiv;
     }
     reseau->commodites=commodites;
+    libererArbre(a);
     return reseau;
 }
 
@@ -218,9 +219,6 @@ void libererArbre(ArbreQuat *a){
     libererArbre(a->se);
     libererArbre(a->no);
     libererArbre(a->ne);
-    if (a->noeud){
-        free(a->noeud);
-    }
     free(a);
 }
 
