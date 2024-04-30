@@ -181,7 +181,7 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
 
 int reorganiseReseau(Reseau *r){
     Graphe * G=creerGraphe(r);
-    printf("G = %d \n",G->nbcommod);
+    //printf("G = %d \n",G->nbcommod);
     int **matrice=malloc(sizeof(int*)*G->nbsom);
     for(int i=0;i<G->nbsom+1;i++){
         matrice[i]=malloc(sizeof(int)*G->nbsom);
@@ -191,9 +191,9 @@ int reorganiseReseau(Reseau *r){
     }
     CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
     for(int i=0;i<G->nbcommod;i++){
-        printf("i = %d \n",i);
+        //printf("i = %d \n",i);
         chaineCommod[i]=plusCourtChemin(G,G->T_commod[i].e1,G->T_commod[i].e2);
-        printf("e1 = %d, e2 = %d\n",G->T_commod[i].e1,G->T_commod[i].e2);
+        //printf("e1 = %d, e2 = %d\n",G->T_commod[i].e1,G->T_commod[i].e2);
         // CellChaine * parcours=chaineCommod[i];
         // while(parcours){
         //     printf("%d\n",parcours->numero);
