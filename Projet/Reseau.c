@@ -117,9 +117,7 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     CellNoeud *noeudR = R->noeuds;
     
     while (noeudR){
-        double nX=noeudR->nd->x;
-        double nY=noeudR->nd->y;
-        if(nX==x && nY==y){
+        if(noeudR->nd->x==x && noeudR->nd->y==y){
             return noeudR->nd;;
         }    
         noeudR = noeudR->suiv;
@@ -285,11 +283,6 @@ void libererCellNoeud(CellNoeud *cn){
         free(tmp);
     }
 }
-
-// void libererNoeud(Noeud *nd){
-
-//     free(nd);
-// }
 
 void libererCellCommodite(CellCommodite *com){
     /*Libère la mémoire allouée pour une liste de commodités.
