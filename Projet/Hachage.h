@@ -16,3 +16,4 @@ CellCommodite * creeCommodite(Noeud * extrA,Noeud * extrB);
 CellCommodite * ajout_teteCellCommodite(CellCommodite * commodites,Noeud * extrA,Noeud * extrB);
 Noeud* rechercheCreeNoeudHachage(Reseau* R,TableHachage *H,double x,double y);
 Reseau * reconstitueReseauHachage(Chaines *C,int M);
+void LibererTableHachage(TableHachage *table);
