@@ -109,5 +109,29 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
         chaines = chaines->suiv;
     }
     R->commodites=commodites;
+    LibererTableHachage(H);
     return R;
+}
+void LibererTableHachage(TableHachage *table) {
+    /* Libère la mémoire allouée pour une table de hachage.
+
+    Paramètre :
+    - table : pointeur vers la table de hachage à libérer
+    */
+
+    if (table == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < table->tailleMax; i++) {
+        CellNoeud *p = table->T[i];
+        while (p) {
+            CellNoeud *temp = p;
+            p = p->suiv;
+            free(temp);
+        }
+    }
+
+    free(table->T);
+    free(table);
 }
