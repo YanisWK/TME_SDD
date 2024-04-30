@@ -5,13 +5,13 @@
 #include <stdlib.h>
 
 int main(){
-    FILE *f =fopen("00014_burma.cha", "r");
+    FILE *f =fopen("05000_USA-road-d-NY.cha", "r");
     Chaines *c = lectureChaines(f);
     Reseau *r = reconstitueReseauListe(c);
 
     Graphe *g = creerGraphe(r);    
     afficherGraphe(g);
-    printf("%d\n",plusCourtChemin(g,3,4));
+    //printf("%d\n",plusCourtChemin(g,3,4));
 
     liberer_graphe(g);
     libererChaines(c);

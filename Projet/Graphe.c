@@ -125,18 +125,24 @@ int plusCourtChemin(Graphe *g, int u, int v){
     S_file file; 
     Init_file(&file); 
 
-    enfile(&file, u); 
+    enfile(&file,u); 
     int nbaretes = 0;
+    int *tabvisite=malloc(sizeof(int)*g->nbsom);
+    tabvisite[u]=u;
 
     while (!estFileVide(&file)){
-        for (int i=0;i<tailleFile(&file); i++){
-            int cour = defile(&file); 
-            Cellule_arete *voisin = g->T_som[cour]->L_voisin;
-            while (voisin){  
-                if (voisin->a->v == v) return nbaretes+1; 
-                enfile(&file, voisin->a->v); 
-                voisin = voisin->suiv;
+        int cour = defile(&file); 
+        Cellule_arete *voisin = g->T_som[cour]->L_voisin;
+        while (voisin){  
+            if (voisin->a->v == v){
+                free(tabvisite);
+                return nbaretes+1; 
             }
+            if(!tabvisite[voisin->a->u]){
+                enfile(&file, voisin->a->v); 
+                tabvisite[voisin->a->u]=voisin->a->u;
+            }
+                voisin = voisin->suiv;
         }
         nbaretes++; 
     }
