@@ -88,7 +88,6 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
     Noeud *ExtrB=NULL;
 
     while(chaines){
-        //printf("Chaine du réseau créer\n");
         CellPoint *points=chaines->points;
         Noeud * V=NULL;
         ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);
@@ -108,7 +107,6 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
             commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
         }
         chaines = chaines->suiv;
-        //printf("Fin de la chaine du reseau\n");
     }
     R->commodites=commodites;
     return R;
