@@ -107,45 +107,45 @@ Graphe* creerGraphe(Reseau* r){
     return g;
 }
 
-int tailleFile(S_file *f){
-    int taille = 0;
-    Cellule_file *cour = f->tete;
-    while (cour){
-        taille++;
-        cour = cour->suiv;
+int len(int* tab){
+    int cpt=0;
+    while(*(tab+cpt)){
+        cpt++;
     }
-    return taille;
+    return cpt;
 }
 
 int plusCourtChemin(Graphe *g, int u, int v){
-    //pb la fonction calcule pas le plus court chemin
-    //+possiblement une boucle infinie si le graphe contient un cycle
     if (u == v) return 0;
 
     S_file file; 
     Init_file(&file); 
-
-    enfile(&file,u); 
+    enfile(&file, u); 
     int nbaretes = 0;
-    int *tabvisite=malloc(sizeof(int)*g->nbsom);
-    tabvisite[u]=u;
+    int *tabvisite = calloc(g->nbsom, sizeof(int));
+    tabvisite[u] = u; 
 
     while (!estFileVide(&file)){
-        int cour = defile(&file); 
-        Cellule_arete *voisin = g->T_som[cour]->L_voisin;
-        while (voisin){  
-            if (voisin->a->v == v){
-                free(tabvisite);
-                return nbaretes+1; 
-            }
-            if(!tabvisite[voisin->a->u]){
-                enfile(&file, voisin->a->v); 
-                tabvisite[voisin->a->u]=voisin->a->u;
-            }
+        int taille_file = tailleFile(&file); 
+        for (int i = 0; i<taille_file; i++){
+            int cour = defile(&file);
+            Cellule_arete *voisin = g->T_som[cour]->L_voisin;
+            while (voisin){
+                int numv = voisin->a->v; 
+                if (numv == v){
+                    free(tabvisite);
+                    return nbaretes+1; 
+                }
+                if (!tabvisite[numv]){
+                    enfile(&file, numv); 
+                    tabvisite[numv] = numv;
+                }
                 voisin = voisin->suiv;
+            }
         }
         nbaretes++; 
     }
+    free(tabvisite);
     return -1; 
 }
 
@@ -174,7 +174,7 @@ void liberer_graphe(Graphe *g){
 void afficherGraphe(Graphe *g){
     for (int i = 0; i<g->nbsom; i++){
         Sommet *sommet = g->T_som[i];
-        printf("Sommet %d : x = %f, y = %f\n", sommet->num, sommet->x, sommet->y);
+        printf("Sommet %d -> ", sommet->num);
         printf("Voisins : ");
         Cellule_arete *voisin = sommet->L_voisin;
         while (voisin){

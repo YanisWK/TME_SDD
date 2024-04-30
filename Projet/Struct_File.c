@@ -31,5 +31,33 @@ int defile(S_file *f){
   f->tete=f->tete->suiv;
   free(temp);
   return v;
+}
 
+void afficherFile(S_file *f) {
+    if (estFileVide(f)) {
+        printf("La file est vide.\n");
+        return;
+    }
+    
+    Cellule_file *courant = f->tete;
+    printf("File : ");
+    while (courant != NULL) {
+        printf("%d ", courant->val);
+        courant = courant->suiv;
+    }
+    printf("\n");
+}
+
+int tailleFile(S_file *f){
+    if (estFileVide(f)){
+        return 0;
+    }else{
+        int taille = 0;
+        Cellule_file *cour = f->tete; 
+        while (cour){
+            taille++; 
+            cour = cour->suiv; 
+        }
+        return taille; 
+    }
 }

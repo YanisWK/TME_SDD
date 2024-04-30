@@ -45,7 +45,7 @@ void insererVoisinsArete(Sommet* u, Sommet* v);
 Graphe* creerGraphe(Reseau* r);
 void liberer_sommet(Sommet *s);
 void liberer_graphe(Graphe *g);
-int tailleFile(S_file *f);
+int len(int *tab);
 int plusCourtChemin(Graphe *g, int u, int v);
 void afficherGraphe(Graphe *g);
 #endif
