@@ -28,6 +28,5 @@ void enfile(S_file * f, int donnee);
 int defile(S_file *f);
 
 void afficherFile(S_file *f);
-int tailleFile(S_file *f);
 
 #endif 

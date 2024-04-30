@@ -48,16 +48,3 @@ void afficherFile(S_file *f) {
     printf("\n");
 }
 
-int tailleFile(S_file *f){
-    if (estFileVide(f)){
-        return 0;
-    }else{
-        int taille = 0;
-        Cellule_file *cour = f->tete; 
-        while (cour){
-            taille++; 
-            cour = cour->suiv; 
-        }
-        return taille; 
-    }
-}
