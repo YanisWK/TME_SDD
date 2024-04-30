@@ -77,12 +77,12 @@ Graphe* creerGraphe(Reseau* r){
         nbnoeuds++;
         pr = pr->suiv;
     }
-    Sommet **T_som = malloc(sizeof(Sommet*)*nbnoeuds);
+    Sommet **T_som = malloc(sizeof(Sommet*)*(nbnoeuds+1));
     int nbCommod = nbCommodites(r);
     
     pr = r->noeuds;
     while(pr){
-        T_som[pr->nd->num-1] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
+        T_som[pr->nd->num] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
         pr = pr->suiv;
     }
 
@@ -90,8 +90,8 @@ Graphe* creerGraphe(Reseau* r){
     while (pr){
         CellNoeud *v = pr->nd->voisins; //voisins de pr
         while (v){
-            Sommet *voisin = T_som[v->nd->num-1]; 
-            insererVoisinsArete(T_som[pr->nd->num-1], voisin);
+            Sommet *voisin = T_som[v->nd->num]; 
+            insererVoisinsArete(T_som[pr->nd->num], voisin);
             //insererVoisinsArete(voisin, T_som[pr->nd->num-1]);
             v = v->suiv;
         }
@@ -116,37 +116,97 @@ int len(int* tab){
 }
 
 int plusCourtChemin(Graphe *g, int u, int v){
-    if (u == v) return 0;
 
-    S_file file; 
-    Init_file(&file); 
-    enfile(&file, u); 
-    int nbaretes = 0;
-    int *tabvisite = calloc(g->nbsom, sizeof(int));
-    tabvisite[u] = u; 
-
-    while (!estFileVide(&file)){
-        int taille_file = tailleFile(&file); 
-        for (int i = 0; i<taille_file; i++){
-            int cour = defile(&file);
-            Cellule_arete *voisin = g->T_som[cour]->L_voisin;
-            while (voisin){
-                int numv = voisin->a->v; 
-                if (numv == v){
-                    free(tabvisite);
-                    return nbaretes+1; 
-                }
-                if (!tabvisite[numv]){
-                    enfile(&file, numv); 
-                    tabvisite[numv] = numv;
-                }
-                voisin = voisin->suiv;
-            }
-        }
-        nbaretes++; 
+    S_file *file=malloc(sizeof(S_file)); 
+    Init_file(file); 
+    enfile(file, u); 
+    int valu;
+    int *tabvisite = (int*)malloc(sizeof(int)*(g->nbsom));
+    int *tabPere=(int*)malloc(sizeof(int)*(g->nbsom));
+    for(int i=1;i<g->nbsom;i++){
+        tabvisite[i]=0;
+        tabPere[i]=0;
     }
-    free(tabvisite);
-    return -1; 
+    tabvisite[u] = 1; 
+    tabPere[u]=-1;
+    while (!estFileVide(file)){
+        int valu=defile(file);
+        printf("valu : %d \n",valu);
+        if(valu==v){
+            break;
+        }
+        Cellule_arete * cour=g->T_som[valu]->L_voisin;
+        while(cour!=NULL){
+            int valv=cour->a->v;
+            printf("valvoisins = %d \n",valv);
+            if(tabvisite[valv]==0){
+                tabvisite[valv]=1;
+                enfile(file,valv);
+                tabPere[valv]=valu;
+                printf("Trouvé ! \n");
+            }
+            cour=cour->suiv;
+        }
+    }
+    valu=v;
+    int C=0;
+    while(valu!=-1){
+        printf("C= %d , valu = %d \n",C,valu);
+        valu=tabPere[valu];
+        if(valu==-1){
+            continue;
+        }else{
+            C+=1;
+        }
+    }
+    return C;
+}
+
+int plusCourtChemin(Graphe *g, int u, int v){
+
+    S_file *file=malloc(sizeof(S_file)); 
+    Init_file(file); 
+    enfile(file, u); 
+    int valu;
+    int *tabvisite = (int*)malloc(sizeof(int)*(g->nbsom));
+    int *tabPere=(int*)malloc(sizeof(int)*(g->nbsom));
+    for(int i=1;i<g->nbsom;i++){
+        tabvisite[i]=0;
+        tabPere[i]=0;
+    }
+    tabvisite[u] = 1; 
+    tabPere[u]=-1;
+    while (!estFileVide(file)){
+        int valu=defile(file);
+        printf("valu : %d \n",valu);
+        if(valu==v){
+            break;
+        }
+        Cellule_arete * cour=g->T_som[valu]->L_voisin;
+        while(cour!=NULL){
+            int valv=cour->a->v;
+            printf("valvoisins = %d \n",valv);
+            if(tabvisite[valv]==0){
+                tabvisite[valv]=1;
+                enfile(file,valv);
+                tabPere[valv]=valu;
+                printf("Trouvé ! \n");
+            }
+            cour=cour->suiv;
+        }
+    }
+    valu=v;
+    int C=0;
+    while(valu!=-1){
+        printf("C= %d , valu = %d \n",C,valu);
+        valu=tabPere[valu];
+        if(valu==-1){
+            continue;
+        }else{
+            C+=1;
+        }
+    }
+    return C;
 }
 
 
@@ -172,7 +232,7 @@ void liberer_graphe(Graphe *g){
 }
 
 void afficherGraphe(Graphe *g){
-    for (int i = 0; i<g->nbsom; i++){
+    for (int i = 1; i<g->nbsom+1    ; i++){
         Sommet *sommet = g->T_som[i];
         printf("Sommet %d -> ", sommet->num);
         printf("Voisins : ");
