@@ -26,10 +26,10 @@ Sommet *creer_sommet(int num, int x, int y){
     return new;
 }
 
-Commod *creer_commod(int e1, int e2){
-    Commod *new = malloc(sizeof(Commod));
-    new->e1 = e1;
-    new->e2 = e2;
+Commod creer_commod(int e1, int e2){
+    Commod new;
+    new.e1 = e1;
+    new.e2 = e2;
     return new;
 }
 
@@ -45,8 +45,8 @@ Cellule_arete *ajout_teteCellule_arete(Cellule_arete *ca, Sommet *u, Sommet *v){
 
 
 void ajout_commod(int e1, int e2, Graphe *g){
-    Commod * new = creer_commod(e1, e2);
-    g->T_commod[g->nbcommod]=*new;  
+    Commod new = creer_commod(e1, e2);
+    g->T_commod[g->nbcommod]=new;  
     g->nbcommod ++;
 }
 
@@ -73,9 +73,9 @@ void insererVoisinsArete(Sommet* u, Sommet* v){
 }
 
 Graphe* creerGraphe(Reseau* r){
-    int nbnoeuds = 0;
+    int nbnoeuds = 0; 
     CellNoeud *pr = r->noeuds;
-    while(pr){
+    while(pr){ //compte le nombre de noeuds du reseau
         nbnoeuds++;
         pr = pr->suiv;
     }
@@ -99,12 +99,22 @@ Graphe* creerGraphe(Reseau* r){
         }
         pr = pr->suiv;
     }
+    
 
     Graphe *g = malloc(sizeof(Graphe));
     g->T_som = T_som;
     g->T_commod = malloc(sizeof(Commod)*nbCommod); 
     g->nbsom = nbnoeuds;
     g->nbcommod = 0; 
+    
+    CellCommodite *commodites = r->commodites;
+    int i=0;
+    while (commodites){
+        g->T_commod[i].e1 = commodites->extrA->num;
+        g->T_commod[i].e2 = commodites->extrB->num;
+        commodites = commodites->suiv;
+        i++;
+    }
 
     return g;
 }
@@ -222,4 +232,10 @@ void afficherGraphe(Graphe *g){
         }
         printf("\n");
     }
+
+    printf("Commodités : ");
+    for (int i=0; i<g->nbcommod; i++){
+        printf("%d %d", g->T_commod[i].e1, g->T_commod[i].e2);
+    }
 }
+

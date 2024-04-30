@@ -28,7 +28,8 @@ CellChaine *creer_CellChaine(int num,CellPoint *points);
 Chaines *creer_Chaine(int gamma,int nbChaines,CellChaine * chaines);
 CellChaine * inserer_teteCC(CellChaine *Lchaine,int num,CellPoint *points);
 
-
+CellPoint * inserer_teteCP(CellPoint *points,double x,double y);
+CellChaine * inserer_teteCC(CellChaine *Lchaine,int num,CellPoint *points);
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
 void afficheChainesSVG(Chaines *C, char* nomInstance);
