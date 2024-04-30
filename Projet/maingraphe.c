@@ -11,7 +11,7 @@ int main(){
 
     Graphe *g = creerGraphe(r);    
     afficherGraphe(g);
-    printf("%d\n",plusCourtChemin(g,1,2));
+    //(g,1,2));
 
     liberer_graphe(g);
     libererChaines(c);

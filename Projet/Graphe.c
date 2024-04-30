@@ -71,18 +71,18 @@ void insererVoisinsArete(Sommet* u, Sommet* v){
 }
 
 Graphe* creerGraphe(Reseau* r){
-    int nbnoeuds = 0;
+    int nbnoeuds = 0; 
     CellNoeud *pr = r->noeuds;
-    while(pr){
+    while(pr){ //compte le nombre de noeuds du reseau
         nbnoeuds++;
         pr = pr->suiv;
     }
-    Sommet **T_som = malloc(sizeof(Sommet*)*nbnoeuds);
+    Sommet **T_som = malloc(sizeof(Sommet*)*(nbnoeuds+1));
     int nbCommod = nbCommodites(r);
     
     pr = r->noeuds;
     while(pr){
-        T_som[pr->nd->num-1] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
+        T_som[pr->nd->num] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
         pr = pr->suiv;
     }
 
@@ -90,19 +90,28 @@ Graphe* creerGraphe(Reseau* r){
     while (pr){
         CellNoeud *v = pr->nd->voisins; //voisins de pr
         while (v){
-            Sommet *voisin = T_som[v->nd->num-1]; 
-            insererVoisinsArete(T_som[pr->nd->num-1], voisin);
-            //insererVoisinsArete(voisin, T_som[pr->nd->num-1]);
+            Sommet *voisin = T_som[v->nd->num]; 
+            insererVoisinsArete(T_som[pr->nd->num], voisin);
             v = v->suiv;
         }
         pr = pr->suiv;
     }
+    
 
     Graphe *g = malloc(sizeof(Graphe));
     g->T_som = T_som;
     g->T_commod = malloc(sizeof(Commod)*nbCommod); 
     g->nbsom = nbnoeuds;
     g->nbcommod = 0; 
+    
+    CellCommodite *commodites = r->commodites;
+    int i=0;
+    while (commodites){
+        g->T_commod[i].e1 = commodites->extrA->num;
+        g->T_commod[i].e2 = commodites->extrB->num;
+        commodites = commodites->suiv;
+        i++;
+    }
 
     return g;
 }
@@ -172,7 +181,7 @@ void liberer_graphe(Graphe *g){
 }
 
 void afficherGraphe(Graphe *g){
-    for (int i = 0; i<g->nbsom; i++){
+    for (int i = 0; i < g->nbsom; i++){
         Sommet *sommet = g->T_som[i];
         printf("Sommet %d -> ", sommet->num);
         printf("Voisins : ");
@@ -183,4 +192,10 @@ void afficherGraphe(Graphe *g){
         }
         printf("\n");
     }
+
+    printf("Commodités : ");
+    for (int i=0; i<g->nbcommod; i++){
+        printf("%d %d", g->T_commod[i].e1, g->T_commod[i].e2);
+    }
 }
+
