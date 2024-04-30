@@ -276,12 +276,23 @@ void libererCellNoeud(CellNoeud *cn){
     Paramètre :
     - cn : liste de cellules de nœuds
     */
+    
     while (cn){
         CellNoeud *tmp = cn;
         cn = cn->suiv;
-        free(tmp->nd);
+        while(tmp->nd->voisins){
+            CellNoeud *tmp2=tmp->nd->voisins;
+            tmp->nd->voisins=tmp->nd->voisins->suiv;
+            if(tmp2->nd){
+                free(tmp2);
+            }
+        }
+        if(tmp->nd){
+            free(tmp->nd);
+        }
         free(tmp);
     }
+
 }
 
 void libererCellCommodite(CellCommodite *com){
@@ -290,6 +301,7 @@ void libererCellCommodite(CellCommodite *com){
     Paramètre :
     - com : liste de commodités
     */
+
     while (com){
         CellCommodite *tmp = com;
         com = com->suiv;
