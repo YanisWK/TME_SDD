@@ -11,8 +11,11 @@ int main(){
 
     Graphe *g = creerGraphe(r);    
     afficherGraphe(g);
-    printf("%d\n",plusCourtChemin(g,4,8));
-
+    CellChaine * parcours=plusCourtChemin(g,4,8);
+    while(parcours){
+        printf("%d\n",parcours->numero);
+        parcours=parcours->suiv;
+    }
     liberer_graphe(g);
     libererChaines(c);
     libererReseau(r);

@@ -46,6 +46,6 @@ Graphe* creerGraphe(Reseau* r);
 void liberer_sommet(Sommet *s);
 void liberer_graphe(Graphe *g);
 int len(int *tab);
-int plusCourtChemin(Graphe *g, int u, int v);
+CellChaine* plusCourtChemin(Graphe *g, int u, int v);
 void afficherGraphe(Graphe *g);
 #endif

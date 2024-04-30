@@ -33,6 +33,8 @@ Commod *creer_commod(int e1, int e2){
     return new;
 }
 
+
+
 Cellule_arete *ajout_teteCellule_arete(Cellule_arete *ca, Sommet *u, Sommet *v){
     Arete *a = creer_arete(u->num, v->num);
     if (!a) return ca;
@@ -115,7 +117,7 @@ int len(int* tab){
     return cpt;
 }
 
-int plusCourtChemin(Graphe *g, int u, int v){
+CellChaine * plusCourtChemin(Graphe *g, int u, int v){
 
     S_file *file=malloc(sizeof(S_file)); 
     Init_file(file); 
@@ -131,14 +133,14 @@ int plusCourtChemin(Graphe *g, int u, int v){
     tabPere[u]=-1;
     while (!estFileVide(file)){
         int valu=defile(file);
-        printf("valu : %d \n",valu);
+        //printf("valu : %d \n",valu);
         if(valu==v){
             break;
         }
         Cellule_arete * cour=g->T_som[valu]->L_voisin;
         while(cour!=NULL){
             int valv=cour->a->v;
-            printf("valvoisins = %d \n",valv);
+            //printf("valvoisins = %d \n",valv);
             if(tabvisite[valv]==0){
                 tabvisite[valv]=1;
                 enfile(file,valv);
@@ -150,65 +152,35 @@ int plusCourtChemin(Graphe *g, int u, int v){
     }
     valu=v;
     int C=0;
+    CellChaine * parcours=malloc(sizeof(CellChaine));
+    parcours->numero=v;
+    parcours->points=NULL;
     while(valu!=-1){
-        printf("C= %d , valu = %d \n",C,valu);
         valu=tabPere[valu];
         if(valu==-1){
             continue;
         }else{
             C+=1;
+            parcours=inserer_teteCC(parcours,valu,NULL);
         }
     }
-    return C;
+    return parcours;
 }
 
-int plusCourtChemin(Graphe *g, int u, int v){
 
-    S_file *file=malloc(sizeof(S_file)); 
-    Init_file(file); 
-    enfile(file, u); 
-    int valu;
-    int *tabvisite = (int*)malloc(sizeof(int)*(g->nbsom));
-    int *tabPere=(int*)malloc(sizeof(int)*(g->nbsom));
-    for(int i=1;i<g->nbsom;i++){
-        tabvisite[i]=0;
-        tabPere[i]=0;
+int reorganiseReseau(Reseau *r){
+    Graphe * G=creerGraphe(r);
+    int **matrice=malloc(sizeof(int*)*G->nbsom);
+    for(int i=0;i<G->nbsom;i++){
+        matrice[i]=malloc(sizeof(int)*G->nbsom);
     }
-    tabvisite[u] = 1; 
-    tabPere[u]=-1;
-    while (!estFileVide(file)){
-        int valu=defile(file);
-        printf("valu : %d \n",valu);
-        if(valu==v){
-            break;
-        }
-        Cellule_arete * cour=g->T_som[valu]->L_voisin;
-        while(cour!=NULL){
-            int valv=cour->a->v;
-            printf("valvoisins = %d \n",valv);
-            if(tabvisite[valv]==0){
-                tabvisite[valv]=1;
-                enfile(file,valv);
-                tabPere[valv]=valu;
-                printf("Trouvé ! \n");
-            }
-            cour=cour->suiv;
-        }
+    CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
+    for(int i=0;i<G->nbcommod;i++){
+
+        chaineCommod[i]=plusCourtChemin(G,G->T_commod)
     }
-    valu=v;
-    int C=0;
-    while(valu!=-1){
-        printf("C= %d , valu = %d \n",C,valu);
-        valu=tabPere[valu];
-        if(valu==-1){
-            continue;
-        }else{
-            C+=1;
-        }
-    }
-    return C;
+    
 }
-
 
 void liberer_sommet(Sommet *s){
     Cellule_arete *p = s->L_voisin;
