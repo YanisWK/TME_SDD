@@ -145,7 +145,7 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
                 tabvisite[valv]=1;
                 enfile(file,valv);
                 tabPere[valv]=valu;
-                printf("Trouvé ! \n");
+                //printf("Trouvé ! \n");
             }
             cour=cour->suiv;
         }
@@ -173,12 +173,19 @@ int reorganiseReseau(Reseau *r){
     int **matrice=malloc(sizeof(int*)*G->nbsom);
     for(int i=0;i<G->nbsom;i++){
         matrice[i]=malloc(sizeof(int)*G->nbsom);
+        for(int j=0;j<G->nbsom;j++){
+            matrice[i][j]=0;
+        }
     }
     CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
     for(int i=0;i<G->nbcommod;i++){
-
-        chaineCommod[i]=plusCourtChemin(G,G->T_commod)
+        chaineCommod[i]=plusCourtChemin(G,G->T_commod-[i]->e1,G->T_commod[i]->e2);
+        CellChaine * courant=chaineCommod[i];
+        while(courant){
+            
+        }
     }
+    
     
 }
 
