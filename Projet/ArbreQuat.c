@@ -40,11 +40,9 @@ ArbreQuat* creerArbreQuat(double xc,double yc,double coteX,double coteY){
     - coteX, coteY : longueur et largeur de l'arbre
     */
     ArbreQuat *abr=(ArbreQuat *)malloc(sizeof(ArbreQuat));
-    // printf("param xc = %lf\n",xc);
 
     abr->xc=xc;
     abr->yc=yc;
-    // printf("xc = %lf ; yc = %lf\n",abr->xc,abr->yc);
     abr->coteX=coteX;
     abr->coteY=coteY;
     abr->noeud=NULL;
@@ -167,8 +165,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
 }
 
 
-
-
 Reseau* reconstitueReseauArbre(Chaines* C){
     /* Reconstitue un réseau à partir des chaînes avec un arbre.
 
@@ -179,9 +175,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     CellCommodite *commodites =NULL;
     double xmin=0,xmax=0,ymin=0,ymax=0;
     chaineCoordMinMax(C,&xmin,&ymin,&xmax,&ymax);
-    // printf("param arbre : %lf\n",xmin+(xmin+xmax)/2);
     ArbreQuat *a=creerArbreQuat(xmin+(xmin+xmax)/2,ymin+(ymin+ymax)/2,xmax-xmin,ymax-ymin);
-    //afficherArbreQuat(parent);
     CellChaine * chaines=C->chaines;
 
     Noeud *extrA=NULL;
@@ -209,7 +203,6 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         chaines = chaines->suiv;
     }
     reseau->commodites=commodites;
-    //afficherArbreQuat(a);
     return reseau;
 }
 
