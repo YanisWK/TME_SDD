@@ -43,6 +43,13 @@ int h(int k,int M){
 
 
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y){
+    /*Recherche un nœud dans un réseau ou en crée un nouveau s'il n'existe pas déjà.
+
+    Paramètres :
+    - R : réseau de chaines
+    - H : table de hachage qui stocke les noeuds
+    - x,y : coordonnées du noeud à trouver ou créer
+    */
     int cles = f((int) x, (int) y);
     int pos = h(cles, H->tailleMax);
     CellNoeud* cour = H->T[pos];
