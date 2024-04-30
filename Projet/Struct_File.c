@@ -39,9 +39,9 @@ void afficherFile(S_file *f) {
         return;
     }
     
-    Cellule_file *courant = f->tete;
+    Cellule_file *courant = f->dernier;
     printf("File : ");
-    while (courant != NULL) {
+    while (courant){
         printf("%d ", courant->val);
         courant = courant->suiv;
     }
