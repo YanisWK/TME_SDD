@@ -26,10 +26,10 @@ Sommet *creer_sommet(int num, int x, int y){
     return new;
 }
 
-Commod *creer_commod(int e1, int e2){
-    Commod *new = malloc(sizeof(Commod));
-    new->e1 = e1;
-    new->e2 = e2;
+Commod creer_commod(int e1, int e2){
+    Commod new;
+    new.e1 = e1;
+    new.e2 = e2;
     return new;
 }
 
@@ -45,8 +45,8 @@ Cellule_arete *ajout_teteCellule_arete(Cellule_arete *ca, Sommet *u, Sommet *v){
 
 
 void ajout_commod(int e1, int e2, Graphe *g){
-    Commod * new = creer_commod(e1, e2);
-    g->T_commod[g->nbcommod]=*new;  
+    Commod new = creer_commod(e1, e2);
+    g->T_commod[g->nbcommod]=new;  
     g->nbcommod ++;
 }
 
@@ -187,7 +187,7 @@ int reorganiseReseau(Reseau *r){
     CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
     for(int i=0;i<G->nbcommod;i++){
 
-        chaineCommod[i]=plusCourtChemin(G,G->T_commod)
+        chaineCommod[i]=plusCourtChemin(G,G->T_commod);
     }
     
 }
