@@ -113,6 +113,7 @@ Graphe* creerGraphe(Reseau* r){
         g->T_commod[i].e1 = commodites->extrA->num;
         g->T_commod[i].e2 = commodites->extrB->num;
         commodites = commodites->suiv;
+        g->nbcommod++;
         i++;
     }
 
@@ -180,6 +181,7 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
 
 int reorganiseReseau(Reseau *r){
     Graphe * G=creerGraphe(r);
+    printf("G = %d \n",G->nbcommod);
     int **matrice=malloc(sizeof(int*)*G->nbsom);
     for(int i=0;i<G->nbsom;i++){
         matrice[i]=malloc(sizeof(int)*G->nbsom);
@@ -189,14 +191,36 @@ int reorganiseReseau(Reseau *r){
     }
     CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
     for(int i=0;i<G->nbcommod;i++){
-        chaineCommod[i]=plusCourtChemin(G,G->T_commod-[i]->e1,G->T_commod[i]->e2);
-        CellChaine * courant=chaineCommod[i];
+        printf("i = %d \n",i);
+        chaineCommod[i]=plusCourtChemin(G,G->T_commod[i].e1,G->T_commod[i].e2);
+        printf("e1 = %d, e2 = %d\n",G->T_commod[i].e1,G->T_commod[i].e2);
+        //CellChaine * parcours=chaineCommod[i];
+        // while(parcours){
+        //     printf("%d\n",parcours->numero);
+        //     parcours=parcours->suiv;
+        // }
+        CellChaine * prec=chaineCommod[i];
+        CellChaine * courant=prec->suiv;
+        
         while(courant){
-            
+            matrice[prec->numero][courant->numero]+=1;
+            matrice[courant->numero][prec->numero]+=1;
+            //printf("valeur prec : %d , valeur courant : %d \n",prec->numero,courant->numero);
+            prec=courant;
+            courant=courant->suiv;
+
         }
     }
-    
-    
+    for(int i=0;i<G->nbsom;i++){
+        printf("\n");
+        for(int j=0;j<G->nbsom;j++){
+            //printf("%d ",matrice[i][j]);
+            if(matrice[i][j]>=G->gamma){
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
 
 void liberer_sommet(Sommet *s){
