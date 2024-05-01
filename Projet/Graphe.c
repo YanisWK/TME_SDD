@@ -282,6 +282,7 @@ int reorganiseReseau(Reseau *r){
             courant=courant->suiv;
         }
     }
+
     // Affichage de la matrice et vérification des conditions de gamma
     for(int i=1;i<G->nbsom+1;i++){
         printf("\n");

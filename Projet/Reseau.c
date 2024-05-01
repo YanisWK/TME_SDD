@@ -116,6 +116,7 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
     */
     CellNoeud *noeudR = R->noeuds;
     
+    // Recherche du nœud dans le réseau
     while (noeudR){
         if(noeudR->nd->x==x && noeudR->nd->y==y){
             return noeudR->nd;;
@@ -123,6 +124,7 @@ Noeud * rechercheCreeNoeudListe(Reseau *R, double x,double y){
         noeudR = noeudR->suiv;
     }    
 
+    // Nœud n'existe pas, donc on le crée
     R->noeuds=ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
     R->nbNoeuds+=1;
     return R->noeuds->nd;
@@ -162,6 +164,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
         CellPoint *points=chaines->points;    
         Noeud * V=NULL; //noeud precedent
 
+        // Assigne le premier point à l'extremité de la commodité 
         extrA=rechercheCreeNoeudListe(reseau,points->x,points->y);
         while(points){
             //recherche ou crée le noeud correspondant au point
@@ -175,11 +178,13 @@ Reseau* reconstitueReseauListe(Chaines *C){
 
             V = cour; //noeud courant devient noeud precedent
             
+            // Assigne le dernier point à l'extremité de la commodité
             if(!points->suiv){
                 extrB=rechercheCreeNoeudListe(reseau,points->x,points->y);
             }
             points = points->suiv;
         }
+        // Crée la commodités des deux extremités et l'ajoute à la liste de commodités
         if(!rechercheCommodite(commodites,extrA,extrB)){
             commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
         }
@@ -241,6 +246,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     fprintf(f,"Gamma: %d\n", R->gamma);
 
     fprintf(f,"\n");
+    // Écriture des coordonnées des nœuds
     CellNoeud *noeud = R->noeuds;
     while(noeud){
         fprintf(f,"v %d %.6lf %.6lf\n", noeud->nd->num, noeud->nd->x, noeud->nd->y);
@@ -248,7 +254,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     }
 
     fprintf(f,"\n");
-    
+    // Écriture des liaisons entre les nœuds
     CellNoeud *liaison = R->noeuds;
     while(liaison){
         CellNoeud *voisin = liaison->nd->voisins;
@@ -262,7 +268,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     }
 
     fprintf(f,"\n");
-
+    // Écriture des commodités
     CellCommodite *com = R->commodites;
     while(com){
         fprintf(f,"k %d %d\n", com->extrA->num, com->extrB->num);
@@ -349,6 +355,13 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
 }
 
 Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax){
+    /*Génère aléatoirement une structure de chaînes.
+
+    Paramètres :
+    - nbChaines : nombre de chaînes à générer
+    - nbPointsChaine : nombre de points par chaîne
+    - xmax, ymax : dimensions maximales du plan
+    */
     Chaines* c = malloc(sizeof(Chaines));
     c->gamma = rand()%(10)-1;
     c->nbChaines = nbChaines;
@@ -359,6 +372,7 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax)
         new->points = NULL;
         for (int j = 0; j < nbPointsChaine; j++){
             CellPoint* point = malloc(sizeof(CellPoint));
+            // Génération aléatoire des coordonnées des points
             point->x = rand()%(xmax);
             point->y = rand()%(ymax);
             point->suiv = new->points;
