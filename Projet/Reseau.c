@@ -172,20 +172,20 @@ Reseau* reconstitueReseauListe(Chaines *C){
             
             //s'il y a un noeud precedent
             if (V){
-                insererVoisins(V,cour);
-                insererVoisins(cour,V);
+                insererVoisins(V,cour); // Lie le nœud actuel au nœud précédent en tant que voisins
+                insererVoisins(cour,V); // Et inversement
             }
 
-            V = cour; //noeud courant devient noeud precedent
+            V = cour; // Met à jour le nœud précédent
             
-            // Assigne le dernier point à l'extremité de la commodité
-            if(!points->suiv){
+            if(!points->suiv){ // Si ce point est le dernier point de la chaîne
+                // Recherche ou crée un nœud pour ce point et l'assigne à extrB
                 extrB=rechercheCreeNoeudListe(reseau,points->x,points->y);
             }
             points = points->suiv;
         }
-        // Crée la commodités des deux extremités et l'ajoute à la liste de commodités
-        if(!rechercheCommodite(commodites,extrA,extrB)){
+        // Si une commodité entre ExtrA et ExtrB n'existe pas déjà,
+        // On ajoute cette commodité à la liste des commodités        if(!rechercheCommodite(commodites,extrA,extrB)){
             commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
         }
         chaines = chaines->suiv;

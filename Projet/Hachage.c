@@ -100,11 +100,16 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
     while(chaines){
         CellPoint *points=chaines->points; // Pointeur sur la tête de points de la chaîne
         Noeud * V=NULL; // Crée pointeur pour stocker le noeud précédent
-        ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);  // Recherche ou crée un nœud pour le premier point
+        
+        // Assigne le premier point à l'extremité de la commodité 
+        ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);  
+        
         while(points){
             // Recherche ou crée un nœud pour chaque point de la chaîne
             Noeud *cour=rechercheCreeNoeudHachage(R,H,points->x,points->y);
-            if(V){ // Si ce n'est pas le premier point de la chaîne
+
+            //s'il y a un noeud precedent
+            if(V){
                 insererVoisins(V,cour); // Lie le nœud actuel au nœud précédent en tant que voisins
                 insererVoisins(cour,V); // Et inversement
             }
