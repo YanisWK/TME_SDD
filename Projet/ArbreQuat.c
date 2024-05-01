@@ -124,6 +124,15 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 }
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
+    /*Recherche un noeud dans l'arbre, le crée sinon
+    
+    Paramètres :
+    - R : réseau de chaînes
+    - a : arbre quaternaire
+    - parent : noeud parent de l'arbre
+    - x,y : coordonnées du noeud à chercher/créer
+    */
+    
     // Cas arbre vide
     if((*a==NULL)){
         // Crée un nouveau nœud et l'ajoute à la tête du réseau

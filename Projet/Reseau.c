@@ -185,7 +185,8 @@ Reseau* reconstitueReseauListe(Chaines *C){
             points = points->suiv;
         }
         // Si une commodité entre ExtrA et ExtrB n'existe pas déjà,
-        // On ajoute cette commodité à la liste des commodités        if(!rechercheCommodite(commodites,extrA,extrB)){
+        // On ajoute cette commodité à la liste des commodités        
+        if(!rechercheCommodite(commodites,extrA,extrB)){
             commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
         }
         chaines = chaines->suiv;
