@@ -262,3 +262,19 @@ void libererChaines(Chaines *c){
     }
     free(c);
 }
+
+void liberer_cellchaine(CellChaine *chaine){
+    if (!chaine) return;
+    CellChaine *courant = chaine;
+    CellChaine *prec = NULL;
+    while (courant){
+        prec = courant;
+        courant = courant->suiv;
+        while(prec->points){
+            CellPoint *tmp= prec->points;
+            prec->points = prec->points->suiv;
+            free(tmp);
+        }
+        free(prec);
+    }
+}

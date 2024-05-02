@@ -38,5 +38,5 @@ double longueurTotale(Chaines *C);
 int comptePointsTotal(Chaines *C);
 int nbPoints(CellPoint * points);
 void libererChaines(Chaines *c);
-
+void liberer_cellchaine(CellChaine *chaine);
 #endif	

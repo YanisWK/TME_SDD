@@ -14,8 +14,11 @@ void chaineCoordMinMax(Chaines* C,double* xmin,double* ymin,double *xmax,double 
     while(courant){
         CellPoint *points=courant->points;
         while(points){
-            double x=points->x;
+            // Coordonnées du premier point de la chaîne actuelle
+            double x=points->x; 
             double y=points->y;
+            
+            // Mettre à jour les coordonnées minimales et maximales si nécessaire
             if(x<*xmin){
                 *xmin=x;
             }if(x>*xmax){
@@ -71,6 +74,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
     //cas arbre vide
     if((*a)==NULL || a==NULL){
         ArbreQuat *res;
+        // Détermine la partie dans lequel insérer le nœud en fonction de ses coordonnées et du parent
         if(pX<PcentreX && pY<PcentreY){//Sud ouest
             res=creerArbreQuat(PcentreX-(PcoteX/4),PcentreY-(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
             parent->so=res;
@@ -87,7 +91,8 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
             res=creerArbreQuat(PcentreX+(PcoteX/4),PcentreY+(PcoteY/4),(parent->coteX)/2,(parent->coteY)/2);
             parent->ne=res;
         }
-        res->noeud=n;
+        res->noeud=n; // Assigne le nœud à l'arbre
+
     }else{
         //cas noeud interne
 
@@ -95,6 +100,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
         double acentreY=(*a)->yc;
 
         if((*a)->noeud == NULL){
+            // Récursion pour insérer le nœud interne au bon endroit
             if(pX<acentreX && pY<acentreY){ //Sud ouest
                 insererNoeudArbre(n,&((*a)->so),*a);
             }
@@ -109,7 +115,7 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
             }
         }else{
             //cas feuille
-
+            // Insérer le nœud actuel dans l'arbre
             insererNoeudArbre((*a)->noeud,NULL,*a);
             insererNoeudArbre(n,NULL,*a);
             (*a)->noeud=NULL; 
@@ -118,16 +124,31 @@ void insererNoeudArbre(Noeud *n,ArbreQuat ** a,ArbreQuat *parent){
 }
 
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double x,double y){
+    /*Recherche un noeud dans l'arbre, le crée sinon
+    
+    Paramètres :
+    - R : réseau de chaînes
+    - a : arbre quaternaire
+    - parent : noeud parent de l'arbre
+    - x,y : coordonnées du noeud à chercher/créer
+    */
+    
+    // Cas arbre vide
     if((*a==NULL)){
+        // Crée un nouveau nœud et l'ajoute à la tête du réseau
         R->noeuds = ajout_teteCellNoeud(R->noeuds,x,y,R->nbNoeuds+1);
         R->nbNoeuds+=1;
+        // Insére le nœud dans l'arbre
         insererNoeudArbre(R->noeuds->nd,a,parent);
         return R->noeuds->nd;
     }
-    else if(((*a)->noeud!=NULL)){
+    else if(((*a)->noeud!=NULL)){ // Cas feuille
+        // Vérifie si le nœud existe déjà
         if(((*a)->noeud->x==x && (*a)->noeud->y==y)){
+            
             return (*a)->noeud;
         }else{
+            // Cherche ou crée le nœud au bon endroit de manière récursive
             double acentreX=(*a)->xc;
             double acentreY=(*a)->yc;
             if(x<acentreX && y<acentreY){ //Sud ouest
@@ -144,7 +165,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat *parent ,double
             }
         }
     } 
-    else{
+    else{ // Cas noeud interne
+        // Cherche ou crée le nœud au bon endroit de manière récursive
         double acentreX=(*a)->xc;
         double acentreY=(*a)->yc;
         if(x<acentreX && y<acentreY){//Sud ouest
@@ -170,11 +192,14 @@ Reseau* reconstitueReseauArbre(Chaines* C){
 
     Paramètre:
     - C : chaînes
-    */
-    Reseau *reseau = creerReseau(C);
-    CellCommodite *commodites =NULL;
-    double xmin=0,xmax=0,ymin=0,ymax=0;
+    */ 
+    Reseau *reseau = creerReseau(C); // Crée un réseau
+    CellCommodite *commodites =NULL; // Initialise la liste des commodités
+
+    double xmin=0,xmax=0,ymin=0,ymax=0; 
+    // Calcule les coordonnées minimales et maximales de la lste de chaînes
     chaineCoordMinMax(C,&xmin,&ymin,&xmax,&ymax);
+    // Crée un arbre à partir des coordonnées minimales et maximales
     ArbreQuat *a=creerArbreQuat(xmin+(xmin+xmax)/2,ymin+(ymin+ymax)/2,xmax-xmin,ymax-ymin);
     CellChaine * chaines=C->chaines;
 
@@ -182,27 +207,36 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     Noeud *extrB=NULL;
 
     while(chaines){
-        CellPoint *points = chaines->points;
-        Noeud *V=NULL;
+        CellPoint *points = chaines->points; // tête de la chaîne
+        Noeud *V=NULL; // noeud précédent
+
+        // Assigne le premier point à l'extremité de la commodité 
         extrA=rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
-        while (points){
+        while (points){        
+            // Recherche ou crée les nœuds dans l'arbre pour chaque point de la chaîne
             Noeud *cour = rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
+
+            //s'il y a un noeud precedent
             if (V){
-                insererVoisins(V,cour);
-                insererVoisins(cour,V);
+                insererVoisins(V,cour); // Lie le nœud actuel au nœud précédent en tant que voisins
+                insererVoisins(cour,V); // Et inversement
             }
-            V=cour;
-            if(!points->suiv){
+            V=cour; // Met à jour le nœud précédent
+
+            if(!points->suiv){ // Si ce point est le dernier point de la chaîne
+                // Recherche ou crée un nœud pour ce point et l'assigne à ExtrB
                 extrB=rechercheCreeNoeudArbre(reseau,&a,NULL,points->x,points->y);
             }
             points = points->suiv;
         }
+        // Si une commodité entre extrA et extrB n'existe pas déjà,
+        // On ajoute cette commodité à la liste des commodités
         if(!rechercheCommodite(commodites,extrA,extrB)){
             commodites=ajout_teteCellCommodite(commodites,extrA,extrB);
         }
         chaines = chaines->suiv;
     }
-    reseau->commodites=commodites;
+    reseau->commodites=commodites; // Met à jour les commodités du réseau
     libererArbre(a);
     return reseau;
 }

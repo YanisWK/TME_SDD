@@ -127,20 +127,28 @@ Graphe* creerGraphe(Reseau* r){
     */
     int nbnoeuds = 0; 
     CellNoeud *pr = r->noeuds;
+
+    // Calcul du nombre de noeuds en parcourant la liste de noeuds du réseau
     while(pr){ 
         nbnoeuds++;
         pr = pr->suiv;
     }
+
     Sommet **T_som = malloc(sizeof(Sommet*)*(nbnoeuds+1));
+
+    // Calcul du nombre de commodités dans le réseau
     int nbCommod = nbCommodites(r);
-    
+
+    // Parcours de la liste de noeuds du réseau
     pr = r->noeuds;
     while(pr){
+        // Création des sommets du graphe à partir des noeuds
         T_som[pr->nd->num] = creer_sommet(pr->nd->num, pr->nd->x, pr->nd->y);
         pr = pr->suiv;
     }
 
     pr = r->noeuds;
+    // Ajout des arêtes en parcourant les voisins de chaque noeud
     while (pr){
         CellNoeud *v = pr->nd->voisins;
         while (v){
@@ -151,13 +159,14 @@ Graphe* creerGraphe(Reseau* r){
         pr = pr->suiv;
     }
     
-
+    // Création du graphe
     Graphe *g = malloc(sizeof(Graphe));
     g->T_som = T_som;
     g->T_commod = malloc(sizeof(Commod)*nbCommod); 
     g->nbsom = nbnoeuds;
     g->nbcommod = 0; 
     
+    // Ajout des commodités
     CellCommodite *commodites = r->commodites;
     int i=0;
     while (commodites){
@@ -180,26 +189,35 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
     - u : identifiant du premier sommet
     - v : identifiant du deuxième sommet
     */
+    // Allocation d'une file pour le parcours en largeur
     S_file *file=malloc(sizeof(S_file)); 
     Init_file(file); 
+
+    // Enfile le sommet de départ u
     enfile(file, u); 
     int valu;
-    int *tabvisite = (int*)malloc(sizeof(int)*(g->nbsom));
-    int *tabPere=(int*)malloc(sizeof(int)*(g->nbsom));
+
+    // Création des tableaux pour le parcours en largeur
+    int *tabvisite = (int*)malloc(sizeof(int)*(g->nbsom+1));
+    int *tabPere=(int*)malloc(sizeof(int)*(g->nbsom+1));
     for(int i=1;i<g->nbsom;i++){
         tabvisite[i]=0;
         tabPere[i]=0;
     }
     tabvisite[u] = 1; 
     tabPere[u]=-1;
+
+    // Parcours en largeur jusqu'à atteindre v ou parcourir tous les sommets du graphe
     while (!estFileVide(file)){
         int valu=defile(file);
         if(valu==v){
             break;
         }
+        // Parcours des voisins du sommet valu
         Cellule_arete * cour=g->T_som[valu]->L_voisin;
         while(cour!=NULL){
             int valv=cour->a->v;
+            // Si voisin pas visité, on l'enfile et met dans le tableau des prédécesseurs
             if(tabvisite[valv]==0){
                 tabvisite[valv]=1;
                 enfile(file,valv);
@@ -210,9 +228,11 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
     }
     valu=v;
     int C=0;
+    // Création d'une liste pour stocker le chemin
     CellChaine * parcours=malloc(sizeof(CellChaine));
     parcours->numero=v;
     parcours->points=NULL;
+    // Reconstruction du chemin à partir du tableau des prédécesseurs
     while(valu!=-1){
         valu=tabPere[valu];
         if(valu==-1){
@@ -222,6 +242,9 @@ CellChaine * plusCourtChemin(Graphe *g, int u, int v){
             parcours=inserer_teteCC(parcours,valu,NULL);
         }
     }
+    // Libération de la mémoire allouée dynamiquement
+    free(tabvisite);
+    free(tabPere);
     return parcours;
 }
 
@@ -232,37 +255,57 @@ int reorganiseReseau(Reseau *r){
     Paramètre :
     - r : réseau
     */
+   // Création du graphe
     Graphe * G=creerGraphe(r);
-    int **matrice=malloc(sizeof(int*)*G->nbsom);
+    // Création de la matrice pour le comptage des arêtes entre les sommets
+    int **matrice=malloc(sizeof(int*)*(G->nbsom+1));
     for(int i=0;i<G->nbsom+1;i++){
-        matrice[i]=malloc(sizeof(int)*G->nbsom);
+        matrice[i]=malloc(sizeof(int)*(G->nbsom+1));
         for(int j=0;j<G->nbsom+1;j++){
             matrice[i][j]=0;
         }
     }
+    // Création du tableau de listes chainées pour stocker les chemins des commodités
     CellChaine **chaineCommod=malloc(sizeof(CellChaine *)*G->nbcommod);
     for(int i=0;i<G->nbcommod;i++){
+        // On trouve le plus court chemin entre les extrémités de la commodité
         chaineCommod[i]=plusCourtChemin(G,G->T_commod[i].e1,G->T_commod[i].e2);
 
         CellChaine * prec=chaineCommod[i];
         CellChaine * courant=prec->suiv;
 
-        while(courant){
+        // Parcours du chemin et mise à jour de la matrice
+        while(courant && prec){
             matrice[prec->numero][courant->numero]+=1;
             matrice[courant->numero][prec->numero]+=1;
             prec=courant;
             courant=courant->suiv;
         }
     }
-    for(int i=1;i<G->nbsom;i++){
+
+    // Affichage de la matrice et vérification des conditions de gamma
+    for(int i=1;i<G->nbsom+1;i++){
         printf("\n");
-        for(int j=1;j<G->nbsom;j++){
+        for(int j=1;j<G->nbsom+1;j++){
+            //printf("%d ", matrice[i][j]);
             if(matrice[i][j]>=G->gamma){
-                return 0;
+                return 0; //condition non satisfaite
             }
         }
     }
-    return 1;
+
+    // Libération de la mémoire
+    libererMatrice(matrice,G->nbsom+1);
+    liberer_graphe(G);
+    return 1; //condition de gamma satisfaite
+}
+
+void libererMatrice(int **matrice, int taille) {
+    if (!matrice) return;
+    for (int i = 0; i < taille; i++) {
+        free(matrice[i]);
+    }
+    free(matrice);
 }
 
 void liberer_sommet(Sommet *s){
@@ -275,6 +318,7 @@ void liberer_sommet(Sommet *s){
     while (p){
         Cellule_arete *tmp = p; 
         p = p->suiv;
+        free(tmp->a);
         free(tmp);
     }
     free(s);

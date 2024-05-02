@@ -50,10 +50,18 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     - H : table de hachage qui stocke les noeuds
     - x,y : coordonnées du noeud à trouver ou créer
     */
+
+    // Calculer la clé de hachage pour les coordonnées du noeud
     int cles = f((int) x, (int) y);
+
+    // Trouver la position dans la table de hachage
     int pos = h(cles, H->tailleMax);
+
+    // Crée pointeur pour parcourir la liste de la position pos
     CellNoeud* cour = H->T[pos];
-    while (cour != NULL){
+
+    // Parcourt la liste chaînée et vérifie si lz noeud existe déjà
+    while (cour){
         if ((cour->nd->x == x) && (cour->nd->y == y)){
             return cour->nd;
         }
@@ -61,10 +69,12 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     }
     Noeud *nd =(creerNoeud(R->nbNoeuds+1,x,y,NULL));
     
+    // Créer un nouveau nœud et l'ajoute à la table de hachage
     CellNoeud *pos_Hachage = creerCellNoeud(nd);
     pos_Hachage->suiv = H->T[pos];
     H->T[pos] = pos_Hachage;
-    
+
+    // Ajoute le nœud au réseau
     CellNoeud *pos_Reseau = creerCellNoeud(nd);
     pos_Reseau->suiv =  R->noeuds;
     R->noeuds = pos_Reseau;
@@ -80,36 +90,46 @@ Reseau * reconstitueReseauHachage(Chaines *C,int M){
     - C : liste des chaînes pour reconstituer le réseau
     - M : taille de la table de hachage
     */
-    Reseau * R=creerReseau(C);
-    TableHachage *H=CreeTableHachage(M);
-    CellCommodite * commodites=NULL;
-    CellChaine * chaines=C->chaines;
+    Reseau * R=creerReseau(C); // Crée un réseau vide à partir de la liste de chaînes
+    TableHachage *H=CreeTableHachage(M); // Crée une table de hachage de taille M
+    CellCommodite * commodites=NULL; // Initialise la liste des commodités
+    CellChaine * chaines=C->chaines; // Pointeur sur la tête de liste des chaînes
     Noeud *ExtrA=NULL;
     Noeud *ExtrB=NULL;
 
     while(chaines){
-        CellPoint *points=chaines->points;
-        Noeud * V=NULL;
-        ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+        CellPoint *points=chaines->points; // Pointeur sur la tête de points de la chaîne
+        Noeud * V=NULL; // Crée pointeur pour stocker le noeud précédent
+        
+        // Assigne le premier point à l'extremité de la commodité 
+        ExtrA=rechercheCreeNoeudHachage(R,H,points->x,points->y);  
+        
         while(points){
+            // Recherche ou crée un nœud pour chaque point de la chaîne
             Noeud *cour=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+
+            //s'il y a un noeud precedent
             if(V){
-                insererVoisins(V,cour);
-                insererVoisins(cour,V);
+                insererVoisins(V,cour); // Lie le nœud actuel au nœud précédent en tant que voisins
+                insererVoisins(cour,V); // Et inversement
             }
-            V=cour;
-            if(!points->suiv){
-                ExtrB=rechercheCreeNoeudHachage(R,H,points->x,points->y);
+            V=cour; // Met à jour le nœud précédent
+
+            if(!points->suiv){  // Si ce point est le dernier point de la chaîne
+                // Recherche ou crée un nœud pour ce point et l'assigne à ExtrB
+                ExtrB=rechercheCreeNoeudHachage(R,H,points->x,points->y); 
             }
             points = points->suiv;
         }
+        // Si une commodité entre ExtrA et ExtrB n'existe pas déjà,
+        // On ajoute cette commodité à la liste des commodités
         if(!rechercheCommodite(commodites,ExtrA,ExtrB)){
             commodites=ajout_teteCellCommodite(commodites,ExtrA,ExtrB);
         }
         chaines = chaines->suiv;
     }
-    R->commodites=commodites;
-    LibererTableHachage(H);
+    R->commodites=commodites; // Assigne la liste des commodités au réseau
+    LibererTableHachage(H); // Libère la mémoire de la table de hachage 
     return R;
 }
 void LibererTableHachage(TableHachage *table) {
@@ -119,13 +139,12 @@ void LibererTableHachage(TableHachage *table) {
     - table : pointeur vers la table de hachage à libérer
     */
 
-    if (table == NULL) {
-        return;
-    }
+    if (table == NULL) return;
 
-    for (int i = 0; i < table->tailleMax; i++) {
-        CellNoeud *p = table->T[i];
-        while (p) {
+    for (int i = 0; i<table->tailleMax; i++){
+        CellNoeud *p = table->T[i]; //récupère la tête de chaque liste de la table
+        while (p){
+            // Libère chaque liste à l'aide d'une variable temporaire
             CellNoeud *temp = p;
             p = p->suiv;
             free(temp);
